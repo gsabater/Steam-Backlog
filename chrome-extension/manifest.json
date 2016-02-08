@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+
+  "name": "Steam Backlog",
+  "description": "Lets do this",
+  "version": "0.1",
+
+  "options_page": "options.html",
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.steamcommunity.com/*"],
+      "css": ["mv-front.css"],
+      "js": [
+        "lib/jquery-2.1.4.min.js",        
+        "-front.js"
+      ]
+    }
+  ],
+
+
+    "permissions": [
+    "storage",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "notifications",
+    "*://*.steampowered.com/*"
+  ]
+}
