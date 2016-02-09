@@ -3,28 +3,34 @@
 
   "name": "Steam Backlog",
   "description": "Lets do this",
-  "version": "0.1",
+  "version": "0.2",
 
   "options_page": "options.html",
 
   "content_scripts": [
     {
-      "matches": ["*://*.steamcommunity.com/*"],
-      "css": ["mv-front.css"],
+      "matches": [
+        "*://*.steamcommunity.com/*",
+        "*://*.steampowered.com/*"
+      ],
+
       "js": [
         "lib/jquery-2.1.4.min.js",        
-        "-front.js"
-      ]
+        
+        "sb-front.js",
+        "modules/sb.module.user.js",
+        "modules/sb.module.games.js"
+
+      ],
+
+      "css": ["mv-front.css"]
     }
   ],
 
-
-    "permissions": [
+  "permissions": [
     "storage",
-    "activeTab",
     "webRequest",
     "webRequestBlocking",
-    "notifications",
-    "*://*.steampowered.com/*"
+    "notifications"
   ]
 }
