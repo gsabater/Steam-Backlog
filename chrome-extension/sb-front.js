@@ -26,7 +26,7 @@ var userID = false;
   //+-------------------------------------------------------
     function init(){
       
-      $('<a class="menuitem" href="https://help.steampowered.com/">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
+      $('<a class="menuitem" href="'+chrome.extension.getURL("/backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
       
       // Init localstorage
       window.setTimeout(function(){ 
