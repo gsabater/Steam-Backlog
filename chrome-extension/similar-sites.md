@@ -3,3 +3,5 @@
 * http://www.howlongtobeatsteam.com/#/gohrum
 * http://www.lambentstew.com/webblog/miniproject/steamanalysis?steamid=awfurious
 * https://i.imgur.com/YeIj4fw.jpg
+* http://csgo-stats.com/bnnnn/
+* https://steamdb.info/calculator/76561198061541150/?cc=it

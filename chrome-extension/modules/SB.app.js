@@ -9,42 +9,34 @@
 //
 //=================================================================
 
-var SB = angular.module('SB', [
-          'ngRoute',
-          'SB.controllers', 
-          'SB.services', 
-          //'pascalprecht.translate', 
-        ])
+  var SB = angular.module('SB', [
+    'ngRoute',
+    'SB.controllers', 
+    'SB.services', 
+    //'pascalprecht.translate', 
+  ])
 
   //+-------------------------------------------------------
   //| .run()
   //| + First call in app where start $rootScope
-  //| + environment vars
-  //| + api calls
+  //| + set memory for games and stats
   //+-------------------------------------------------------
     .run(function($rootScope){ // localstorage
 
       console.log("+ App start");
 
       $rootScope.app = {
-        firebase : [],
-        offline: false,
-        ready: false,
-        error: false,
-        tabs: false,
         v: 0.9
       };
 
       $rootScope.user = {
-        EMT: true,
-        lang: "es",
-        ionic: false,
-        elTiempo: true
+        finished: [],
+        hoursPlayed: 0,
+        hoursWeek: 0,
       };
 
       $rootScope.db = {
-        recientes : [],
-        favoritos : [],
+        games : [],
       };
 /*
       // Get Localstorage de usuario
@@ -91,21 +83,21 @@ var SB = angular.module('SB', [
   //| + $stateProvider for routes
   //+-------------------------------------------------------
     .config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider
+    function($routeProvider){
+      $routeProvider
 
-      .when('/dashboard', {
-        templateUrl: 'partials/phone-list.html',
-        controller: 'dashboard'
-      })
+        .when('/dashboard', {
+          templateUrl: 'partials/phone-list.html',
+          controller: 'dashboard'
+        })
 
-      .when('/dashboard/:phoneId', {
-        templateUrl: 'partials/phone-detail.html',
-        controller: 'PhoneDetailCtrl'
-      })
+        .when('/dashboard/:phoneId', {
+          templateUrl: 'partials/phone-detail.html',
+          controller: 'PhoneDetailCtrl'
+        })
 
-      .otherwise({
-        redirectTo: '/dashboard'
-      });
-  }])
-    ;
+        .otherwise({
+          redirectTo: '/dashboard'
+        });
+    }])
+;
