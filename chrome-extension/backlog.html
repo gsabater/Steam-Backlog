@@ -4,16 +4,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     
-    <title>Horabaixa</title>
+    <title>Steam Backlog</title>
+    <link rel="shortcut icon" href="http://steamcommunity.com/favicon.ico" type="image/x-icon">
+
+    <link href="sb.panel.css" rel="stylesheet" type="text/css">
 
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-route.min.js"></script>
 
     <script src="modules/SB.app.js"></script>
     <script src="modules/SB.controllers.js"></script>
+    <script src="modules/SB.services.js"></script>
 
   </head>
   <body ng-app="SB">
+
+    <div id="header">
+      <div class="header-content">
+        <div class="logo">
+          <span id="logo_holder">
+            <a href="http://store.steampowered.com/">
+              <img src="http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png" width="176" height="44">
+            </a>
+          </span>
+        </div>
+        <div class="supernav_container">
+          <a class="menuitem supernav" href="javascript:history(-1);">BACK TO STEAM</a>
+        </div>        
+      </div>
+    </div>
+
+    <div id="container">
+      
 
     <div>
       <label>Name:</label>
@@ -30,7 +52,12 @@
         </li>
       </ul>
 
+      {{games}}
+
     <div ng-view></div>
+
+    </div>
+
 
   </body>
 </html>

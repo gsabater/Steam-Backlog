@@ -11,10 +11,8 @@
 
 var SB = angular.module('SB', [
           'ngRoute',
-          'phonecatControllers'
-          //'HB.controllers', 
-          //'HB.services', 
-          //'HB.factories', 
+          'SB.controllers', 
+          'SB.services', 
           //'pascalprecht.translate', 
         ])
 
@@ -94,17 +92,20 @@ var SB = angular.module('SB', [
   //+-------------------------------------------------------
     .config(['$routeProvider',
   function($routeProvider) {
-    $routeProvider.
-      when('/phones', {
+    $routeProvider
+
+      .when('/dashboard', {
         templateUrl: 'partials/phone-list.html',
-        controller: 'PhoneListCtrl'
-      }).
-      when('/phones/:phoneId', {
+        controller: 'dashboard'
+      })
+
+      .when('/dashboard/:phoneId', {
         templateUrl: 'partials/phone-detail.html',
         controller: 'PhoneDetailCtrl'
-      }).
-      otherwise({
-        redirectTo: '/phones'
+      })
+
+      .otherwise({
+        redirectTo: '/dashboard'
       });
   }])
     ;

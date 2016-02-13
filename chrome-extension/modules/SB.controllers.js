@@ -1,15 +1,37 @@
-var phonecatControllers = angular.module('phonecatControllers', []);
+//=================================================================
+//
+//  ██████╗  █████╗  ██████╗██╗  ██╗██╗      ██████╗  ██████╗ 
+//  ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║     ██╔═══██╗██╔════╝ 
+//  ██████╔╝███████║██║     █████╔╝ ██║     ██║   ██║██║  ███╗
+//  ██╔══██╗██╔══██║██║     ██╔═██╗ ██║     ██║   ██║██║   ██║
+//  ██████╔╝██║  ██║╚██████╗██║  ██╗███████╗╚██████╔╝╚██████╔╝
+//  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
+//
+//=================================================================
 
-phonecatControllers.controller('PhoneListCtrl', ['$scope', '$http',
-  function ($scope, $http) {
-    $http.get('phones/phones.json').success(function(data) {
-      $scope.phones = data;
+angular.module('SB.controllers', []);
+angular.module('SB.controllers')
+
+//=================================================
+// dashboard
+// + Function to check the active state and apply
+//=================================================
+  .controller('dashboard', function($scope, $location, SteamAPI){
+
+    console.log("dashboard");
+
+    SteamAPI.getGames().then(function(xhr){
+      console.log("succ",xhr);
+
+      $scope.games = xhr.data.response.games;
+
+    }, function(err){
+      // An error occured. Show a message to the user
+      console.log("error",err);
     });
 
-    $scope.orderProp = 'age';
-  }]);
-
-phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams',
-  function($scope, $routeParams) {
-    $scope.phoneId = $routeParams.phoneId;
-  }]);
+    $scope.isItemActive = function(item){
+      //console.log("wat", $location.path().indexOf(item) > -1);
+      //return $location.path().indexOf(item) > -1;
+    };
+  })
