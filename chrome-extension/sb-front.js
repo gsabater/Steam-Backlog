@@ -9,11 +9,26 @@
 //
 //=================================================================
 
-// A594C3C2BBC8B18CB7C00CB560BA1409
-
 console.warn("Steam Backlog active");
 
 init();
+
+/*
+
+check user localstorage if set
+else get user data and set it on localstorage - warning if private -
+check if user profile is owner
+---
+get played games in last two weeks
+if one game has > 5h and is not in currently playing games -> show message
+message options: yes, add it to currently playing games / nope, just idling for cards.
+---
+get games number (frontend)
+if number is higher, prompt a message for update the extension database.
+if yes, get owned games, search for not saved ones, and get detailed info
+then save to localstorage
+*/
+
 
 var userID = false;
 

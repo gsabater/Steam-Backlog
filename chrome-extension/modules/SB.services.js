@@ -26,6 +26,9 @@ angular.module('SB.services', [])
       },
       getGameStats : function(id){
         return $http.get('http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=246420&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=76561198061541150');
+      },
+      getDynamicStore : function(){
+        return $http.get('http://store.steampowered.com/dynamicstore/userdata/');
       }
     };
   }])

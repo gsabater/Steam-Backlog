@@ -31,6 +31,11 @@ angular.module('SB.controllers')
       $scope.gameStats = xhr.data.playerstats.achievements;
     });
 
+    SteamAPI.getDynamicStore().then(function(xhr){
+      console.log("succ",xhr);
+      $scope.dynamic = xhr.data;
+    });    
+
     SteamAPI.getGames().then(function(xhr){
       console.log("succ",xhr);
 
