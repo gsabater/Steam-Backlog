@@ -41,13 +41,18 @@ var userID = false;
   //+-------------------------------------------------------
     function init(){
       
+      // Add backlog menu option
       $('<a class="menuitem" href="'+chrome.extension.getURL("/backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
       
+      // Get user id and check 
+      getPlayerID();
+
       // Init localstorage
       window.setTimeout(function(){ 
         chrome.storage.sync.get("SB-settings", function(result){ SBStorage(result); });
         chrome.storage.sync.get("SB-games", function(result){ SBStorage(result); });
       }, 100);
+
     }
 
   //+-------------------------------------------------------
@@ -97,4 +102,23 @@ if(false){
       if(user.audio){ _audio.src = "assets/" + user.audio; }
 
       console.log("Setting", obj);
-    }    
+    }
+
+
+    function getPlayerID(){
+      var player    = $("#global_header a.user_avatar.playerAvatar");
+      var playerURL = player.attr("href").split("steamcommunity.com/")[1];
+      //var playerURL = "http://steamcommunity.com/profiles/76561198063583863".split("steamcommunity.com/")[1];
+
+      if(playerURL.substring(0,9) == "profiles/"){ 
+        //return playerURL.substring(9, playerURL.length).replace("/", "");
+        $('<div>User ID: '+ playerURL.substring(9, playerURL.length).replace("/", "") + '</div>').appendTo(".profile_header_centered_persona");
+      }
+
+      if(playerURL.substring(0,3) == "id/"){
+        $.getJSON("http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&vanityurl=" + playerURL.substring(3, playerURL.length).replace("/", ""), function(data){
+          $('<div>User ID: '+ data.response.steamid + '</div>').appendTo(".profile_header_centered_persona");
+        });
+      }
+
+    }
