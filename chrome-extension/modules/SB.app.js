@@ -33,6 +33,7 @@
         finished: [],
         hoursPlayed: 0,
         hoursWeek: 0,
+        info: false
       };
 
       $rootScope.db = {

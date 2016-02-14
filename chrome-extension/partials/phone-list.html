@@ -7,11 +7,25 @@ Juegos: xx<br>
 achievements: xx<br>
 completed games: xx<br>
 perfect games: xx<br>
+Steam level: xxx<br>
+Barajas necesarias para subir al próximo nivel: XX / 10 niveles: xx<br>
 
 CTA_ launch random game<br>
 
 <br>
-
-<div ng-repeat="game in games" style="display: inline-block;">
+Player info<br>
+<img src="{{user.info.avatarmedium}}" /><br>
+{{user.info}}
+<br>
+<br>
+<div ng-repeat="game in games | limitTo:10" style="display: inline-block;">
 <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_184x69.jpg?t=1455141178">
 </div>
+
+<br>
+<hr>
+Game stats for game: <b>Kingdom Rush</b><br>
+{{gameStats}}
+<br>
+achievements: {{gameStats.length}}<br>
+completed: xx

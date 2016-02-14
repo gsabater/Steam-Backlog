@@ -16,10 +16,20 @@ angular.module('SB.controllers')
 // dashboard
 // + Function to check the active state and apply
 //=================================================
-  .controller('dashboard', function($scope, $location, SteamAPI, Games){
+  .controller('dashboard', function($rootScope, $scope, $location, SteamAPI, Games){
 
     console.log("dashboard");
     NProgress.start();
+
+    SteamAPI.getPlayer().then(function(xhr){
+      console.log("succ",xhr);
+      $rootScope.user.info = xhr.data.response.players[0];
+    });
+
+    SteamAPI.getGameStats().then(function(xhr){
+      console.log("succ",xhr);
+      $scope.gameStats = xhr.data.playerstats.achievements;
+    });
 
     SteamAPI.getGames().then(function(xhr){
       console.log("succ",xhr);
