@@ -34,7 +34,12 @@ angular.module('SB.controllers')
     SteamAPI.getDynamicStore().then(function(xhr){
       console.log("succ",xhr);
       $scope.dynamic = xhr.data;
-    });    
+    }); 
+
+    SteamAPI.getHLTB().then(function(xhr){
+      console.log("succ HLTB",xhr);
+      $scope.HLTB = xhr.data;
+    }); 
 
     SteamAPI.getGames().then(function(xhr){
       console.log("succ",xhr);

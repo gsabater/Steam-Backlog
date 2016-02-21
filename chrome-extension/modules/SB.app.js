@@ -30,6 +30,7 @@
       };
 
       $rootScope.user = {
+        steamid: false,
         finished: [],
         hoursPlayed: 0,
         hoursWeek: 0,
@@ -88,7 +89,7 @@
       $routeProvider
 
         .when('/dashboard', {
-          templateUrl: 'partials/phone-list.html',
+          templateUrl: 'partials/dashboard.html',
           controller: 'dashboard'
         })
 
@@ -101,4 +102,5 @@
           redirectTo: '/dashboard'
         });
     }])
+
 ;

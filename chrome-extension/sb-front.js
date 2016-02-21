@@ -9,9 +9,13 @@
 //
 //=================================================================
 
-console.warn("Steam Backlog active");
+var v = "0.1";
+console.log("%c Steam Backlog v " + v + " ", 'background: #222; color: #bada55');
 
-init();
+// Init localstorage
+window.setTimeout(function(){
+  chrome.storage.sync.get(null, function(items){ init(items); });
+}, 50);
 
 /*
 
@@ -29,45 +33,116 @@ if yes, get owned games, search for not saved ones, and get detailed info
 then save to localstorage
 */
 
-
-var userID = false;
+var userID  = false;
+var user    = false,
+    db      = false;
 
   //+-------------------------------------------------------
   //| init()
   //+--------------------------------
   //| + Gets the Steam User ID 
-  //| + inits localstorage *
   //| + Adds menu option
   //+-------------------------------------------------------
-    function init(){
-      
+    function init(storage){
+
+      //chrome.storage.sync.remove("value", function(){console.log("removed"); });
+      //chrome.storage.sync.remove("user", function(){console.log("removed"); });
+      //return false;
+
+      console.warn("0", storage);
+
+      // Stop execution if client is not logged in
+      if(!$("a.user_avatar.playerAvatar").length){ return; }
+
       // Add backlog menu option
       $('<a class="menuitem" href="'+chrome.extension.getURL("/backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
-      
-      // Get user id and check 
-      getPlayerID();
+     
+      // Set global user and db vars
+      user = (storage.user)? storage.user : {};
+      //db   = (storage)? storage : [];
 
-      // Init localstorage
-      window.setTimeout(function(){ 
-        chrome.storage.sync.get("SB-settings", function(result){ SBStorage(result); });
-        chrome.storage.sync.get("SB-games", function(result){ SBStorage(result); });
-      }, 100);
+      // Get user id and check 
+      getPlayerInfo();
+
+    }
+
+
+  //+-------------------------------------------------------
+  //| getPlayerInfo()
+  //| + Checks if stored info is from known user
+  //| + else, gets extended user info and stores
+  //+-------------------------------------------------------
+    function getPlayerInfo(){
+
+      console.log("Player Info", user);
+
+      // First, check user SteamID
+      if(!user.steamid){
+
+        var player    = $("#global_header a.user_avatar.playerAvatar");
+        var playerURL = player.attr("href").split("steamcommunity.com/")[1];
+
+        if(playerURL.substring(0,9) == "profiles/"){
+          user.steamid = playerURL.substring(9, playerURL.length).replace("/", "");
+          getPlayerInfo();
+          //$('<div>User ID: '+ playerURL.substring(9, playerURL.length).replace("/", "") + '</div>').appendTo(".profile_header_centered_persona");
+        }
+
+        if(playerURL.substring(0,3) == "id/"){
+          $.getJSON("http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&vanityurl=" + playerURL.substring(3, playerURL.length).replace("/", ""), function(data){
+            //$('<div>User ID: '+ data.response.steamid + '</div>').appendTo(".profile_header_centered_persona");
+            user.steamid = data.response.steamid;
+            getPlayerInfo();
+          });
+        }
+
+        return;
+      }
+
+      // Get user info from steam API
+      if(!user.info){
+        $.getJSON("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamids="+user.steamid, function(data){
+          
+          user.info = data.response.players[0];
+          console.log(data.response, user);
+
+          chrome.storage.sync.set({'user': user}, function(){ console.warn("User saved", user); });
+        });
+
+        return;
+      }
+
+      console.log("finished", user, db);
 
     }
 
   //+-------------------------------------------------------
-  //| SBStorage()
+  //| Storage()
   //| + Inits user settings
   //+-------------------------------------------------------
-    function SBStorage(localstorage){
+    function Storage(items){
 
-if(false){
-  chrome.storage.sync.set({'value': theValue}, function() {
-          // Notify that we saved.
-          message('Settings saved');
-        });
-}
-      console.warn(localstorage);
+      chrome.storage.sync.set({'value': 'theValue'}, function() {
+        // Notify that we saved.
+        console.error('Settings saved');
+      });
+      
+
+      //chrome.storage.sync.remove("value", function(){console.log("removed"); });
+
+      chrome.storage.sync.set({'something': 'awf'}, function() {
+        // Notify that we saved.
+        console.error('Settings saved');
+      });
+
+
+      //var allKeys = Object.keys(items);
+      //console.log(allKeys);
+
+      console.warn(items);
+
+      
+
       return false;
 
       if(localstorage['MVN-user']){
@@ -102,23 +177,4 @@ if(false){
       if(user.audio){ _audio.src = "assets/" + user.audio; }
 
       console.log("Setting", obj);
-    }
-
-
-    function getPlayerID(){
-      var player    = $("#global_header a.user_avatar.playerAvatar");
-      var playerURL = player.attr("href").split("steamcommunity.com/")[1];
-      //var playerURL = "http://steamcommunity.com/profiles/76561198063583863".split("steamcommunity.com/")[1];
-
-      if(playerURL.substring(0,9) == "profiles/"){ 
-        //return playerURL.substring(9, playerURL.length).replace("/", "");
-        $('<div>User ID: '+ playerURL.substring(9, playerURL.length).replace("/", "") + '</div>').appendTo(".profile_header_centered_persona");
-      }
-
-      if(playerURL.substring(0,3) == "id/"){
-        $.getJSON("http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&vanityurl=" + playerURL.substring(3, playerURL.length).replace("/", ""), function(data){
-          $('<div>User ID: '+ data.response.steamid + '</div>').appendTo(".profile_header_centered_persona");
-        });
-      }
-
     }

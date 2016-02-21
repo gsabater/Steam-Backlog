@@ -30,6 +30,7 @@ angular.module('SB.services', [])
       getDynamicStore : function(){
         return $http.get('http://store.steampowered.com/dynamicstore/userdata/');
       }
+      //http://steamspy.com/api.php
     };
   }])
 
