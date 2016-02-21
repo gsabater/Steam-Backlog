@@ -31,10 +31,15 @@
 
       $rootScope.user = {
         steamid: false,
+        info: false,
+
         finished: [],
+        
         hoursPlayed: 0,
         hoursWeek: 0,
-        info: false
+        
+        ownedGames: 0,
+        profileGames: 0
       };
 
       $rootScope.db = {

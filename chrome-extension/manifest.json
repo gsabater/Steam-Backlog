@@ -15,11 +15,9 @@
       ],
 
       "js": [
-        "lib/jquery-2.1.4.min.js",        
-        
-        "sb-front.js",
-        "modules/sb.module.games.js"
-
+        "lib/jquery-2.1.4.min.js",
+        "lib/nprogress.js",
+        "sb-front.js"
       ],
 
       "css": ["sb.front.css"]

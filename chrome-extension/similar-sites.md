@@ -5,3 +5,5 @@
 * https://i.imgur.com/YeIj4fw.jpg
 * http://csgo-stats.com/bnnnn/
 * https://steamdb.info/calculator/76561198061541150/?cc=it
+* http://gamedeed.com/
+* http://darkadia.com/member/Malygris/library#!/shelf
