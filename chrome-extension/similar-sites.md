@@ -7,3 +7,9 @@
 * https://steamdb.info/calculator/76561198061541150/?cc=it
 * http://gamedeed.com/
 * http://darkadia.com/member/Malygris/library#!/shelf
+* http://steamcharts.com/ (scrapable)
+
+#### promo
+
+* https://steamcommunity.com/groups/completingthebacklog
+* http://steamcommunity.com/groups/backlog-extension

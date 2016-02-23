@@ -10,7 +10,7 @@
 //=================================================================
 
 var v = "0.1";
-console.log("%c Steam Backlog v " + v + " ", 'background: #222; color: #bada55');
+console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
 // Init localstorage
 window.setTimeout(function(){
@@ -54,11 +54,11 @@ var user   = false,
       //chrome.storage.local.remove("db",    function(){console.error("removed"); });
       //return false;
 
-      console.warn("0", storage);
-      NProgress.configure({ parent: '#sb-detected-games-bar' });
+      console.warn(storage);
+      NProgress.configure({ parent: '#sb-detected-games-bar', trickleRate: 0.02 });
 
       // Stop execution if client is not logged in
-      if(!$("a.user_avatar.playerAvatar").length){ return; }
+      if(!$("a.user_avatar.playerAvatar").length){ console.error("Backlog: User not logged in"); return; }
 
       // Add backlog menu option
       $('<a class="menuitem" href="'+chrome.extension.getURL("/backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
@@ -193,6 +193,10 @@ var user   = false,
       $("#sb-scan-games").hide();
       NProgress.start();
 
+      $('#sb-detected-games-bar').html(
+       // '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
+       'Adding games, please wait. This won\'t take long.<br><div class="sb-add-games-feedback">&nbsp;</div>');
+
       // Get all games and iterate them
       $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){    
         mergeGames(data.response);
@@ -209,7 +213,8 @@ var user   = false,
       var d = new Date();
       var n = d.getTime();
 
-      var topTen = [];
+      var topTen   = [];
+      var SteamIDs = [];
 
       // First, insert any not already processed game into db
       for(var i = 0, len = xhr.games.length; i < len; i++){
@@ -267,28 +272,105 @@ var user   = false,
       };
 
       // Once the new games are set, get the top ten new games
-      console.log(topTen);
       topTen.sort(function(a, b) {return b[1] - a[1]});
-      var i = 0; while(i <= 10){
-        console.log(topTen[i]);
-        i++;
+      for(var i = 0; i < topTen.length; i++){
+        SteamIDs.push(topTen[i][0]); }
+
+      // Get info for the included array of games
+      getGameInfo(SteamIDs);
+
+      // Set properties
+      user.ownedGames = xhr.games.length;
+      user.profileGames = parseInt($("a[href='http://steamcommunity.com/id/Gohrum/games/?tab=all'] span.profile_count_link_total").text());
+
+      chrome.storage.local.set({'user': user}, function(){  /* console.warn("User saved", user); */ });
+    }
+
+
+  //+-------------------------------------------------------
+  //| getGameInfo()
+  //| + Get fucking everything from a list of games
+  //+-------------------------------------------------------
+    function getGameInfo(SteamIDs, delay){
+      
+      // This function works with an array of IDs.
+      // If a single ID is provided, convert this
+      if(typeof SteamIDs == "string"){ SteamIDs = [SteamIDs]; }
+      if(SteamIDs.length == 0){ 
+        
+        $('#sb-detected-games-bar').html(
+            '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
+          + 'All untracked games have been added to the extension memory<br>Feel free to pick your next game!</div>');
+
+        NProgress.done();
+        return; 
       }
 
-      // Set properties and save
-      user.ownedGames = xhr.games.length;
-      user.profileGames = parseInt($("a[href='http://steamcommunity.com/id/Gohrum/games/?tab=all'] span.profile_count_link_total").text()) -2;
+      var d = new Date();
+      var n = d.getTime();
 
-      //chrome.storage.local.set({'user': user}, function(){ console.warn("User saved", user); });
-      //chrome.storage.local.set({'db': db}, function(){ console.warn("db saved", db); });
+      console.log(SteamIDs);
+      console.log("search for " + SteamIDs[0]);
+      $('.sb-add-games-feedback').html("Getting information for <strong style='color: #bada55;'>" + db[SteamIDs[0]].name + "</strong>");
 
-      $('#sb-detected-games-bar').html(
-          '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
-        + 'Awesome, your new games have been added to the backlog.<br>'
-        + 'something');
+      $.get( "http://store.steampowered.com/app/" + SteamIDs[0] )
+      .done(function(xhr){
+        
 
-      //NProgress.done();
+        db[SteamIDs[0]].released   = $('.release_date .date', xhr).text();
+        db[SteamIDs[0]].steamscore = $(".game_review_summary", xhr).text();
+
+        // If Metascore
+        if($("#game_area_metascore", xhr).length){ 
+          db[SteamIDs[0]].metascore  = $("#game_area_metascore span:first-child", xhr).text(); }
+
+        // Game tags
+        var tags = [];
+        $(".popular_tags a", xhr).each(function(){ tags.push($(this).text().trim()); });
+        db[SteamIDs[0]].tags = tags.slice(0, 10);
+
+        // Features
+        $("#category_block .game_area_details_specs a", xhr).each(function(i,e){
+          if($(e).attr("href").indexOf("category2=28") > -1){ db[SteamIDs[0]].controller = true; }
+          if($(e).attr("href").indexOf("category2=18") > -1){ db[SteamIDs[0]].controller = true; }
+
+          if($(e).attr("href").indexOf("category2=2")  > -1){ db[SteamIDs[0]].singlePlayer = true; }
+
+          if($(e).attr("href").indexOf("category2=1")  > -1){ db[SteamIDs[0]].multiPlayer = true; }
+          if($(e).attr("href").indexOf("category2=27") > -1){ db[SteamIDs[0]].multiPlayer = true; }
+          if($(e).attr("href").indexOf("category2=20") > -1){ db[SteamIDs[0]].mmo = true; }
+
+          if($(e).attr("href").indexOf("category2=9")  > -1){ db[SteamIDs[0]].coop = true; }
+          if($(e).attr("href").indexOf("category2=24") > -1){ db[SteamIDs[0]].coop = true; db[SteamIDs[0]].localCoop = true; }
+        });
+
+
+        // Get achievements stats.
+        $.getJSON("http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=" + SteamIDs[0] + "&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=" + user.steamid, 
+          function(data){ 
+        })
+        .always(function(data){
+          
+          // Achievements info if it has
+          if(data.hasOwnProperty("playerstats")){
+
+            var achieved = 0; for(i in data.playerstats.achievements){
+              if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
+
+            db[SteamIDs[0]].achievements = data.playerstats.achievements.length;
+            db[SteamIDs[0]].achieved     = achieved;
+          }
+
+          // Save block
+          db[SteamIDs[0]].updated = n;
+          chrome.storage.local.set({'user': user}, function(){  /* console.warn("User saved", user); */ });
+          chrome.storage.local.set({'db': db}, function(){      /* console.warn("db saved", db); */ });
+
+          // Iterate again
+          SteamIDs.splice(0,1);
+          getGameInfo(SteamIDs);          
+
+        });
+      });
+      
     }
-/*
-
-  chrome.storage.local.set({'user': user}, function(){ console.warn("User saved", user); });
-*/
