@@ -14,7 +14,7 @@ console.log("%c Steam Backlog v " + v + " ", 'background: #222; color: #bada55')
 
 // Init localstorage
 window.setTimeout(function(){
-  chrome.storage.sync.get(null, function(items){ init(items); });
+  chrome.storage.local.get(null, function(items){ init(items); });
 }, 50);
 
 /*
@@ -49,8 +49,9 @@ var user   = false,
   //+-------------------------------------------------------
     function init(storage){
 
-      //chrome.storage.sync.remove("value", function(){console.log("removed"); });
-      //chrome.storage.sync.remove("user", function(){console.log("removed"); });
+      
+      //chrome.storage.local.remove("user",  function(){console.error("removed"); });
+      //chrome.storage.local.remove("db",    function(){console.error("removed"); });
       //return false;
 
       console.warn("0", storage);
@@ -64,7 +65,7 @@ var user   = false,
      
       // Set global user and db vars
       user = (storage.user)? storage.user : {};
-      //db   = (storage)? storage : [];
+      db   = (storage.db)? storage.db : {};
 
       // Get user id and check 
       GetPlayerSummaries();
@@ -113,7 +114,7 @@ var user   = false,
             user.info = data.response.players[0];
             console.log(data.response, user);
 
-            chrome.storage.sync.set({'user': user}, function(){ 
+            chrome.storage.local.set({'user': user}, function(){ 
               console.warn("User saved", user); 
               GetPlayerSummaries(); 
             });
@@ -164,9 +165,8 @@ var user   = false,
         + '<div class="profile_customization_block"><div class="customtext_showcase">'
         + '<div id="sb-detected-games-bar" class="showcase_content_bg showcase_notes" style="line-height: 17px;">'
         + '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Sure</span></div>'        
-        + 'Looks like you have <span style="color: #bada55;">' + newGames + '</span> new untracked games.<br>'
-        + 'Do you want Steam Backlog to track them for you?' //<span style="background: #222; color: #bada55;padding: 0 5px;">Steam Backlog</span>
-        + '<div id="sb-feedback"></div>'
+        + 'Looks like you have <span style="color: #bada55;">' + newGames + '</span> new games.<br>'
+        + 'Do you want Steam Backlog to track them now?' //<span style="background: #222; color: #bada55;padding: 0 5px;">Steam Backlog</span>
         + '</div></div></div></div>';
 
         $(".profile_customization_area").prepend(scanPanel);
@@ -193,18 +193,102 @@ var user   = false,
       $("#sb-scan-games").hide();
       NProgress.start();
 
-      $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&format=json", function(data){    
-          console.warn(data);
-
-          for(var i = 0, len = data.response.games.length; i < len; i++){ 
-            e = data.response.games[i];
-            $("#sb-feedback").html($("#sb-feedback").html() + e.appid +"<br>");
-          };
-
-        });
+      // Get all games and iterate them
+      $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){    
+        mergeGames(data.response);
+      });
 
     }
+
+  //+-------------------------------------------------------
+  //| mergeGames()
+  //| + Given a collection of games, iterates them and syncs
+  //+-------------------------------------------------------
+    function mergeGames(xhr){
+
+      var d = new Date();
+      var n = d.getTime();
+
+      var topTen = [];
+
+      // First, insert any not already processed game into db
+      for(var i = 0, len = xhr.games.length; i < len; i++){
+        e = xhr.games[i];
+        
+        //if(!db[e.appid]){
+        if(!db.hasOwnProperty(e.appid)){
+
+          topTen.push([e.appid, e.playtime_forever]);
+          db[e.appid] = {
+
+            name: e.name,
+            cached: n,
+            updated: null,
+            released: null,
+
+            playtime_forever: e.playtime_forever,
+            achievements: null,
+            achieved: null,
+
+            metascore: null,
+            userscore: null,
+            steamscore: null,
+            tags: null,
+            controller: null,
+
+            hltb: {
+              main: null,
+              extras: null,
+              completionist: null
+            },
+
+            categories: {
+              singlePlayer: null,
+              multiPlayer: null,
+              mmo: null,
+              coop: null,
+              localCoop: null
+            },
+
+            status: {
+              playing: false,
+              loved: false,
+              completed: false,
+              mastered: false,
+              dominated: false,
+              shelved: false
+            },
+
+            notes: ""
+
+          };          
+
+        }
+      };
+
+      // Once the new games are set, get the top ten new games
+      console.log(topTen);
+      topTen.sort(function(a, b) {return b[1] - a[1]});
+      var i = 0; while(i <= 10){
+        console.log(topTen[i]);
+        i++;
+      }
+
+      // Set properties and save
+      user.ownedGames = xhr.games.length;
+      user.profileGames = parseInt($("a[href='http://steamcommunity.com/id/Gohrum/games/?tab=all'] span.profile_count_link_total").text()) -2;
+
+      //chrome.storage.local.set({'user': user}, function(){ console.warn("User saved", user); });
+      //chrome.storage.local.set({'db': db}, function(){ console.warn("db saved", db); });
+
+      $('#sb-detected-games-bar').html(
+          '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
+        + 'Awesome, your new games have been added to the backlog.<br>'
+        + 'something');
+
+      //NProgress.done();
+    }
 /*
-  user.profileGames = profileGames;
-  chrome.storage.sync.set({'user': user}, function(){ console.warn("User saved", user); });
+
+  chrome.storage.local.set({'user': user}, function(){ console.warn("User saved", user); });
 */
