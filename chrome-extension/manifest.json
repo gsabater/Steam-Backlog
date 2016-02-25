@@ -17,7 +17,9 @@
       "js": [
         "lib/jquery-2.1.4.min.js",
         "lib/nprogress.js",
-        "sb-front.js"
+        "sb-front.js",
+        "modules/SB.module.ajax.js",
+        "modules/SB.module.user.js"
       ],
 
       "css": ["sb.front.css"]
