@@ -9,7 +9,7 @@
 //
 //=================================================================
 
-var v = "0.1";
+var v = "0.3";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
 // Init localstorage
@@ -18,24 +18,17 @@ window.setTimeout(function(){
 }, 50);
 
 /*
-
-check user localstorage if set
 else get user data and set it on localstorage - warning if private -
 check if user profile is owner
 ---
 get played games in last two weeks
 if one game has > 5h and is not in currently playing games -> show message
 message options: yes, add it to currently playing games / nope, just idling for cards.
----
-get games number (frontend)
-if number is higher, prompt a message for update the extension database.
-if yes, get owned games, search for not saved ones, and get detailed info
-then save to localstorage
 */
 
-var userID = false;
 var user   = false,
     db     = false,
+    dbTop  = false,
 
   settings = {
     option: false
@@ -44,17 +37,16 @@ var user   = false,
   //+-------------------------------------------------------
   //| init()
   //+--------------------------------
-  //| + Gets the Steam User ID 
+  //| + Sets global db and user vars
   //| + Adds menu option
   //+-------------------------------------------------------
     function init(storage){
 
-      
       //chrome.storage.local.remove("user",  function(){console.error("removed"); });
       //chrome.storage.local.remove("db",    function(){console.error("removed"); });
       //return false;
+      //console.warn(storage);
 
-      console.warn(storage);
       NProgress.configure({ parent: '#sb-detected-games-bar', trickleRate: 0.02 });
 
       // Stop execution if client is not logged in
@@ -67,7 +59,7 @@ var user   = false,
       user = (storage.user)? storage.user : {};
       db   = (storage.db)? storage.db : {};
 
-      // Get user id and check 
+      // Update user information 
       GetPlayerSummaries();
 
     }
@@ -80,9 +72,9 @@ var user   = false,
   //+-------------------------------------------------------
     function GetPlayerSummaries(){
 
-      console.log("Player Summaries", user);
+      console.warn("Player Summaries", user);
 
-      //| First, check user SteamID
+      //| Get SteamID
       //+-------------------------------------------------------      
         if(!user.steamid){
 
@@ -110,53 +102,44 @@ var user   = false,
       //+-------------------------------------------------------           
         if(!user.info){
           $.getJSON("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamids="+user.steamid, function(data){
-            
             user.info = data.response.players[0];
-            console.log(data.response, user);
-
             chrome.storage.local.set({'user': user}, function(){ 
-              console.warn("User saved", user); 
               GetPlayerSummaries(); 
             });
-
           });
 
           return;
         }
 
-      console.log("finished", user, db);
+      //| Check that url is own profile to avoid extra charge
+      //| and update library
+      //+-------------------------------------------------------
+        var playerURL = user.info.profileurl.split("steamcommunity.com")[1].replace(/^\/|\/$/g, '').toLowerCase();
+        var windowURL = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
 
-      //| Once we know who you are, lets get your games.
-      //+-------------------------------------------------------   
-        detectOwnedGames();
+        if( windowURL !== playerURL){
+          console.warn(windowURL, playerURL);
+          return; }
 
+          detectOwnedGames();
+          updateDB();
     }
+
 
   //+-------------------------------------------------------
   //| detectOwnedGames()
   //| + Gets owned games from all games and profile number.
   //+-------------------------------------------------------
     function detectOwnedGames(){
-      
-      // first check that url is own profile
-      // to avoid extra charge and calling on every page
-      var playerURL = user.info.profileurl.split("steamcommunity.com")[1].replace(/^\/|\/$/g, '').toLowerCase();
-      var windowURL = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
-
-      console.warn(windowURL, playerURL);
-      if( windowURL !== playerURL){
-        return; }
-
+    
       // Get number of owned games
       // If profile is higher, set a message.
       var profileGames = parseInt($("a[href='http://steamcommunity.com/id/Gohrum/games/?tab=all'] span.profile_count_link_total").text());
       user.profileGames = (user.profileGames)? user.profileGames : 0;
       
       if(user.profileGames < profileGames){
-        console.warn("yeah", user.profileGames, profileGames);
         var newGames = profileGames - parseInt(user.profileGames);
-        console.log(newGames, profileGames, parseInt(user.profileGames) , user.profileGames);
-          
+
         var scanPanel = ''
         + '<div id="sb-detected-games" class="profile_customization">'
         + '<a class="profile_customization_editlink" href="http://steamcommunity.com/id/Gohrum/edit#showcases">'
@@ -174,13 +157,50 @@ var user   = false,
       }
     }
 
+
   //+-------------------------------------------------------
-  //| getOwnedGames()
-  //| + Gets owned games from all games and profile number.
+  //| updateDB()
+  //| + updates database for each game every once in a while
   //+-------------------------------------------------------
-    $("body").on("click", "#sb-scan-games", function(){
-      getOwnedGames();
-    });
+    function updateDB(){
+
+      // stop execution if we don't have any games
+      if(db.length == 0){
+        return; }
+
+      // First load, order the games by played
+      if(!dbTop){
+        dbTop = [];
+
+        for(i in db){
+          dbTop.push([i,db[i].playtime_forever]); }
+
+        dbTop.sort(function(a, b) {return b[1] - a[1]});
+      }
+
+      var gameID = false;
+      var d = new Date();
+      var n = d.getTime();
+
+      // Check every game and remove recently updated
+      for(var i = 0; i < dbTop.length; i++){
+
+        if((n - db[dbTop[i][0]].updated) < 2592000000 ){
+          //console.log("remove " + dbTop[i][0], db[dbTop[i][0]].name);
+          dbTop.splice(i,1);
+        }else{
+          gameID = dbTop[i][0];
+          break;
+        }
+
+      }
+
+      // Get info for the winner
+      getGameInfo(gameID);
+
+      window.setTimeout(function(){ updateDB(); }, 30000);
+
+    }
 
 
   //+-------------------------------------------------------
@@ -193,7 +213,7 @@ var user   = false,
       $("#sb-scan-games").hide();
       NProgress.start();
 
-      $('#sb-detected-games-bar').html(
+      $('#sb-detected-games-bar').addClass("detecting-games").html(
        // '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
        'Adding games, please wait. This won\'t take long.<br><div class="sb-add-games-feedback">&nbsp;</div>');
 
@@ -277,6 +297,7 @@ var user   = false,
         SteamIDs.push(topTen[i][0]); }
 
       // Get info for the included array of games
+      SteamIDs = SteamIDs.slice(0, 10);
       getGameInfo(SteamIDs);
 
       // Set properties
@@ -291,26 +312,29 @@ var user   = false,
   //| getGameInfo()
   //| + Get fucking everything from a list of games
   //+-------------------------------------------------------
-    function getGameInfo(SteamIDs, delay){
+    function getGameInfo(SteamIDs){
       
       // This function works with an array of IDs.
       // If a single ID is provided, convert this
       if(typeof SteamIDs == "string"){ SteamIDs = [SteamIDs]; }
-      if(SteamIDs.length == 0){ 
+      if(!SteamIDs || SteamIDs.length == 0){
         
-        $('#sb-detected-games-bar').html(
-            '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
-          + 'All untracked games have been added to the extension memory<br>Feel free to pick your next game!</div>');
+        if($("#sb-detected-games-bar").hasClass("detecting-games")){
+          $('#sb-detected-games-bar').html(
+              '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
+            + 'All untracked games have been added to the extension memory<br>Feel free to pick your next game!</div>');
 
-        NProgress.done();
-        return; 
+          NProgress.done();
+        }
+
+        return;
       }
 
       var d = new Date();
       var n = d.getTime();
 
       console.log(SteamIDs);
-      console.log("search for " + SteamIDs[0]);
+      console.log("%c search for " + SteamIDs[0] + " - " + db[SteamIDs[0]].name, 'background: #222; color: #bada55');
       $('.sb-add-games-feedback').html("Getting information for <strong style='color: #bada55;'>" + db[SteamIDs[0]].name + "</strong>");
 
       $.get( "http://store.steampowered.com/app/" + SteamIDs[0] )
@@ -353,12 +377,13 @@ var user   = false,
           
           // Achievements info if it has
           if(data.hasOwnProperty("playerstats")){
+            if(data.playerstats.hasOwnProperty("achievements")){
+              var achieved = 0; for(i in data.playerstats.achievements){
+                if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
 
-            var achieved = 0; for(i in data.playerstats.achievements){
-              if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
-
-            db[SteamIDs[0]].achievements = data.playerstats.achievements.length;
-            db[SteamIDs[0]].achieved     = achieved;
+              db[SteamIDs[0]].achievements = data.playerstats.achievements.length;
+              db[SteamIDs[0]].achieved     = achieved;
+            }
           }
 
           // Save block
@@ -374,3 +399,22 @@ var user   = false,
       });
       
     }
+
+  //+-------------------------------------------------------
+  //| jQuery Actions
+  //+-------------------------------------------------------
+
+  //+-------------------------------------------------------
+  //| #sb-scan-games
+  //| Start getOwnedGames
+  //+-------------------------------------------------------
+    $("body").on("click", "#sb-scan-games", function(){
+      getOwnedGames(); });
+
+    $("body").on("click", ".sb-close-panel", function(){
+      $(this).closest(".profile_customization").remove(); });
+
+    $("body").on("click", "[src='http://steamcommunity-a.akamaihd.net/economy/emoticon/csgox']", function(){
+      chrome.storage.local.remove("user",  function(){console.error("removed"); });
+      chrome.storage.local.remove("db",    function(){console.error("removed"); }); 
+    });
