@@ -15,7 +15,7 @@ console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 var user   = false,
     db     = false,
     dbTop  = false,
-    scan   = false,
+    queue  = [],
 
   settings = {
     option: false

@@ -33,7 +33,6 @@
 
     }
 
-
     var gameID = false;
     var d = new Date();
     var n = d.getTime();
@@ -52,92 +51,107 @@
 
     // Finally, get info for the selected game
     getGameInfo(gameID);
-
   }
 
 
 //+-------------------------------------------------------
 //| getGameInfo()
-//| + Given an array of games or a game ID
+//| + Using queue var containing game IDs
 //| + scrapes information from the steam public page
 //| + and saves into game db
 //+-------------------------------------------------------
-  function getGameInfo(SteamIDs){
+  function getGameInfo(concatID){
     
-    if(typeof SteamIDs == "string"){ SteamIDs = [SteamIDs]; }
-    
-    // stop execution if already scanning
-    if(scan){ 
-      console.log("Steam Backlog: Another scan is in progress", SteamIDs);
-      window.setTimeout(function(){ getGameInfo(SteamIDs); }, 2000); 
-      return; }
-
-    //stop execution if there is no more ids
-    if(!SteamIDs || SteamIDs.length == 0){
-      console.log("Steam Backlog: No SteamIDs remaining", SteamIDs);
-      if($("#sb-detected-games-content").hasClass("detecting-games")){
-        
-        scan = false;
-        NProgress.done();
-
-        $('#sb-detected-games-content').html(
-            '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
-          + 'All untracked games have been added to the extension memory<br>Feel free to pick your next game!</div>'); }
-      
-      return; }
-    
-
-  //| Initialize scanning process
-  //| Sets flag and initial time vars
-  //+-------------------------------------------------------
-    scan = true;
+    var gameID = queue[0];
     var d = new Date();
     var n = d.getTime();
 
-    console.log("%c Steam Backlog: Scraping " + SteamIDs[0] + " - " + db[SteamIDs[0]].name + " ", 'background: #222; color: #bada55');
-    console.log(SteamIDs);
+    // Add games to queue if requested
+    if(concatID){
+      if(typeof concatID == "string"){ concatID = [concatID]; }
+      queue = queue.concat(concatID);
+      if(queue.length == concatID.length){ getGameInfo(); }
+      return;
+    }
 
-    $('.sb-add-games-feedback').html("Getting information for <strong style='color: #bada55;'>" + db[SteamIDs[0]].name + "</strong>");
+  //| Initial possible exceptions
+  //| if queue is empty or recently updated
+  //+-------------------------------------------------------
+
+    //stop execution if there is no more ids
+    if(queue.length == 0){
+      console.log("Steam Backlog: No queue remaining");
+
+      if($("#sb-detected-games-content").hasClass("detecting-games")){
+          $('#sb-detected-games-content').html(
+              '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
+            + 'All untracked games have been added to the extension memory, and some <br>of your most played games have been scanned.<br>'
+            + 'Why don\'t you take a look at your <a href="'+chrome.extension.getURL("/backlog.html")+'" style="color: #bada55;">Backlog</a> ?</div>'); }
+      
+      NProgress.done();
+      return; 
+    }
+    
+    //stop execution if the game have been recently updated
+    if( db[gameID].hasOwnProperty("updated")){
+      if( (n - db[gameID].updated) < 2592000000 ){
+
+      removeFromQueue(gameID);
+      getGameInfo();
+      return; } }
+
+
+  //| Initialize scanning process
+  //| 
+  //+-------------------------------------------------------
+    console.log("%c Steam Backlog: Scraping " + gameID + " - " + db[gameID].name + " ", 'background: #222; color: #bada55');
+    console.warn(queue, gameID, db[gameID]);
+
+    $('.sb-add-games-feedback').html("Getting extended information for <strong style='color: #bada55;'>" + db[gameID].name + "</strong>");
 
 
   //| Initialize scanning process
   //| Sets flag and initial time vars
   //+-------------------------------------------------------
-    $.get( "http://store.steampowered.com/app/" + SteamIDs[0] )
+    $.get( "http://store.steampowered.com/app/" + gameID )
     .done(function(xhr){
       
-      db[SteamIDs[0]].released   = $('.release_date .date', xhr).text();
-      db[SteamIDs[0]].steamscore = $(".game_review_summary", xhr).text();
+      // Clean data to avoid loading extra images
+      xhr = xhr.replace(/<img[^>]*>/g,"");
+
+      db[gameID].updated    = n;
+      db[gameID].released   = $('.release_date .date', xhr).text();
+      db[gameID].steamscore = $(".game_review_summary", xhr).text();
 
       // If Metascore
       if($("#game_area_metascore", xhr).length){ 
-        db[SteamIDs[0]].metascore  = $("#game_area_metascore span:first-child", xhr).text(); }
+        db[gameID].metascore  = $("#game_area_metascore span:first-child", xhr).text(); }
 
       // Game tags
       var tags = [];
       $(".popular_tags a", xhr).each(function(){ tags.push($(this).text().trim()); });
-      db[SteamIDs[0]].tags = tags.slice(0, 10);
+      db[gameID].tags = tags.slice(0, 10);
 
       // Features
       $("#category_block .game_area_details_specs a", xhr).each(function(i,e){
-        if($(e).attr("href").indexOf("category2=28") > -1){ db[SteamIDs[0]].controller = true; }
-        if($(e).attr("href").indexOf("category2=18") > -1){ db[SteamIDs[0]].controller = true; }
+        if($(e).attr("href").indexOf("category2=28") > -1){ db[gameID].controller = true; }
+        if($(e).attr("href").indexOf("category2=18") > -1){ db[gameID].controller = true; }
 
-        if($(e).attr("href").indexOf("category2=2")  > -1){ db[SteamIDs[0]].singlePlayer = true; }
+        if($(e).attr("href").indexOf("category2=2")  > -1){ db[gameID].singlePlayer = true; }
 
-        if($(e).attr("href").indexOf("category2=1")  > -1){ db[SteamIDs[0]].multiPlayer = true; }
-        if($(e).attr("href").indexOf("category2=27") > -1){ db[SteamIDs[0]].multiPlayer = true; }
-        if($(e).attr("href").indexOf("category2=20") > -1){ db[SteamIDs[0]].mmo = true; }
+        if($(e).attr("href").indexOf("category2=1")  > -1){ db[gameID].multiPlayer = true; }
+        if($(e).attr("href").indexOf("category2=27") > -1){ db[gameID].multiPlayer = true; }
+        if($(e).attr("href").indexOf("category2=20") > -1){ db[gameID].mmo = true; }
 
-        if($(e).attr("href").indexOf("category2=9")  > -1){ db[SteamIDs[0]].coop = true; }
-        if($(e).attr("href").indexOf("category2=24") > -1){ db[SteamIDs[0]].coop = true; db[SteamIDs[0]].localCoop = true; }
+        if($(e).attr("href").indexOf("category2=9")  > -1){ db[gameID].coop = true; }
+        if($(e).attr("href").indexOf("category2=24") > -1){ db[gameID].coop = true; db[gameID].localCoop = true; }
       });
 
 
     //| Get achievements stats
     //| After complete, autocall function
     //+-------------------------------------------------------
-      $.getJSON("http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=" + SteamIDs[0] + "&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=" + user.steamid, 
+      $.getJSON("http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=" + gameID + "&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=" + user.steamid, 
       function(data){
         // execute always to avoid errors 400 given by steam
       })
@@ -149,22 +163,37 @@
             var achieved = 0; for(i in data.playerstats.achievements){
               if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
 
-            db[SteamIDs[0]].achievements = data.playerstats.achievements.length;
-            db[SteamIDs[0]].achieved     = achieved;
+            db[gameID].achievements = data.playerstats.achievements.length;
+            db[gameID].achieved     = achieved;
           }
         }
 
         // Save block
-        db[SteamIDs[0]].updated = n;
         chrome.storage.local.set({'db': db}, function(){      /* console.warn("db saved", db); */ });
-        console.log("Steam Backlog: Done updating ", SteamIDs[0]);
+        console.log("Steam Backlog: Done updating ", gameID);
 
         // Iterate again
-        scan = false;
-        SteamIDs.splice(0,1);
-        getGameInfo(SteamIDs);
+        removeFromQueue(gameID);
+        getGameInfo();
 
       });
     });
     
+  }
+
+
+//+-------------------------------------------------------
+//| removeFromQueue()
+//| + Removes one game id from the queue
+//| + helps removing duplicates and also is much better
+//| + than splice(0,1);
+//+-------------------------------------------------------
+  function removeFromQueue(gameID){
+  
+    for(var i = queue.length - 1; i >= 0; i--){
+      if(queue[i] === gameID){
+        queue.splice(i, 1);
+      }
+    }
+
   }

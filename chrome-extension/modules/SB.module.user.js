@@ -64,6 +64,11 @@
     var playerURL = user.info.profileurl.split("steamcommunity.com")[1].replace(/^\/|\/$/g, '').toLowerCase();
     var windowURL = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
 
+    if(windowURL.indexOf("app/") > -1){
+      gameID = windowURL.split("app/")[1];
+      if(db[gameID]){ getGameInfo(gameID); }
+    }
+
     if( windowURL !== playerURL){
       console.warn(windowURL, playerURL);
       return; }
@@ -155,47 +160,9 @@
 
         topTen.push([e.appid, e.playtime_forever]);
         db[e.appid] = {
-
           name: e.name,
           cached: n,
-          updated: null,
-          released: null,
-
           playtime_forever: e.playtime_forever,
-          achievements: null,
-          achieved: null,
-
-          metascore: null,
-          userscore: null,
-          steamscore: null,
-          tags: null,
-          controller: null,
-
-          hltb: {
-            main: null,
-            extras: null,
-            completionist: null
-          },
-
-          categories: {
-            singlePlayer: null,
-            multiPlayer: null,
-            mmo: null,
-            coop: null,
-            localCoop: null
-          },
-
-          status: {
-            playing: false,
-            loved: false,
-            completed: false,
-            mastered: false,
-            dominated: false,
-            shelved: false
-          },
-
-          notes: ""
-
         };          
 
       }
@@ -208,7 +175,9 @@
 
     // getGameInfo() for the first ten most played games
     SteamIDs = SteamIDs.slice(0, 10);
-    getGameInfo(SteamIDs);
+    queue = queue.concat(SteamIDs);
+
+    getGameInfo();
 
     // Set properties
     user.ownedGames = xhr.games.length;
