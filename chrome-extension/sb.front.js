@@ -47,7 +47,7 @@ var user   = false,
     if(!$("a.user_avatar.playerAvatar").length){ console.error("Steam Backlog: User not logged in"); return; }
 
     // Add backlog menu option
-    $('<a class="menuitem" href="'+chrome.extension.getURL("/backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
+    $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
    
     // Set global user and db vars
     user = (storage.user)? storage.user : {};

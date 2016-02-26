@@ -85,8 +85,8 @@
       if($("#sb-detected-games-content").hasClass("detecting-games")){
           $('#sb-detected-games-content').html(
               '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
-            + 'All untracked games have been added to the extension memory, and some <br>of your most played games have been scanned.<br>'
-            + 'Why don\'t you take a look at your <a href="'+chrome.extension.getURL("/backlog.html")+'" style="color: #bada55;">Backlog</a> ?</div>'); }
+            + 'All untracked games have been added to the extension memory, and some <br>of your most played games have been scanned.<br><br>'
+            + 'Why don\'t you take a look at your <a href="'+chrome.extension.getURL("/steam-backlog.html")+'" style="color: #bada55;">Backlog</a> ?</div>'); }
       
       NProgress.done();
       return; 

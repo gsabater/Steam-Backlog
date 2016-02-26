@@ -7,16 +7,16 @@
     <title>Steam Backlog</title>
     <link rel="shortcut icon" href="http://steamcommunity.com/favicon.ico" type="image/x-icon">
 
-    <link href="lib/nprogress.css" rel="stylesheet" type="text/css">
-    <link href="sb.panel.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="resources/sb.dashboard.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-route.min.js"></script>
     <script src="lib/nprogress.js"></script>
 
-    <script src="modules/SB.app.js"></script>
-    <script src="modules/SB.controllers.js"></script>
-    <script src="modules/SB.services.js"></script>
+    <script src="modules/SB.angular.app.js"></script>
+    <script src="modules/SB.angular.controllers.js"></script>
+    <script src="modules/SB.angular.services.js"></script>
 
   </head>
   <body ng-app="SB">
@@ -37,24 +37,6 @@
     </div>
 
     <div id="container">
-      
-
-    <div>
-      <label>Name:</label>
-      <input type="text" ng-model="yourName" placeholder="Enter a name here">
-      <hr>
-      <h1>Hello {{yourName}}!</h1>
-    </div>
-
-    <ul class="phones">
-        <li ng-repeat="phone in phones | filter:query | orderBy:orderProp" class="thumbnail">
-          <a href="#/phones/{{phone.id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>
-          <a href="#/phones/{{phone.id}}">{{phone.name}}</a>
-          <p>{{phone.snippet}}</p>
-        </li>
-      </ul>
-
-      {{games}}
 
     <div ng-view></div>
 

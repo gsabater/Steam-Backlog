@@ -174,7 +174,7 @@
       SteamIDs.push(topTen[i][0]); }
 
     // getGameInfo() for the first ten most played games
-    SteamIDs = SteamIDs.slice(0, 10);
+    SteamIDs = SteamIDs.slice(0, 15);
     queue = queue.concat(SteamIDs);
 
     getGameInfo();

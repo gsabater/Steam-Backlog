@@ -27,8 +27,8 @@
   ],
 
   "web_accessible_resources": [
-    "backlog.html",
-    "options.html",
+    "steam-backlog.html",
+    "sb.options.html",
     "/partials/*",
     "/assets/*"
   ],
