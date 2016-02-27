@@ -1,43 +1,40 @@
-## Dashboard<br>
-<br>
-Panels: <br>
-Tiempo jugado: {{user.hoursPlayed/60}} horas<br>
-Total games (+ DLC) = {{games.length}}<br>
-Juegos: xx<br>
-achievements: xx<br>
-completed games: xx<br>
-perfect games: xx<br>
-Steam level: xxx<br>
-Barajas necesarias para subir al próximo nivel: XX / 10 niveles: xx<br>
-
-CTA_ launch random game<br>
-
-<br>
-Player info<br>
-<img src="{{user.info.avatarmedium}}" /><br>
-{{user.info}}
-<br>
-<br>
-<div ng-repeat="game in games | limitTo:10" style="display: inline-block;">
-<img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_184x69.jpg?t=1455141178">
+<div  style="float: left">
+  <img src="{{user.info.avatarfull}}" /><br>
+  <h1>{{user.info.personaname}}</h1>
+  <h3>{{user.info.realname}}</h3>
+  <p><a href="{{user.info.profileurl}}">Perfil</a></p>
 </div>
 
-<br>
-<hr>
-Game stats for game: <b>Kingdom Rush</b><br>
-{{gameStats}}
-<br>
-achievements: {{gameStats.length}}<br>
-completed: xx
+<div style="float: right">
+  <br>
+  Panels: <br>
+  Tiempo jugado: {{games.hoursPlayed/60}} horas<br>
+  Total games (+ DLC) = {{games.length}}<br>
+  Juegos: xx<br>
+  achievements: xx<br>
+  completed games: xx<br>
+  perfect games: xx<br>
+  Steam level: xxx<br>
+  Barajas necesarias para subir al próximo nivel: XX / 10 niveles: xx<br>
+  CTA_ launch random game
+</div>
+
+<div style="clear: both;"/></div>
 
 <br>
-<hr>
-Dynamicinfo:<br>
-{{dynamic.rgOwnedApps.length}}<br>
-{{dynamic}}
+<div ng-repeat="game in games | limitTo:30" style="display: inline-block;">
+  <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_184x69.jpg?t=1455141178">
+</div>
 
-<br>
 <hr>
+<h2>Completed games</h2>
+-
 
-HLTB:<br>
-{{HLTB}}
+<hr>
+<h2>Currently playing</h2>
+-
+<hr>
+<h2>Recommended tags for you</h2>
+<span ng-repeat="tag in dynamic.rgRecommendedTags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
+  {{tag.name}}
+</span>

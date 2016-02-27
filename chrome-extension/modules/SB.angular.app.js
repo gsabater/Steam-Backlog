@@ -36,15 +36,21 @@
           console.log($rootScope);
 
         });
-
       }, 50);
+
+      
+      $rootScope.games = {
+        hoursPlayed: 0,
+        playing: {},
+        finished: {},
+        mastered: {},
+        shelved: {}
+      };
 
       /*
       $rootScope.user = {
 
         finished: [],
-        
-        hoursPlayed: 0,
         hoursWeek: 0,
         
       };

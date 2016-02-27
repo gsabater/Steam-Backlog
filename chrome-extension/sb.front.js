@@ -12,7 +12,8 @@
 var v = "0.3";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
-var user   = false,
+var games  = false,
+    user   = false,
     db     = false,
     dbTop  = false,
     queue  = [],
@@ -50,8 +51,9 @@ var user   = false,
     $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
    
     // Set global user and db vars
-    user = (storage.user)? storage.user : {};
-    db   = (storage.db)? storage.db : {};
+    games = (storage.games)? storage.games : {};
+    user  = (storage.user)? storage.user : {};
+    db    = (storage.db)? storage.db : {};
 
     // Update user information 
     GetPlayerSummaries();

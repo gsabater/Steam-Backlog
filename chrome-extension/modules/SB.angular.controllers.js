@@ -21,6 +21,8 @@ angular.module('SB.controllers')
     console.log("dashboard");
     NProgress.start();
 
+    $rootScope.games.hoursPlayed = true;
+
     SteamAPI.getPlayer().then(function(xhr){
       console.log("succ",xhr);
       $rootScope.user.info = xhr.data.response.players[0];
@@ -36,10 +38,12 @@ angular.module('SB.controllers')
       $scope.dynamic = xhr.data;
     }); 
 
+/*
     SteamAPI.getHLTB().then(function(xhr){
       console.log("succ HLTB",xhr);
       $scope.HLTB = xhr.data;
     }); 
+    */
 
     SteamAPI.getGames().then(function(xhr){
       console.log("succ",xhr);
