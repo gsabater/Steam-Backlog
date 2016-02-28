@@ -17,14 +17,15 @@
   function GetPlayerSummaries(){
 
     console.warn("Steam Backlog: Initial player information", user);
+
+    var player       = $("#global_header a.user_avatar.playerAvatar");
+    var playerURL    = player.attr("href").split("steamcommunity.com/")[1];
+    var playerAvatar = player.find("img").attr("src").split("/");
    
   //| Checks user.steamid
   //| Get id from url or ResolveVanityURL
   //+-------------------------------------------------------
     if(!user.steamid){
-
-      var player    = $("#global_header a.user_avatar.playerAvatar");
-      var playerURL = player.attr("href").split("steamcommunity.com/")[1];
 
       if(playerURL.substring(0,9) == "profiles/"){
         user.steamid = playerURL.substring(9, playerURL.length).replace("/", "");
@@ -46,7 +47,7 @@
   //| Checks user.info
   //| Get info from GetPlayerSummaries
   //+-------------------------------------------------------
-    if(!user.info){
+    if(!user.info || (playerAvatar[playerAvatar.length -1] !== user.info.avatar.split("/")[user.info.avatar.split("/").length -1])){
 
       $.getJSON("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamids="+user.steamid, function(data){
         user.info = data.response.players[0];
