@@ -165,6 +165,10 @@ angular.module('SB.services', [])
           return true;
         },
 
+        getInfo: function(id){
+          return id;
+        },
+
       //| checkFavorito
       //| Returns true or false if stop is fav
       //+---------------------------------------

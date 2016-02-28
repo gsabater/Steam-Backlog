@@ -1,5 +1,5 @@
 <div  style="float: left">
-  <img src="{{user.info.avatarfull}}" /><br>
+  <img src="{{user.info.avatarfull}}" ng-click="openPopup()" /><br>
   <h1>{{user.info.personaname}}</h1>
   <h3>{{user.info.realname}}</h3>
   <p><a href="{{user.info.profileurl}}">Perfil</a></p>
@@ -38,3 +38,17 @@
 <span ng-repeat="tag in dynamic.rgRecommendedTags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
   {{tag.name}}
 </span>
+
+<style>
+.white-popup {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  max-width: 500px;
+  margin: 20px auto;
+  color: black;
+}
+</style>
+
+<div class="white-popup mfp-hide">something {{something}}</div>

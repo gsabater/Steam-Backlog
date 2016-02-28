@@ -130,7 +130,7 @@
       // Game tags
       var tags = [];
       $(".popular_tags a", xhr).each(function(){ tags.push($(this).text().trim()); });
-      db[gameID].tags = tags.slice(0, 10);
+      db[gameID].tags = tags.slice(0, 20);
 
       // Features
       $("#category_block .game_area_details_specs a", xhr).each(function(i,e){

@@ -1,6 +1,8 @@
 body{
   padding: 0;
   margin: 0;
+  background-color: #2E3C4C;
+  color: white;
 }
 
 #header{
@@ -55,10 +57,13 @@ body{
   text-decoration: none;
 }
 
-#container{
-  /*background-image: url('http://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/203160/716f4289fa8eb7cd5772c432671c60db2e00cfac.jpg');*/
+.steam-backlog-container{
+  padding-top: 40px;
 }
 
+.container{
+  /*background-image: url('http://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/203160/716f4289fa8eb7cd5772c432671c60db2e00cfac.jpg'); */
+}
 
 
 /*****************************

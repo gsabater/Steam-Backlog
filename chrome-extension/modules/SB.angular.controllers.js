@@ -61,4 +61,16 @@ angular.module('SB.controllers')
       //console.log("wat", $location.path().indexOf(item) > -1);
       //return $location.path().indexOf(item) > -1;
     };
+
+    $scope.openPopup = function(){
+      $scope.app = Games.getInfo(122, function(){
+        console.error("seee");
+      });
+      $.magnificPopup.open({
+        items: {
+          src: '.white-popup',
+          type: 'inline'
+        }
+      });
+    }
   })

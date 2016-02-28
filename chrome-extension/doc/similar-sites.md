@@ -8,6 +8,7 @@
 * http://gamedeed.com/
 * http://darkadia.com/member/Malygris/library#!/shelf
 * http://steamcharts.com/ (scrapable)
+* http://www.lorenzostanco.com/lab/steam/
 
 #### promo
 

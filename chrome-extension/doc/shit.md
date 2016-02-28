@@ -57,3 +57,13 @@ message options: yes, add it to currently playing games / nope, just idling for 
 
         }
         */
+
+
+
+1- Un sistema de Checks: Completado/Completado 100%.
+2- Filtrar mis juegos por tag.
+3- Juegos similares al que tengas seleccionado (los que recomienda la propia store) al hacer rollover encima de un juego.
+4- Ordenar juegos por metascore y valoraciones de los usuarios en Steam.
+5- Ordenar juegos en función de las horas necesarias para completarlo.
+6- Combinar filtros y órdenes.
+7- (Algo más que olvido)
