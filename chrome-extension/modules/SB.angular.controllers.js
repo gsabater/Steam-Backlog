@@ -62,10 +62,8 @@ angular.module('SB.controllers')
       //return $location.path().indexOf(item) > -1;
     };
 
-    $scope.openPopup = function(){
-      $scope.app = Games.getInfo(122, function(){
-        console.error("seee");
-      });
+    $scope.openPopup = function(gameID){
+      $scope.app = $rootScope.db[gameID];
       $.magnificPopup.open({
         items: {
           src: '.white-popup',

@@ -1,5 +1,5 @@
 <div  style="float: left">
-  <img src="{{user.info.avatarfull}}" ng-click="openPopup()" /><br>
+  <img src="{{user.info.avatarfull}}" /><br>
   <h1>{{user.info.personaname}}</h1>
   <h3>{{user.info.realname}}</h3>
   <p><a href="{{user.info.profileurl}}">Perfil</a></p>
@@ -23,7 +23,7 @@
 
 <br>
 <div ng-repeat="game in games | limitTo:30" style="display: inline-block;">
-  <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_184x69.jpg?t=1455141178">
+  <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_184x69.jpg?t=1455141178" ng-click="openPopup(game.appid)" />
 </div>
 
 <hr>
@@ -51,4 +51,7 @@
 }
 </style>
 
-<div class="white-popup mfp-hide">something {{something}}</div>
+<div class="white-popup mfp-hide">
+<h3>{{app.name}}</h3>
+{{app}}
+</div>
