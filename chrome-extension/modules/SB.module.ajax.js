@@ -1,11 +1,11 @@
 //=================================================================
 //
-//  ██████╗  █████╗  ██████╗██╗  ██╗██╗      ██████╗  ██████╗ 
-//  ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║     ██╔═══██╗██╔════╝ 
+//  ██████╗  █████╗  ██████╗██╗  ██╗██╗      ██████╗  ██████╗
+//  ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║     ██╔═══██╗██╔════╝
 //  ██████╔╝███████║██║     █████╔╝ ██║     ██║   ██║██║  ███╗
 //  ██╔══██╗██╔══██║██║     ██╔═██╗ ██║     ██║   ██║██║   ██║
 //  ██████╔╝██║  ██║╚██████╗██║  ██╗███████╗╚██████╔╝╚██████╔╝
-//  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
+//  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝
 //
 //=================================================================
 
@@ -61,7 +61,7 @@
 //| + and saves into game db
 //+-------------------------------------------------------
   function getGameInfo(concatID){
-    
+
     var gameID = queue[0];
     var d = new Date();
     var n = d.getTime();
@@ -70,7 +70,10 @@
     if(concatID){
       if(typeof concatID == "string"){ concatID = [concatID]; }
       queue = queue.concat(concatID);
+
       if(queue.length == concatID.length){ getGameInfo(); }
+      if(queue.length >= 10){ getGameInfo(); }
+
       return;
     }
 
@@ -84,14 +87,14 @@
 
       if($("#sb-detected-games-content").hasClass("detecting-games")){
           $('#sb-detected-games-content').html(
-              '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'        
+              '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'
             + 'All untracked games have been added to the extension memory, and some <br>of your most played games have been scanned.<br><br>'
             + 'Why don\'t you take a look at your <a href="'+chrome.extension.getURL("/steam-backlog.html")+'" style="color: #bada55;">Backlog</a> ?</div>'); }
-      
+
       NProgress.done();
-      return; 
+      return;
     }
-    
+
     //stop execution if the game have been recently updated
     if( db[gameID].hasOwnProperty("updated")){
       if( (n - db[gameID].updated) < 2592000000 ){
@@ -102,7 +105,7 @@
 
 
   //| Initialize scanning process
-  //| 
+  //|
   //+-------------------------------------------------------
     console.log("%c Steam Backlog: Scraping " + gameID + " - " + db[gameID].name + " ", 'background: #222; color: #bada55');
     console.warn(queue, gameID, db[gameID]);
@@ -115,7 +118,7 @@
   //+-------------------------------------------------------
     $.get( "http://store.steampowered.com/app/" + gameID )
     .done(function(xhr){
-      
+
       // Clean data to avoid loading extra images
       xhr = xhr.replace(/<img[^>]*>/g,"");
 
@@ -124,7 +127,7 @@
       db[gameID].steamscore = $(".game_review_summary", xhr).text();
 
       // If Metascore
-      if($("#game_area_metascore", xhr).length){ 
+      if($("#game_area_metascore", xhr).length){
         db[gameID].metascore  = $("#game_area_metascore span:first-child", xhr).text(); }
 
       // Game tags
@@ -151,12 +154,15 @@
     //| Get achievements stats
     //| After complete, autocall function
     //+-------------------------------------------------------
-      $.getJSON("http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=" + gameID + "&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=" + user.steamid, 
+      $.getJSON("http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=" + gameID + "&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=" + user.steamid,
       function(data){
         // execute always to avoid errors 400 given by steam
       })
       .always(function(data){
-        
+
+        // if error code 503 || > 500
+        // ececute getGameInfo() again to retry
+
         // Achievements info if it has
         if(data.hasOwnProperty("playerstats")){
           if(data.playerstats.hasOwnProperty("achievements")){
@@ -178,7 +184,7 @@
 
       });
     });
-    
+
   }
 
 
@@ -189,7 +195,7 @@
 //| + than splice(0,1);
 //+-------------------------------------------------------
   function removeFromQueue(gameID){
-  
+
     for(var i = queue.length - 1; i >= 0; i--){
       if(queue[i] === gameID){
         queue.splice(i, 1);
