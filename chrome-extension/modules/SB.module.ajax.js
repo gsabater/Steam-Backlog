@@ -43,7 +43,7 @@
       if((n - db[dbTop[i][0]].updated) < 2592000000 ){
         dbTop.splice(i,1);  //console.log("remove " + dbTop[i][0], db[dbTop[i][0]].name);
       }else{
-        gameID = dbTop[i][0];
+        gameID = parseInt(dbTop[i][0]);
         break;
       }
 
@@ -60,7 +60,7 @@
 //| + scrapes information from the steam public page
 //| + and saves into game db
 //+-------------------------------------------------------
-  function getGameInfo(concatID){
+  function getGameInfo(concatID){ //console.warn(concatID, queue);
 
     var gameID = queue[0];
     var d = new Date();
@@ -72,7 +72,7 @@
       queue = queue.concat(concatID);
 
       if(queue.length == concatID.length){ getGameInfo(); }
-      if(queue.length >= 10){ getGameInfo(); }
+      if(queue.length >= 20){ getGameInfo(); }
 
       return;
     }

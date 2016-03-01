@@ -1,11 +1,11 @@
 //=================================================================
 //
-//  ██████╗  █████╗  ██████╗██╗  ██╗██╗      ██████╗  ██████╗ 
-//  ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║     ██╔═══██╗██╔════╝ 
+//  ██████╗  █████╗  ██████╗██╗  ██╗██╗      ██████╗  ██████╗
+//  ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║     ██╔═══██╗██╔════╝
 //  ██████╔╝███████║██║     █████╔╝ ██║     ██║   ██║██║  ███╗
 //  ██╔══██╗██╔══██║██║     ██╔═██╗ ██║     ██║   ██║██║   ██║
 //  ██████╔╝██║  ██║╚██████╗██║  ██╗███████╗╚██████╔╝╚██████╔╝
-//  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
+//  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝
 //
 //=================================================================
 
@@ -32,6 +32,7 @@ angular.module('SB.controllers')
       window.setTimeout(function(){
         $scope.tags  = Games.getAllTags();
         $scope.games = Filter.games();
+        $scope.$apply();
       }, 100);
 
     //| Search service
@@ -39,7 +40,7 @@ angular.module('SB.controllers')
       $scope.search = function(){
         $scope.games = Filter.games($scope.filters);
       };
-      
+
 /*
     SteamAPI.getPlayer().then(function(xhr){
       console.log("succ",xhr);
@@ -54,13 +55,13 @@ angular.module('SB.controllers')
     SteamAPI.getDynamicStore().then(function(xhr){
       console.log("succ",xhr);
       $scope.dynamic = xhr.data;
-    }); 
+    });
 
 /*
     SteamAPI.getHLTB().then(function(xhr){
       console.log("succ HLTB",xhr);
       $scope.HLTB = xhr.data;
-    }); 
+    });
     */
 /*
     SteamAPI.getGames().then(function(xhr){

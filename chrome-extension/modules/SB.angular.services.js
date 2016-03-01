@@ -6,7 +6,7 @@
 //  ██╔══██╗██║   ██║██║╚██╗██║██║  ██║██╔══██║   ██╔══╝  ╚════██║
 //  ██████╔╝╚██████╔╝██║ ╚████║██████╔╝██║  ██║██╗███████╗███████║
 //  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝
-//  
+//
 //=================================================================
 
 angular.module('SB.services', [])
@@ -40,7 +40,6 @@ angular.module('SB.services', [])
 
     var self   = this;
     var db     = $rootScope.db;
-    var result = [];
 
 
     //| Filter.games: Filter db
@@ -48,31 +47,36 @@ angular.module('SB.services', [])
     //| uses all filters to get information in
     //| a single iteration
     //+---------------------------------------
-      self.games = function(string){
+      self.games = function(filters){
 
         var num = 0;
+        var result = [];
+
+        searchString = (filters)? filters.string.toLowerCase() : false;
+        console.log(searchString);
 
         for(i in $rootScope.db){
 
-          if(num >= 20){ break; }
+          game = $rootScope.db[i];
+          game.appid = i;
+          gameName = game.name.toLowerCase();
 
-          //if(comparador.indexOf(searchString) !== -1){
-            game = $rootScope.db[i];
-            game.appid = i;
-            result.push(game);
-            num++;
-          //}
+          if(num >= 20){ break; }
+          if(searchString && gameName.indexOf(searchString) == -1){ continue; }
+
+          result.push(game);
+          num++;
 
         }
 
-        console.warn("FILTER RESULT",string,result);
+        console.warn("FILTER RESULT",filters, result);
         return result;
 
       };
 /*
 
       self.games = function(string, backspace){
-        
+
         //if(backspace || !db){ db = EMT.paradas; console.warn("reset"); }
         db = EMT.paradas;
         if(string.length == 0){ return []; }
@@ -96,7 +100,7 @@ angular.module('SB.services', [])
 
         console.log("timestamp", db.length, result.length);
         db = result;
-        
+
         return result;
       };
 */
@@ -150,7 +154,7 @@ angular.module('SB.services', [])
     return{
 
       //| getAllTags
-      //| Returns an array of all tags found in 
+      //| Returns an array of all tags found in
       //| the games
       //+---------------------------------------
         getAllTags: function(){
