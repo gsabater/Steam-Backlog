@@ -22,9 +22,17 @@
 <div style="clear: both;"/></div>
 
 <br>
-<div ng-repeat="game in games | limitTo:30" style="display: inline-block;">
+<div class="row">
+  <input type="text" ng-model="filters.string" ng-change="search()" />
+</div>
+
+<div ng-repeat="game in games | limitTo : 30" style="display: inline-block;">
   <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_184x69.jpg?t=1455141178" ng-click="openPopup(game.appid)" />
 </div>
+
+<span ng-repeat="tag in tags track by $index" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
+  {{tag}}
+</span>
 
 <hr>
 <h2>Completed games</h2>

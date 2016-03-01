@@ -33,20 +33,45 @@ angular.module('SB.services', [])
   }])
 
 //=================================================
-// Filtrar
+// Filter
 // - Paradas
 //=================================================
-  .factory('Filtrar', function($rootScope, EMT){
+  .factory('Filter', function($rootScope){
 
-    var self = this;
-    var db = false;
+    var self   = this;
+    var db     = $rootScope.db;
+    var result = [];
 
-    //| paradas: Filtra DB
-    //| Funcionamiento principal del buscador
+
+    //| Filter.games: Filter db
     //+ ------------------------
-    //| Comparación de cada elemento {nombre} con la searchString
+    //| uses all filters to get information in
+    //| a single iteration
     //+---------------------------------------
-      self.paradas = function(string, backspace){
+      self.games = function(string){
+
+        var num = 0;
+
+        for(i in $rootScope.db){
+
+          if(num >= 20){ break; }
+
+          //if(comparador.indexOf(searchString) !== -1){
+            game = $rootScope.db[i];
+            game.appid = i;
+            result.push(game);
+            num++;
+          //}
+
+        }
+
+        console.warn("FILTER RESULT",string,result);
+        return result;
+
+      };
+/*
+
+      self.games = function(string, backspace){
         
         //if(backspace || !db){ db = EMT.paradas; console.warn("reset"); }
         db = EMT.paradas;
@@ -74,7 +99,7 @@ angular.module('SB.services', [])
         
         return result;
       };
-
+*/
     //| normalizar: normaliza texto de entrada
     //+---------------------------------------
       self.normalizar = function(string){
@@ -124,47 +149,32 @@ angular.module('SB.services', [])
   .factory('Games', function($rootScope){
     return{
 
-      //| Analyze
-      //| Updates rootScope and localstorage 
+      //| getAllTags
+      //| Returns an array of all tags found in 
+      //| the games
       //+---------------------------------------
-        Analyze: function(games){
+        getAllTags: function(){
+          tags = [];
 
-          console.warn(games);
-          //console.warn(games);
-          console.warn(games[0]);
-
-
-          //Check each game for stats
-          angular.forEach(games, function(item){
-            $rootScope.user.hoursPlayed = $rootScope.user.hoursPlayed + item.playtime_forever;
-          });
-
-          console.log($rootScope.user);
-          return;
-
-          //Break if corrupt
-          if(!ultima.nombre){ return; }
-          var recientes = $rootScope.db.recientes;
-
-          //Remove item if already in object
-          angular.forEach(recientes, function(item){
-            if(item.id === ultima.id){
-              recientes.splice(recientes.indexOf(item),1);
+          angular.forEach($rootScope.db, function(item){
+            if(item.tags){
+              for(i in item.tags){
+                if(tags.indexOf(item.tags[i]) == -1){
+                  tags.push(item.tags[i]);
+                }else{
+                  //console.log(tags);
+                }
+              }
             }
           });
 
-          //insert last at the beggining of object
-          recientes.splice(0, 0, ultima);
-
-          //elimina la ultima si la cadena es mayor a 10
-          if(recientes.length > 10){ recientes.splice(10, 1); }
-
-          $rootScope.db.recientes = recientes;
-          localstorage.setObject('recientes', $rootScope.db.recientes);
-
-          return true;
+          console.log(tags);
+          return tags;
         },
 
+      //| checkFavorito
+      //| Returns true or false if stop is fav
+      //+---------------------------------------
         getInfo: function(id){
           return id;
         },
