@@ -26,6 +26,15 @@
     }
   ],
 
+  "page_action": {
+    "default_icon": {                    // optional
+      "19": "assets/icon19.png",           // optional
+      "38": "assets/icon38.png"            // optional
+    },
+    "default_title": "Google Mail",      // optional; shown in tooltip
+    "default_popup": "popup.html"        // optional
+  },
+
   "web_accessible_resources": [
     "steam-backlog.html",
     "sb.options.html",
