@@ -19,7 +19,7 @@ angular.module('SB.controllers')
   .controller('dashboard', function($rootScope, $scope, $location, SteamAPI, Games, Filter){
 
     console.log("dashboard");
-    NProgress.start();
+    //NProgress.start();
 
     $scope.games   = {};
     $scope.filters = {

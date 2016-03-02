@@ -1,113 +1,118 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    
-    <title>Steam Backlog</title>
-    <link rel="shortcut icon" href="http://steamcommunity.com/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  
+  <title>Steam Backlog</title>
+  <link rel="shortcut icon" href="http://steamcommunity.com/favicon.ico" type="image/x-icon">
 
-    <!-- Javascript libraries  -->
-    <script src="lib/jquery-2.1.4.min.js"></script>
-    <script src="lib/angular.min.js"></script>
-    <script src="lib/angular-route.min.js"></script>
+  <!-- Javascript libraries  -->
+  <script src="lib/jquery-2.1.4.min.js"></script>
+  <script src="lib/angular.min.js"></script>
+  <script src="lib/angular-route.min.js"></script>
 
-    <script src="lib/nprogress.js"></script>
-    <script src="lib/magnific-popup.min.js"></script>
+  <script src="lib/nprogress.js"></script>
+  <script src="lib/magnific-popup.min.js"></script>
 
-    <!-- Javascript angular modules -->
-    <script src="modules/SB.angular.app.js"></script>
-    <script src="modules/SB.angular.controllers.js"></script>
-    <script src="modules/SB.angular.services.js"></script>
+  <!-- Javascript angular modules -->
+  <script src="modules/SB.angular.app.js"></script>
+  <script src="modules/SB.angular.controllers.js"></script>
+  <script src="modules/SB.angular.services.js"></script>
 
-    <!-- Page and plugin styles -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="lib/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="resources/sb.dashboard.css" type="text/css">
+  <!-- Page and plugin styles -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="lib/magnific-popup.css" type="text/css">
+  <link rel="stylesheet" href="resources/sb.dashboard.css" type="text/css">
 
-    <!-- Custom Fonts -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <!-- Custom Fonts -->
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link href="http://fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700%2C400italic&amp;subset=latin%2Ccyrillic-ext%2Cgreek-ext%2Ccyrillic" rel="stylesheet" type="text/css" media="all">
+  <link href="http://fonts.googleapis.com/css?family=Lato%3A300%2C400%2C700%2C400italic&amp;subset=latin%2Ccyrillic-ext%2Cgreek-ext%2Ccyrillic" rel="stylesheet" type="text/css" media="all">
 
   </head>
-  <body ng-app="SB">
+  <body ng-app="SB" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{app.background}}/page_bg_generated_v6b.jpg');">
 
-    <div id="header">
-      <div class="header-content">
-        <div class="logo">
-          <span id="logo_holder">
-            <a href="http://store.steampowered.com/">
-              <img src="http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png" width="176" height="44">
-            </a>
-          </span>
+
+  <div id="header">
+    <div class="header-content">
+    <div class="logo">
+      <span id="logo_holder">
+      <a href="http://store.steampowered.com/">
+        <img src="http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png" width="176" height="44">
+      </a>
+      </span>
+    </div>
+    <div class="supernav_container" style="width: 100%;">
+      <a class="menuitem supernav" href="javascript:history(-1);">DASHBOARD</a>
+      <a class="menuitem supernav pull-right" style="padding-right: 200px;" href="javascript:history.back(-1);">BACK TO STEAM</a>
+    </div>        
+    </div>
+  </div>
+
+
+  <!-- Page Header -->
+  <!-- Set your background image for this header on the line below. --
+  <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Man must explore, and this is exploration at its greatest</h1>
+            <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+            <span class="meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</span>
+          </div>
         </div>
-        <div class="supernav_container" style="width: 100%;">
-          <a class="menuitem supernav" href="javascript:history(-1);">DASHBOARD</a>
-          <a class="menuitem supernav pull-right" style="padding-right: 200px;" href="javascript:history.back(-1);">BACK TO STEAM</a>
-        </div>        
       </div>
     </div>
+  </header>
 
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. --
-    <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="post-heading">
-                        <h1>Man must explore, and this is exploration at its greatest</h1>
-                        <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
-                        <span class="meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</span>
-                    </div>
-                </div>
-            </div>
+  <!-- Post Content -->
+
+    <div class="steam-backlog-container container">
+      <div ng-view></div>
+    </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="display: none;">
+          <ul class="list-inline text-center">
+            <li>
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
         </div>
-    </header>
-
-    <!-- Post Content -->
-
-      <div class="steam-backlog-container container">
-        <div ng-view></div>
       </div>
-
-    <hr>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
+  </footer>
   </body>
 </html>

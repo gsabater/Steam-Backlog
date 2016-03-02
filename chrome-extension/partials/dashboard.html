@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="col-md-3">
+    <img src="{{user.info.avatarfull}}" />
+    <h1>{{user.info.personaname}}</h1>
+    <h3>{{user.info.realname}}</h3>
+  </div>  
+</div>
+<!--
 <div  style="float: left">
   <img src="{{user.info.avatarfull}}" /><br>
   <h1>{{user.info.personaname}}</h1>
@@ -20,16 +28,35 @@
 </div>
 
 <div style="clear: both;"/></div>
-
+-->
 <br>
 <div class="row">
-  <input type="text" ng-model="filters.string" ng-change="search()" />
+  <input type="text" ng-model="filters.string" ng-change="search()" style="color: #666" />
 </div>
 
-<div ng-repeat="game in games | limitTo : 30" style="display: inline-block;">
-  <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_184x69.jpg?t=1455141178" ng-click="openPopup(game.appid)" />
+<hr>
+<h2>Your Games</h2>
+
+<div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
+  <div ng-repeat="game in games | limitTo : 30" class="game-card" style="display: inline-block;">
+    <div class="some-nope">
+      <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" ng-click="openPopup(game.appid)" /></div>
+      <div class="game-name"></div>
+      <div class="game-tags"></div>
+      <div class="game-playime"></div>
+      <div class="game-status"></div>
+      <div class="gallery_archive_desc" style="display: none;">
+        <h4>{{game.name}}</h4>
+        <div class="post_detail">{{game.tags | limitTo: 2}}</div>
+      </div>
+    </div>
+  </div>
 </div>
 
+
+<!--
+<hr>
+<h2>Your tags</h2>
 <span ng-repeat="tag in tags track by $index" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
   {{tag}}
 </span>
@@ -47,6 +74,7 @@
   {{tag.name}}
 </span>
 
+-->
 <style>
 .white-popup {
   position: relative;

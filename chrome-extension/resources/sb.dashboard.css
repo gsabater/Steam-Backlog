@@ -1,12 +1,31 @@
+::-webkit-scrollbar{
+  width: 4px; 
+  height: 12px;
+}
+
+::-webkit-scrollbar-track{
+  background: rgba(255, 255, 255, 0.31);
+}
+
+::-webkit-scrollbar-thumb{
+  background: white;
+}
+
 body{
   padding: 0;
   margin: 0;
-  background-color: #2E3C4C;
+
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #1B2838;
+
   color: white;
 }
 
 #header{
   background: #171a21;
+  background: rgba(23, 26, 33, 0.45);
   background-position: center top;
   min-width: 940px;
   font-family: Arial,Helvetica,Verdana,sans-serif;
@@ -14,7 +33,6 @@ body{
 }
 
 .header-content{
-  background: #171a21;
   position: relative;
   width: 940px;
   height: 104px;
@@ -66,6 +84,107 @@ body{
   /*background-image: url('http://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/203160/716f4289fa8eb7cd5772c432671c60db2e00cfac.jpg'); */
 }
 
+/*****************************
+/****  Game card 
+/*****************************/
+
+.games-list{
+  padding: 0;
+}
+
+.games-list.cards .game-card{
+  background-color: white;
+  cursor: pointer;
+
+  width: 220px;
+  margin: 0 auto;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 1px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
+  margin: 8px;
+}
+
+.game-card .game-image img{
+  width: 100%;
+}
+
+.gallery_archive_desc {
+    position: absolute;
+    width: 100%;
+    bottom: 15px;
+    z-index: 3;
+    text-align: center;
+    line-height: normal;
+    opacity: 0;
+    transform: translate3d(0,30px,0);
+    -webkit-transform: translate3d(0,30px,0);
+    -moz-transform: translate3d(0,30px,0);
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    
+    font-family: 'Lato';
+
+
+}
+
+.gallery_archive_desc .post_detail {
+    color: #fff;
+    margin: 0;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.gallery_archive_desc h4 {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: initial;
+}
+
+.gallery_archive_desc h4 {
+    font-size: 26px;
+}
+
+.gallery_archive_desc h4 {
+    font-size: 16px;
+}
+
+.gallery_archive_desc h4 {
+    font-size: 14px;
+}
+
+.game-card .some{
+  position: relative;
+}
+.game-card .some:before {
+    opacity: 0;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(transparent),color-stop(50%,transparent),color-stop(56%,rgba(0,0,0,0.1)),color-stop(93%,rgba(0,0,0,0.6)),to(rgba(0,0,0,0.69)));
+    background-image: -webkit-linear-gradient(transparent 0%,transparent 50%,rgba(0,0,0,0.1) 56%,rgba(0,0,0,0.6) 93%,rgba(0,0,0,0.69) 100%);
+    background-image: linear-gradient(transparent 0%,transparent 50%,rgba(0,0,0,0.1) 56%,rgba(0,0,0,0.6) 93%,rgba(0,0,0,0.69) 100%);
+}
+
+.game-card:hover .some:before {
+    opacity: 1;
+}
+
+.game-card:hover .gallery_archive_desc {
+    opacity: 1;
+    transform: translate3d(0,0px,0);
+    -webkit-transform: translate3d(0,0px,0);
+    -moz-transform: translate3d(0,0px,0);
+}
 
 /*****************************
 /****  NPROGRESS 

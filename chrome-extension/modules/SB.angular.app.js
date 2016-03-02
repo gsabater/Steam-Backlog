@@ -39,6 +39,12 @@
       }, 50);
 
       
+      $rootScope.app = {
+        v: 0,
+        background: "440",
+        listStyle: "cards" //table
+      };
+
       $rootScope.games = {
         hoursPlayed: 0,
         playing: {},

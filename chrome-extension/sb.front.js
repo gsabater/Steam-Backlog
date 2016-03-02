@@ -71,7 +71,7 @@ var games  = false,
     $("body").on("click", ".sb-close-panel", function(){
       $(this).closest(".profile_customization").remove(); });
 
-    $("body").on("click", "[src='http://steamcommunity-a.akamaihd.net/economy/emoticon/csgox']", function(){
+    $("body").on("click", ".profile_flag", function(){
       chrome.storage.local.remove("user",  function(){console.error("removed"); });
       chrome.storage.local.remove("db",    function(){console.error("removed"); }); 
     });
