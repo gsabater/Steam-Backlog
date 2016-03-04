@@ -12,6 +12,8 @@
 }
 
 body{
+  font-family: 'Open Sans', Helvetica Neue ,Helvetica, Arial, sans-serif;
+
   padding: 0;
   margin: 0;
 
@@ -19,8 +21,10 @@ body{
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-color: #1B2838;
-
   color: white;
+
+  color: #eee;
+  background-color: #1f1f1f;
 }
 
 #header{
@@ -93,19 +97,38 @@ body{
 }
 
 .games-list.cards .game-card{
-  background-color: white;
+  display: inline-block;
+  background-color: transparent;
   cursor: pointer;
+  width: 205px;
+  margin: 10px 15px;
+  border-radius: 0px;
+}
 
-  width: 220px;
-  margin: 0 auto;
-  border: 1px solid rgb(0, 0, 0);
-  border-radius: 1px;
+.game-card .game-image{
+  width: 205px;
+  height: 77px;
+  overflow: hidden;
+  outline: 1px solid rgba(255, 255, 255, 0.15);
+  outline-offset: -1px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
-  margin: 8px;
+}
+
+.game-card:hover .game-image{
+  outline: 2px solid red;
+  outline-offset: -2px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
 }
 
 .game-card .game-image img{
   width: 100%;
+}
+
+.game-card .game-name {
+  line-height: 35px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .gallery_archive_desc {

@@ -88,7 +88,7 @@
   //| Get number of owned games
   //| If profile is higher, set a message.
   //+-------------------------------------------------------
-    var profileGames = parseInt($("a[href='http://steamcommunity.com/id/Gohrum/games/?tab=all'] span.profile_count_link_total").text());
+    var profileGames = parseInt($(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text());
     user.profileGames = (user.profileGames)? user.profileGames : 0;
 
     if(user.profileGames < profileGames){

@@ -21,10 +21,10 @@ angular.module('SB.controllers')
     console.log("dashboard");
     //NProgress.start();
 
-    $scope.games   = {};
     $scope.filters = {
       string: "",
-      tags: []
+      tags: [],
+      orderby: "-playtime_forever"
     };
 
     //| Initial set of information
@@ -40,6 +40,7 @@ angular.module('SB.controllers')
       $scope.search = function(){
         $scope.games = Filter.games($scope.filters);
       };
+
 
 /*
     SteamAPI.getPlayer().then(function(xhr){

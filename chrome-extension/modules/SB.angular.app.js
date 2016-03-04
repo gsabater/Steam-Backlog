@@ -45,7 +45,7 @@
         listStyle: "cards" //table
       };
 
-      $rootScope.games = {
+      $rootScope.backlog = {
         hoursPlayed: 0,
         playing: {},
         finished: {},

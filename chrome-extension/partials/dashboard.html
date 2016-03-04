@@ -41,15 +41,14 @@
 </div>
 
 <hr>
-<h2>Your Games</h2>
-{{games}}
+<h2>Your Games {{games.length}}</h2>
 <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
-  <div ng-repeat="game in games | limitTo : 30 | orderBy : playtime_forever" class="game-card" style="display: inline-block;">
+  <div ng-repeat="game in games | orderBy : '-playtime_forever' | limitTo : 20" class="game-card" ng-click="openPopup(game.appid)">
     <div class="some-nope">
-      <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" ng-click="openPopup(game.appid)" /></div>
-      <div class="game-name"></div>
+      <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
+      <div class="game-name">{{game.name}}</div>
       <div class="game-tags"></div>
-      <div class="game-playime"></div>
+      <div class="game-playime">{{game.playtime_forever}}</div>
       <div class="game-status"></div>
       <div class="gallery_archive_desc" style="display: none;">
         <h4>{{game.name}}</h4>
@@ -82,12 +81,19 @@
 
 -->
 <style>
+
+.mfp-content{
+  position: absolute;
+  top: 10%;
+  right: 0;
+}
+
 .white-popup {
   position: relative;
   background: #FFF;
   padding: 20px;
   width: auto;
-  max-width: 500px;
+  max-width: 900px;
   margin: 20px auto;
   color: black;
 }
