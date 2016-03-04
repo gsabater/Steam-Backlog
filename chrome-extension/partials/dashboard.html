@@ -3,7 +3,7 @@
     <img src="{{user.info.avatarfull}}" />
     <h1>{{user.info.personaname}}</h1>
     <h3>{{user.info.realname}}</h3>
-  </div>  
+  </div>
 </div>
 <!--
 <div  style="float: left">
@@ -31,14 +31,20 @@
 -->
 <br>
 <div class="row">
-  <input type="text" ng-model="filters.string" ng-change="search()" style="color: #666" />
+  <input type="text" ng-model="filters.string" ng-change="search()" style="color: #666" /><br>
+  < showing 1-20 of 2000 results >
+  < view as: grid / list ><br>
+  < sort by: metascore, time played, achievement % ><br>
+  < filter: Genre (action, RPG, shooter) / Mode (Single player, MMO)<br>
+  < filter list: < filter x > < filter x > < filter x ><br>
+
 </div>
 
 <hr>
 <h2>Your Games</h2>
-
+{{games}}
 <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
-  <div ng-repeat="game in games | limitTo : 30" class="game-card" style="display: inline-block;">
+  <div ng-repeat="game in games | limitTo : 30 | orderBy : playtime_forever" class="game-card" style="display: inline-block;">
     <div class="some-nope">
       <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" ng-click="openPopup(game.appid)" /></div>
       <div class="game-name"></div>

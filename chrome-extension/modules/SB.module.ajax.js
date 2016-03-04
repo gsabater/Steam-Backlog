@@ -26,11 +26,9 @@
     // First load, order the games by played
     if(!dbTop){
       dbTop = [];
-
       for(i in db){
         dbTop.push([i,db[i].playtime_forever]); }
-        dbTop.sort(function(a, b) {return b[1] - a[1]});
-
+        dbTop.sort(function(a, b){ return b[1] - a[1]; });
     }
 
     var gameID = false;
@@ -39,14 +37,12 @@
 
     // Check top list and remove recently updated
     for(var i = 0; i < dbTop.length; i++){
-
       if((n - db[dbTop[i][0]].updated) < 2592000000 ){
         dbTop.splice(i,1);  //console.log("remove " + dbTop[i][0], db[dbTop[i][0]].name);
       }else{
         gameID = parseInt(dbTop[i][0]);
-        break;
+        if(queue.indexOf(gameID) === -1){ break; }
       }
-
     }
 
     // Finally, get info for the selected game
@@ -69,10 +65,12 @@
     // Add games to queue if requested
     if(concatID){
       if(typeof concatID == "string"){ concatID = [concatID]; }
+
+      var remaining = queue.length;
       queue = queue.concat(concatID);
 
-      if(queue.length == concatID.length){ getGameInfo(); }
-      if(queue.length >= 20){ getGameInfo(); }
+      if(remaining    === 0){ getGameInfo(); return; }
+      if(queue.length >= 20){ getGameInfo(); return; }
 
       return;
     }
@@ -108,10 +106,10 @@
   //|
   //+-------------------------------------------------------
     console.log("%c Steam Backlog: Scraping " + gameID + " - " + db[gameID].name + " ", 'background: #222; color: #bada55');
-    console.warn(queue, gameID, db[gameID]);
+    console.warn(((queue.length * 10 ) /100), queue, gameID, db[gameID]);
 
-    $('.sb-add-games-feedback').html("Getting extended information for <strong style='color: #bada55;'>" + db[gameID].name + "</strong>");
-
+    $('.sb-add-games-feedback').html("Getting extended information for <strong style='color: #bada55;'>(" + queue.length + ") " + db[gameID].name + "</strong>");
+    //NProgress.inc();
 
   //| Initialize scanning process
   //| Sets flag and initial time vars
