@@ -51,12 +51,12 @@ angular.module('SB.services', [])
         var result       = {games: [], tags: []};
         var searchString = (filters)? filters.string.toLowerCase() : false;
 
-        for(i in $rootScope.db){
+        dance: for(i in $rootScope.db){
 
           game = $rootScope.db[i];
           game.appid = i;
           gameName = game.name.toLowerCase();
-
+          
           // Searchstring filter
           if(searchString && gameName.indexOf(searchString) == -1){ continue; }
 
@@ -70,12 +70,19 @@ angular.module('SB.services', [])
             if(!game.steamscore){ continue; }
           }
 
+          //Tag filter
+          if(filters.tags.length > 0){
+            if(!game.tags){ continue; }
+
+            for(f in filters.tags){
+              if(game.tags.indexOf(filters.tags[f]) == -1){ continue dance; } }
+          }
+
           // Add game info to return
           result['games'].push(game);
           for(t in game.tags){
             if(result['tags'].indexOf(game.tags[t]) == -1){
               result['tags'].push(game.tags[t]); } }
-
         }
 
         console.warn("FILTER RESULT", filters, result);
@@ -150,7 +157,6 @@ angular.module('SB.services', [])
             }
           });
 
-          console.log(tags);
           return tags;
         },
 

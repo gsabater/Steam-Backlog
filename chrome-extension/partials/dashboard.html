@@ -37,7 +37,9 @@
 
     <div class="separator"></div>
 
-    <i class="fa fa-filter" ng-click="toggleTags = !toggleTags" style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
+    <i class="fa fa-filter"       ng-if="!toggleTags" style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
+    <i class="fa fa-minus-circle" ng-if="toggleTags"  style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
+
     <div class="tags-selector" ng-click="toggleTags = !toggleTags">Select tags</div>
     <span class="pull-right">showing 32 of {{games.length}} results</span>
 
@@ -53,11 +55,6 @@
 
     <!--
 
-        
-    
-    <span class="pull-right"><i class="fa fa-home"></i></span>
-    < filter: Genre (action, RPG, shooter) / Mode (Single player, MMO)
-
     <div class="filter-list">
       <span>Something <i class="fa fa-times"></i></span>
     </div>
@@ -65,8 +62,8 @@
   </div>
 </div>
 
-    <div class="tags-container" ng-if="!toggleTags">
-      <span ng-repeat="tag in allTags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;" ng-class="{'faded': tags.indexOf(tag) == -1}">
+    <div class="tags-container" ng-if="toggleTags">
+      <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'selected': filters.tags.indexOf(tag) > -1}">
         {{tag}}
       </span>
     </div>
@@ -86,8 +83,10 @@
       <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}}</div>
       <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-metascore'">Metascore: {{game.metascore}}</div>
       <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-steamscore'">{{game.steamscore}}, {{game.steamscoreAlt}}</div>
+      <div class="game-tags card-second-line"      ng-if="filters.tags.length > 0">
+        <span ng-repeat="tag in game.tags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">{{tag}}</span>
+      </div>
 
-      <!-- <div class="game-tags card-second-line"></div> -->
       <!-- <div class="game-status card-second-line"></div> -->
 
       <div class="gallery_archive_desc" style="display: none;">
@@ -121,7 +120,6 @@
 
 -->
 <style>
-.faded{ opacity: 0.3; }
 .mfp-content{
   position: absolute;
   top: 10%;

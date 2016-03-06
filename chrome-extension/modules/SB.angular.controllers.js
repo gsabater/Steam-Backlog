@@ -22,7 +22,7 @@ angular.module('SB.controllers')
     //NProgress.start();
 
     $scope.toggleTags = false;
-    
+
     $scope.filters = {
       string: "",
       tags: [],
@@ -44,6 +44,18 @@ angular.module('SB.controllers')
         var filtered = Filter.games($scope.filters);
         $scope.games = filtered.games;
         $scope.tags  = filtered.tags;
+      };
+
+    //| Apply tag and search
+    //+-------------------------------------------------------
+      $scope.filterTag = function(tag){
+
+        var position = $scope.filters.tags.indexOf(tag);
+        if( position > -1){ 
+          $scope.filters.tags.splice(position,1); }else{
+          $scope.filters.tags.push(tag); }
+
+        $scope.search();
       };
 
 
