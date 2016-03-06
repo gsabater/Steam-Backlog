@@ -35,7 +35,6 @@ angular.module('SB.services', [])
 
 //=================================================
 // Filter
-// - Paradas
 //=================================================
   .factory('Filter', function($rootScope){
 
@@ -49,8 +48,7 @@ angular.module('SB.services', [])
     //+---------------------------------------
       self.games = function(filters){
 
-        var num = 0;
-        var result = [];
+        var result       = {games: [], tags: []};
         var searchString = (filters)? filters.string.toLowerCase() : false;
 
         for(i in $rootScope.db){
@@ -59,17 +57,29 @@ angular.module('SB.services', [])
           game.appid = i;
           gameName = game.name.toLowerCase();
 
-          //if(num >= 20){ break; }
+          // Searchstring filter
           if(searchString && gameName.indexOf(searchString) == -1){ continue; }
 
-          result.push(game);
-          num++;
+          // Metascore filter
+          if(filters.orderBy == "-metascore"){ 
+            if(!game.metascore){ continue; }
+          }
+
+          // steamscore filter
+          if(filters.orderBy == "-steamscore"){ 
+            if(!game.steamscore){ continue; }
+          }
+
+          // Add game info to return
+          result['games'].push(game);
+          for(t in game.tags){
+            if(result['tags'].indexOf(game.tags[t]) == -1){
+              result['tags'].push(game.tags[t]); } }
 
         }
 
-        console.warn("FILTER RESULT",filters, result);
+        console.warn("FILTER RESULT", filters, result);
         return result;
-
       };
 
     //| normalize: normalizes searchstring

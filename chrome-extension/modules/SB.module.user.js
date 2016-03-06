@@ -88,8 +88,11 @@
   //| Get number of owned games
   //| If profile is higher, set a message.
   //+-------------------------------------------------------
-    var profileGames = parseInt($(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text());
+    var profileGames  = $(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text().replace(",", "");
+    profileGames      = parseInt(profileGames);
     user.profileGames = (user.profileGames)? user.profileGames : 0;
+
+    //console.warn(user.profileGames, profileGames);
 
     if(user.profileGames < profileGames){
       var newGames = profileGames - parseInt(user.profileGames);
@@ -182,8 +185,9 @@
     getGameInfo();
 
     // Set properties
-    user.ownedGames = xhr.games.length;
-    user.profileGames = parseInt($("a[href='http://steamcommunity.com/id/Gohrum/games/?tab=all'] span.profile_count_link_total").text());
+    user.ownedGames   = xhr.games.length;
+    var profileGames  = $(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text().replace(",", "");
+    user.profileGames = parseInt(profileGames);
 
     chrome.storage.local.set({'user': user}, function(){  /* console.warn("User saved", user); */ });
   }

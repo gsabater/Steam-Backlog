@@ -122,7 +122,12 @@
 
       db[gameID].updated    = n;
       db[gameID].released   = $('.release_date .date', xhr).text();
-      db[gameID].steamscore = $(".game_review_summary", xhr).text();
+
+      steamscore = $(".glance_ctn_responsive_left div[data-store-tooltip]", xhr).attr("data-store-tooltip");
+      steamscore = steamscore.split("%")[0];
+
+      db[gameID].steamscore    = steamscore;
+      db[gameID].steamscoreAlt = $(".game_review_summary", xhr).text();
 
       // If Metascore
       if($("#game_area_metascore", xhr).length){
@@ -174,7 +179,7 @@
 
         // Save block
         chrome.storage.local.set({'db': db}, function(){      /* console.warn("db saved", db); */ });
-        console.log("Steam Backlog: Done updating ", gameID);
+        console.log("Steam Backlog: Done updating ", gameID, db[gameID]);
 
         // Iterate again
         removeFromQueue(gameID);

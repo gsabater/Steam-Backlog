@@ -29,27 +29,67 @@
 
 <div style="clear: both;"/></div>
 -->
-<br>
-<div class="row">
-  <input type="text" ng-model="filters.string" ng-change="search()" style="color: #666" /><br>
-  < showing 1-20 of 2000 results >
-  < view as: grid / list ><br>
-  < sort by: metascore, time played, achievement % ><br>
-  < filter: Genre (action, RPG, shooter) / Mode (Single player, MMO)<br>
-  < filter list: < filter x > < filter x > < filter x ><br>
 
+<div class="filter-bar">
+  <div class="container" style="width: 970px;">
+    <i class="fa fa-search" style=" position: absolute; top: 20px; margin-left: 10px; opacity: 0.4; font-size: 12px;"></i>
+    <input type="text" placeholder="Filter by name" ng-model="filters.string" ng-change="search()" />
+
+    <div class="separator"></div>
+
+    <i class="fa fa-filter" ng-click="toggleTags = !toggleTags" style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
+    <div class="tags-selector" ng-click="toggleTags = !toggleTags">Select tags</div>
+    <span class="pull-right">showing 32 of {{games.length}} results</span>
+
+    <div class="separator"></div>
+
+    <select ng-model="filters.orderBy" ng-change="search()">
+      <option selected="selected" disabled="disabled">Sort by...</option>
+      <option value="-playtime_forever">Time played</option>
+      <option value="-metascore">Metascore</option>
+      <option value="-steamscore">Steam Score</option>
+      <!-- <option>achievement %</option> -->
+    </select>
+
+    <!--
+
+        
+    
+    <span class="pull-right"><i class="fa fa-home"></i></span>
+    < filter: Genre (action, RPG, shooter) / Mode (Single player, MMO)
+
+    <div class="filter-list">
+      <span>Something <i class="fa fa-times"></i></span>
+    </div>
+    -->
+  </div>
 </div>
 
-<hr>
-<h2>Your Games {{games.length}}</h2>
+    <div class="tags-container" ng-if="!toggleTags">
+      <span ng-repeat="tag in allTags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;" ng-class="{'faded': tags.indexOf(tag) == -1}">
+        {{tag}}
+      </span>
+    </div>
+
+<div class="filter-bar-placeholder"></div>
+  
+  <div class="warning" ng-if="filters.orderBy == '-metascore'">
+    <i class="fa fa-warning"></i> Some games might not appear on the list because it has no metascore or because we don't know it's score.
+  </div>
+
 <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
-  <div ng-repeat="game in games | orderBy : '-playtime_forever' | limitTo : 20" class="game-card" ng-click="openPopup(game.appid)">
+  <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : 32" class="game-card" ng-click="openPopup(game.appid)">
     <div class="some-nope">
       <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
-      <div class="game-tags"></div>
-      <div class="game-playime">{{game.playtime_forever}}</div>
-      <div class="game-status"></div>
+
+      <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}}</div>
+      <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-metascore'">Metascore: {{game.metascore}}</div>
+      <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-steamscore'">{{game.steamscore}}, {{game.steamscoreAlt}}</div>
+
+      <!-- <div class="game-tags card-second-line"></div> -->
+      <!-- <div class="game-status card-second-line"></div> -->
+
       <div class="gallery_archive_desc" style="display: none;">
         <h4>{{game.name}}</h4>
         <div class="post_detail">{{game.tags | limitTo: 2}}</div>
@@ -81,7 +121,7 @@
 
 -->
 <style>
-
+.faded{ opacity: 0.3; }
 .mfp-content{
   position: absolute;
   top: 10%;
@@ -96,10 +136,11 @@
   max-width: 900px;
   margin: 20px auto;
   color: black;
+  color: white;
 }
 </style>
 
-<div class="white-popup mfp-hide">
+<div class="white-popup mfp-hide" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{app.appid}}/page_bg_generated_v6b.jpg');">
 <h3>{{app.name}}</h3>
 {{app}}
 </div>

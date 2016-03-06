@@ -12,7 +12,8 @@
   var SB = angular.module('SB', [
     'ngRoute',
     'SB.controllers', 
-    'SB.services', 
+    'SB.services',
+    'SB.filters',
     //'pascalprecht.translate', 
   ])
 

@@ -21,24 +21,29 @@ angular.module('SB.controllers')
     console.log("dashboard");
     //NProgress.start();
 
+    $scope.toggleTags = false;
+    
     $scope.filters = {
       string: "",
       tags: [],
-      orderby: "-playtime_forever"
+      orderBy: "-playtime_forever"
     };
 
     //| Initial set of information
     //+-------------------------------------------------------
       window.setTimeout(function(){
-        $scope.tags  = Games.getAllTags();
-        $scope.games = Filter.games();
+        $scope.tags    = Games.getAllTags();
+        $scope.allTags = $scope.tags;
+        $scope.games   = Filter.games($scope.filters).games;
         $scope.$apply();
       }, 100);
 
     //| Search service
     //+-------------------------------------------------------
       $scope.search = function(){
-        $scope.games = Filter.games($scope.filters);
+        var filtered = Filter.games($scope.filters);
+        $scope.games = filtered.games;
+        $scope.tags  = filtered.tags;
       };
 
 
