@@ -51,62 +51,32 @@ angular.module('SB.controllers')
       $scope.filterTag = function(tag){
 
         var position = $scope.filters.tags.indexOf(tag);
-        if( position > -1){ 
+        if( position > -1){
           $scope.filters.tags.splice(position,1); }else{
           $scope.filters.tags.push(tag); }
 
         $scope.search();
       };
 
+    //| jQuery Callback
+    //+-------------------------------------------------------
+      $scope.jQueryCallback = function(){
+        $scope.search();
+        $scope.$apply();
+      };
 
-/*
-    SteamAPI.getPlayer().then(function(xhr){
-      console.log("succ",xhr);
-      $rootScope.user.info = xhr.data.response.players[0];
-    });
+      $scope.isItemActive = function(item){
+        //console.log("wat", $location.path().indexOf(item) > -1);
+        //return $location.path().indexOf(item) > -1;
+      };
 
-    SteamAPI.getGameStats().then(function(xhr){
-      console.log("succ",xhr);
-      $scope.gameStats = xhr.data.playerstats.achievements;
-    });
-
-    SteamAPI.getDynamicStore().then(function(xhr){
-      console.log("succ",xhr);
-      $scope.dynamic = xhr.data;
-    });
-
-/*
-    SteamAPI.getHLTB().then(function(xhr){
-      console.log("succ HLTB",xhr);
-      $scope.HLTB = xhr.data;
-    });
-    */
-/*
-    SteamAPI.getGames().then(function(xhr){
-      console.log("succ",xhr);
-
-      Games.Analyze(xhr.data.response.games);
-      $scope.games = xhr.data.response.games;
-      NProgress.done();
-
-    }, function(err){
-      // An error occured. Show a message to the user
-      console.log("error",err);
-    });
-    */
-
-    $scope.isItemActive = function(item){
-      //console.log("wat", $location.path().indexOf(item) > -1);
-      //return $location.path().indexOf(item) > -1;
-    };
-
-    $scope.openPopup = function(gameID){
-      $scope.app = $rootScope.db[gameID];
-      $.magnificPopup.open({
-        items: {
-          src: '.white-popup',
-          type: 'inline'
-        }
-      });
-    }
+      $scope.openPopup = function(gameID){
+        $scope.app = $rootScope.db[gameID];
+        $.magnificPopup.open({
+          items: {
+            src: '.white-popup',
+            type: 'inline'
+          }
+        });
+      }
   })

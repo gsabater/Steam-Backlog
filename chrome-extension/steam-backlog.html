@@ -22,6 +22,7 @@
   <script src="modules/SB.angular.filters.js"></script>
 
   <!-- Javascript jquery modules -->
+  <script src="sb.front.js"></script>
   <script src="modules/SB.module.ajax.js"></script>
 
   <!-- Page and plugin styles -->
@@ -77,7 +78,7 @@
   <!-- Post Content -->
 
     <div class="steam-backlog-container container">
-      <div ng-view></div>
+      <div ng-view ng-controller="dashboard"></div>
     </div>
 
   <hr>

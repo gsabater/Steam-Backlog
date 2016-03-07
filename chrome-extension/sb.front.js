@@ -1,18 +1,19 @@
 //=================================================================
 //
-//  ██████╗  █████╗  ██████╗██╗  ██╗██╗      ██████╗  ██████╗ 
-//  ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║     ██╔═══██╗██╔════╝ 
+//  ██████╗  █████╗  ██████╗██╗  ██╗██╗      ██████╗  ██████╗
+//  ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║     ██╔═══██╗██╔════╝
 //  ██████╔╝███████║██║     █████╔╝ ██║     ██║   ██║██║  ███╗
 //  ██╔══██╗██╔══██║██║     ██╔═██╗ ██║     ██║   ██║██║   ██║
 //  ██████╔╝██║  ██║╚██████╗██║  ██╗███████╗╚██████╔╝╚██████╔╝
-//  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
+//  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝
 //
 //=================================================================
 
 var v = "0.3";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
-var games  = false,
+var angular = false,
+    games  = false,
     user   = false,
     db     = false,
     dbTop  = false,
@@ -44,18 +45,22 @@ var games  = false,
       speed: 100
     });
 
+    // Flag execution in dashboard
+    var windowURL = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+    angular = (windowURL == "steam-backlog.html")? true : false;
+
     // Stop execution if client is not logged in
-    if(!$("a.user_avatar.playerAvatar").length){ console.error("Steam Backlog: User not logged in"); return; }
+    if(!$("a.user_avatar.playerAvatar").length){ console.warn("Steam Backlog: User not logged in"); return; }
 
     // Add backlog menu option
     $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
-   
+
     // Set global user and db vars
     games = (storage.games)? storage.games : {};
     user  = (storage.user)? storage.user : {};
     db    = (storage.db)? storage.db : {};
 
-    // Update user information 
+    // Update user information
     GetPlayerSummaries();
 
   }
@@ -73,5 +78,5 @@ var games  = false,
 
     $("body").on("click", ".profile_flag", function(){
       chrome.storage.local.remove("user",  function(){console.error("removed"); });
-      chrome.storage.local.remove("db",    function(){console.error("removed"); }); 
+      chrome.storage.local.remove("db",    function(){console.error("removed"); });
     });

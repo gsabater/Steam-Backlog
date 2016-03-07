@@ -9,19 +9,6 @@
 //
 //=================================================================
 
-  var v = "0.3";
-  console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
-
-  var games  = false,
-      user   = false,
-      db     = false,
-      dbTop  = false,
-      queue  = [],
-
-    settings = {
-      option: false
-    };
-
   var SB = angular.module('SB', [
     'ngRoute',
     'SB.controllers',
@@ -45,12 +32,13 @@
       window.setTimeout(function(){
         chrome.storage.local.get(null, function(items){
 
-          $rootScope.user = items.user;
-          $rootScope.db   = items.db;
-          console.log($rootScope);
-
           db   = items.db;
           user = items.user;
+
+          $rootScope.db   = items.db;
+          $rootScope.user = items.user;
+
+          updateDB();
 
         });
       }, 50);
@@ -69,15 +57,6 @@
         mastered: {},
         shelved: {}
       };
-
-      /*
-      $rootScope.user = {
-
-        finished: [],
-        hoursWeek: 0,
-
-      };
-      */
 
     })
 

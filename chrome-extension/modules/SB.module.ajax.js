@@ -15,8 +15,10 @@
 //+-------------------------------------------------------
   function updateDB(){
 
+    var timeout = (angular)? 5000 : 15000;
+
     console.log("Steam Backlog: Update db");
-    window.setTimeout(function(){ updateDB(); }, 15000);
+    window.setTimeout(function(){ updateDB(); }, timeout);
 
     // stop execution if we don't have any games
     if(!db || Object.keys(db).length == 0){
@@ -184,6 +186,7 @@
         console.log("Steam Backlog: Done updating ", gameID, db[gameID]);
 
         // Iterate again
+        if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
         removeFromQueue(gameID);
         getGameInfo();
 
@@ -206,5 +209,17 @@
         queue.splice(i, 1);
       }
     }
+
+  }
+
+
+//+-------------------------------------------------------
+//| angularCallback()
+//| + Calls angular function to update rootscope with
+//| + new localstorage
+//+-------------------------------------------------------
+  function angularCallback(){
+
+    console.warn("angular");
 
   }

@@ -139,13 +139,13 @@ angular.module('SB.services', [])
     return{
 
       //| getAllTags
-      //| Returns an array of all tags found in
-      //| the games
+      //| Returns an array of all tags in db
       //+---------------------------------------
         getAllTags: function(){
           tags = [];
 
-          angular.forEach($rootScope.db, function(item){
+          for(g in $rootScope.db){
+            item = $rootScope.db[g];
             if(item.tags){
               for(i in item.tags){
                 if(tags.indexOf(item.tags[i]) == -1){
@@ -155,7 +155,7 @@ angular.module('SB.services', [])
                 }
               }
             }
-          });
+          }
 
           return tags;
         },
@@ -165,201 +165,8 @@ angular.module('SB.services', [])
       //+---------------------------------------
         getInfo: function(id){
           return id;
-        },
-
-      //| checkFavorito
-      //| Returns true or false if stop is fav
-      //+---------------------------------------
-        checkFavorito: function(idParada){
-          var fav = false;
-
-          angular.forEach($rootScope.db.favoritos, function(item){
-            if(item.id === idParada){
-              fav = true;
-            }
-          });
-
-          return fav;
         }
     };
   })
 
-//=================================================
-// InfoItinerario
-// - getInfo (nombreLinea, idLinea, isTib)
-// - getLinea (nombreLinea, idLinea, isTib)
-// - getParada (idParada, isTIB)
-// - getIncidencias (idLinea)
-//=================================================
-  .factory('InfoItinerario', ['EMT','TIBTREN','$rootScope', function(EMT,TIBTREN,$rootScope){
-    return{
-      getInfo: function(nombreLinea, idLinea, isTIB){
-
-        if(isTIB){
-          var itinerarios = TIBTREN.itinerarios;
-        }else{
-          var itinerarios = EMT.itinerarios;
-        }
-
-        var resultado = [];
-
-        if(nombreLinea){
-          nombreLinea.toUpperCase();
-
-          angular.forEach(itinerarios, function(item){
-            if(item.nombre.toUpperCase() === nombreLinea){
-              resultado = item;
-            }
-          });
-        }else{
-          angular.forEach(itinerarios, function(item){
-            //console.log(item);
-            if(item.id === idLinea){
-              resultado = item;
-            }
-          });
-        }
-
-        return resultado;
-
-      },
-
-      getLinea: function(nombreLinea, idLinea, isTIB){
-
-        if(isTIB){
-          var lineas = TIBTREN.lineas;
-        }else{
-          var lineas = EMT.lineas;
-        }
-
-        var resultado = [];
-
-        if(nombreLinea){
-          nombreLinea.toUpperCase();
-
-          angular.forEach(lineas, function(item){
-            if(item.nombre.toUpperCase() === nombreLinea){
-              resultado = item;
-            }
-          });
-        }else{
-          angular.forEach(lineas, function(item){
-            //console.log(item);
-            if(item.id === idLinea){
-              resultado = item;
-            }
-          });
-        }
-
-        return resultado;
-
-      },
-      getParada: function(idParada, isTIB){
-        idParada = parseInt(idParada);
-        var encontrado = false;
-
-        if(isTIB){
-          var paradas = TIBTREN.paradas;
-        }else{
-          var paradas = EMT.paradas;
-        }
-
-        angular.forEach(paradas, function(item){
-          if(!encontrado){
-            if(item.id === idParada){
-              encontrado = item;
-            }
-          }
-        });
-
-        return encontrado;
-
-      },
-      getItinerarios: function(idParada){
-        idParada = parseInt(idParada);
-        var encontrado = false;
-        var itinerarios = TIBTREN.itinerarios;
-        var lineas = [];
-
-        angular.forEach(itinerarios, function(item){
-          encontrado = false;
-          angular.forEach(item.paradas, function(parada){
-            if(!encontrado){
-              if(parada == idParada){
-                encontrado = item;
-                //console.log(item);
-                lineas.push(item);
-              }
-            }
-
-          });
-        });
-
-        return lineas;
-
-      },
-      getIncidencias: function(idLinea, full){
-
-        idLinea = parseInt(idLinea);
-        var resultado = [];
-        var num_avisos = 0;
-
-        //por cada item de incidencia, se extraen las lineas
-        angular.forEach($rootScope.server.incidencias, function(item){
-
-          var lineas = ""+item.lineas;
-          lineas.toString();
-          var obj = lineas.split(",");
-
-
-          obj.forEach(function(entry) {
-            if(idLinea === parseInt(entry)){
-              if(full){
-                resultado.push(item);
-              }else{
-                num_avisos++;
-              }
-              //resultado.push(item);
-              //console.log(entry);
-
-
-            }
-          });
-
-        });
-
-        if(full){
-          return resultado;
-        }else{
-          return num_avisos;
-        }
-
-
-      }
-    };
-  }])
-
-
-//=================================================
-// localstorage
-//=================================================
-  .factory('localstorage', ['$window', function($window) {
-    return {
-      set: function(key, value) {
-        $window.localStorage[key] = value;
-      },
-      get: function(key, defaultValue) {
-        return $window.localStorage[key] || defaultValue;
-      },
-      setObject: function(key, value) {
-        angular.forEach(value, function(item){
-          delete item.$$hashKey;
-        });
-        $window.localStorage[key] = JSON.stringify(value);
-      },
-      getObject: function(key) {
-        return JSON.parse($window.localStorage[key] || '{}');
-      }
-    };
-  }])
 ;
