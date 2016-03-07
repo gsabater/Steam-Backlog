@@ -18,10 +18,8 @@ angular.module('SB.controllers')
 //=================================================
   .controller('dashboard', function($rootScope, $scope, $location, SteamAPI, Games, Filter){
 
-    console.log("dashboard");
-    //NProgress.start();
-
-    $scope.toggleTags = false;
+    $scope.toggleTags  = false;
+    $scope.gameDetails = false;
 
     $scope.filters = {
       string: "",
@@ -65,18 +63,31 @@ angular.module('SB.controllers')
         $scope.$apply();
       };
 
-      $scope.isItemActive = function(item){
-        //console.log("wat", $location.path().indexOf(item) > -1);
-        //return $location.path().indexOf(item) > -1;
-      };
-
-      $scope.openPopup = function(gameID){
-        $scope.app = $rootScope.db[gameID];
-        $.magnificPopup.open({
-          items: {
-            src: '.white-popup',
-            type: 'inline'
-          }
-        });
+    //| openDetails
+    //+-------------------------------------------------------
+      $scope.openDetails = function(gameID){
+        
+        var prev = $scope.gameDetails;
+        $scope.gameDetails = gameID;
+        Games.setApp(gameID);
+        
+        if(prev !== false){
+          $(document.getElementById('game-details')).scope().loadDetails();  }
       }
+  })
+
+//=================================================
+// gameDetails
+// + Function to check the active state and apply
+//=================================================
+  .controller('gameDetails', function($rootScope, $scope, Games){
+
+    $scope.loadDetails = function(){
+      $scope.gameDetails = Games.getDetails();
+    }
+
+    $scope.loadDetails();
+
+    console.warn("?",$scope.gameDetails);
+
   })

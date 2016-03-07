@@ -85,7 +85,7 @@ angular.module('SB.services', [])
               result['tags'].push(game.tags[t]); } }
         }
 
-        console.warn("FILTER RESULT", filters, result);
+        //console.warn("FILTER RESULT", filters, result);
         return result;
       };
 
@@ -96,29 +96,10 @@ angular.module('SB.services', [])
         value = string
 
         .toLowerCase()
-        .replace('ctra.', 'carretera')
-        .replace('cra.', 'carretera')
-        .replace('av.', 'avenida')
-        .replace('avinguda', 'avenida')
-        .replace('pl.', 'plaza')
         .replace('pol.', 'poligono')
-
-        .replace('de ', '').replace('d\'', '')
-        .replace('del ', '')
 
         .replace(/á/g, 'a').replace(/à/g, 'a')
         .replace(/é/g, 'e').replace(/è/g, 'e')
-        .replace(/í/g, 'i').replace(/ì/g, 'i')
-        .replace(/ó/g, 'o').replace(/ò/g, 'o')
-        .replace(/ú/g, 'u').replace(/ù/g, 'u')
-        .replace(/ç/g, 'c').replace(/s/g, 'c')
-        .replace(/q/g, 'c').replace(/z/g, 'c')
-        .replace(/k/g, 'c')
-        .replace(/v/g, 'b')
-        .replace(/y/g, 'i')
-        .replace(/g/g, 'j')
-        .replace(/ny/g, 'ñ').replace(/ñ/g, 'n')
-        .replace(/l'/g, 'l')//.replace(/ll/g, 'y')
         .replace(/:/g, '');
 
         return value;
@@ -136,7 +117,21 @@ angular.module('SB.services', [])
 // - ToggleFavorito (idParada)
 //=================================================
   .factory('Games', function($rootScope){
+    
+    var activeApp = false;
     return{
+
+      //| checkFavorito
+      //| Returns true or false if stop is fav
+      //+---------------------------------------
+        setApp: function(newApp){
+          activeApp = newApp;
+          return true;
+        },
+
+        getDetails: function(){
+          return $rootScope.db[activeApp];
+        },
 
       //| getAllTags
       //| Returns an array of all tags in db
@@ -158,15 +153,8 @@ angular.module('SB.services', [])
           }
 
           return tags;
-        },
-
-      //| checkFavorito
-      //| Returns true or false if stop is fav
-      //+---------------------------------------
-        getInfo: function(id){
-          return id;
         }
+
     };
   })
-
 ;

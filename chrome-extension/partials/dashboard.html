@@ -1,10 +1,11 @@
-<div class="row">
+<div class="row user-header" ng-if="!gameDetails">
   <div class="col-md-3">
     <img src="{{user.info.avatarfull}}" />
     <h1>{{user.info.personaname}}</h1>
     <h3>{{user.info.realname}}</h3>
   </div>
 </div>
+
 <!--
 <div  style="float: left">
   <img src="{{user.info.avatarfull}}" /><br>
@@ -29,6 +30,45 @@
 
 <div style="clear: both;"/></div>
 -->
+
+
+<div id="game-details" ng-controller="gameDetails" ng-if="gameDetails" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/page_bg_generated_v6b.jpg');">
+    
+    <div class="upper">
+      <div class="container">
+        <div class="pull-right text-right game-updated">Updated {{gameDetails.updated | date:'dd MMM, HH:mm:ss'}}</div>
+        <div class="game-image">
+          <a href="steam://rungameid/{{gameDetails.appid}}" class="game-image-overlay"><i class="fa fa-play" style="font-size: 23px;"></i></a>
+          <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/capsule_231x87.jpg" />
+        </div>
+        <span class="game-name">{{gameDetails.name}}</span>
+      </div>
+    </div>
+
+    <div class="lower">
+      <div class="container">
+        <div class="pull-right game-tags">
+          <span class="tag" ng-repeat="tag in gameDetails.tags | limitTo: 2" ng-click="filterTag(tag)">{{tag}}</span>
+        </div>
+
+        <div class="game-metascore" ng-if="gameDetails.metascore"><i class="fa fa-star"></i> Metacritic: {{gameDetails.metascore}} </div>
+        <div class="game-steamscore"><i class="fa fa-steam"></i> {{gameDetails.steamscore}}, {{gameDetails.steamscoreAlt}}</div>
+
+        achievements: {{gameDetails.achievements}}<br>
+        achieved: {{gameDetails.achieved}}<br>
+        --<br>
+        coop: {{gameDetails.coop}}, 
+        multiplayer: {{gameDetails.multiPlayer}}, 
+        singleplayer: {{gameDetails.singlePlayer}}, 
+        controller: {{gameDetails.controller}}, 
+        mmo: {{gameDetails.mmo}}, 
+        localCoop: {{gameDetails.localCoop}}, 
+
+      </div>
+    </div>
+</div>
+<div class="game-details-placeholder" style="height: 300px;" ng-if="gameDetails"></div>
+
 
 <div class="filter-bar">
   <div class="container" style="width: 970px;">
@@ -75,7 +115,7 @@
   </div>
 
 <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
-  <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : 32" class="game-card" ng-click="openPopup(game.appid)">
+  <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : 32" class="game-card" ng-click="openDetails(game.appid)">
     <div class="some-nope">
       <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
@@ -119,26 +159,3 @@
 </span>
 
 -->
-<style>
-.mfp-content{
-  position: absolute;
-  top: 10%;
-  right: 0;
-}
-
-.white-popup {
-  position: relative;
-  background: #FFF;
-  padding: 20px;
-  width: auto;
-  max-width: 900px;
-  margin: 20px auto;
-  color: black;
-  color: white;
-}
-</style>
-
-<div class="white-popup mfp-hide" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{app.appid}}/page_bg_generated_v6b.jpg');">
-<h3>{{app.name}}</h3>
-{{app}}
-</div>

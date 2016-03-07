@@ -41,47 +41,25 @@
   </head>
   <body ng-app="SB" style-nope="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{app.background}}/page_bg_generated_v6b.jpg');">
 
-
-  <div id="header">
-    <div class="header-content">
-    <div class="logo">
-      <span id="logo_holder">
-      <a href="http://store.steampowered.com/">
-        <img src="http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png" width="176" height="44">
-      </a>
-      </span>
-    </div>
-    <div class="supernav_container" style="width: 100%;">
-      <a class="menuitem supernav" href="javascript:history(-1);">DASHBOARD</a>
-      <a class="menuitem supernav pull-right" style="padding-right: 200px;" href="javascript:history.back(-1);">BACK TO STEAM</a>
-    </div>
-    </div>
-  </div>
-
-
-  <!-- Page Header -->
-  <!-- Set your background image for this header on the line below. --
-  <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <h1>Man must explore, and this is exploration at its greatest</h1>
-            <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
-            <span class="meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</span>
-          </div>
-        </div>
+    <div id="header">
+      <div class="header-content">
+      <div class="logo">
+        <span id="logo_holder">
+        <a href="http://store.steampowered.com/">
+          <img src="http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png" width="176" height="44">
+        </a>
+        </span>
+      </div>
+      <div class="supernav_container" style="width: 100%;">
+        <a class="menuitem supernav" href="javascript:history(-1);">DASHBOARD</a>
+        <a class="menuitem supernav pull-right" style="padding-right: 200px;" href="javascript:history.back(-1);">BACK TO STEAM</a>
+      </div>
       </div>
     </div>
-  </header>
-
-  <!-- Post Content -->
 
     <div class="steam-backlog-container container">
       <div ng-view ng-controller="dashboard"></div>
     </div>
-
-  <hr>
 
   <!-- Footer -->
   <footer>

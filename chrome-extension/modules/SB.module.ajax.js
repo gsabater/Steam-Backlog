@@ -15,10 +15,8 @@
 //+-------------------------------------------------------
   function updateDB(){
 
-    var timeout = (angular)? 5000 : 15000;
-
-    console.log("Steam Backlog: Update db");
-    window.setTimeout(function(){ updateDB(); }, timeout);
+    var time    = (angular)? 5000 : 15000;
+    var timeout = window.setTimeout(function(){ updateDB(); }, time);
 
     // stop execution if we don't have any games
     if(!db || Object.keys(db).length == 0){
@@ -48,7 +46,7 @@
     }
 
     // Finally, get info for the selected game
-    getGameInfo(gameID);
+    if(gameID){ getGameInfo(gameID); }else{ clearTimeout(timeout); }
   }
 
 
@@ -83,7 +81,7 @@
 
     //stop execution if there is no more ids
     if(queue.length == 0){
-      console.log("Steam Backlog: No queue remaining");
+      //console.log("Steam Backlog: No queue remaining");
 
       if($("#sb-detected-games-content").hasClass("detecting-games")){
           $('#sb-detected-games-content').html(
@@ -108,10 +106,9 @@
   //|
   //+-------------------------------------------------------
     console.log("%c Steam Backlog: Scraping " + gameID + " - " + db[gameID].name + " ", 'background: #222; color: #bada55');
-    console.warn(((queue.length * 10 ) /100), queue, gameID, db[gameID]);
+    //console.warn(((queue.length * 10 ) /100), queue, gameID, db[gameID]);
 
     $('.sb-add-games-feedback').html("Getting extended information for <strong style='color: #bada55;'>(" + queue.length + ") " + db[gameID].name + "</strong>");
-    //NProgress.inc();
 
   //| Initialize scanning process
   //| Sets flag and initial time vars
@@ -123,6 +120,12 @@
       xhr = xhr.replace(/<img[^>]*>/g,"");
 
       // Stop if age barrier
+      if(!$(".apphub_AppName", xhr).length){
+        console.warn("Game not available");
+        db[gameID].updated = n;
+        saveGameInfo(gameID);
+        return;
+      }
 
       db[gameID].updated    = n;
       db[gameID].released   = $('.release_date .date', xhr).text();
@@ -144,6 +147,8 @@
 
       // Features
       $("#category_block .game_area_details_specs a", xhr).each(function(i,e){
+        if($(e).attr("href").indexOf("category2=22") == -1){ db[gameID].achievements = false; }
+
         if($(e).attr("href").indexOf("category2=28") > -1){ db[gameID].controller = true; }
         if($(e).attr("href").indexOf("category2=18") > -1){ db[gameID].controller = true; }
 
@@ -181,14 +186,7 @@
           }
         }
 
-        // Save block
-        chrome.storage.local.set({'db': db}, function(){      /* console.warn("db saved", db); */ });
-        console.log("Steam Backlog: Done updating ", gameID, db[gameID]);
-
-        // Iterate again
-        if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
-        removeFromQueue(gameID);
-        getGameInfo();
+        saveGameInfo(gameID);
 
       });
     });
@@ -214,12 +212,20 @@
 
 
 //+-------------------------------------------------------
-//| angularCallback()
-//| + Calls angular function to update rootscope with
-//| + new localstorage
+//| removeFromQueue()
+//| + Removes one game id from the queue
+//| + helps removing duplicates and also is much better
+//| + than splice(0,1);
 //+-------------------------------------------------------
-  function angularCallback(){
+  function saveGameInfo(gameID){
 
-    console.warn("angular");
+    chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
+    //console.log("Steam Backlog: Done updating ", gameID, db[gameID]);
 
+    // Callback
+    if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
+
+    // Iterate again
+    removeFromQueue(gameID);
+    getGameInfo();
   }

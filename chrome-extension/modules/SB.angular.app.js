@@ -64,8 +64,11 @@
   //| .config()
   //| + $stateProvider for routes
   //+-------------------------------------------------------
-    .config(['$routeProvider',
-    function($routeProvider){
+    .config(['$routeProvider', '$compileProvider',
+    function($routeProvider, $compileProvider){
+
+      $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|steam):/);
+
       $routeProvider
 
         .when('/dashboard', {
