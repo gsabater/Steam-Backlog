@@ -120,6 +120,8 @@
       // Clean data to avoid loading extra images
       xhr = xhr.replace(/<img[^>]*>/g,"");
 
+      // Stop if age barrier
+
       db[gameID].updated    = n;
       db[gameID].released   = $('.release_date .date', xhr).text();
 
