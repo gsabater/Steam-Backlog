@@ -1,5 +1,5 @@
 ::-webkit-scrollbar{
-  width: 4px; 
+  width: 4px;
   height: 12px;
 }
 
@@ -90,7 +90,7 @@ body{
 }
 
 /*****************************
-/****  Game list and game card 
+/****  Game list and game card
 /*****************************/
 
 .games-list{
@@ -167,7 +167,7 @@ body{
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
-    
+
     font-family: 'Lato';
 
 }
@@ -231,7 +231,7 @@ body{
 }
 
 /*****************************
-/****  Filters bar 
+/****  Filters bar
 /*****************************/
 
 .filter-bar-placeholder{
@@ -322,8 +322,8 @@ position: absolute;
   opacity: 0.3;
 }
 
-.tags-container .selected{
-  color: green;
+.tag-active {
+  background-color: rgba(56, 97, 65, 0.6) !important;
 }
 
 .warning{
@@ -345,7 +345,7 @@ position: absolute;
 }
 
 /*****************************
-/****  game info 
+/****  game info
 /*****************************/
 
 #game-details{
@@ -375,9 +375,15 @@ position: absolute;
 
 #game-details .game-name{
   font-size: 30px;
-  line-height: 130px;
+  line-height: 40px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.51);
   padding-left: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 460px;
+  display: inline-block;
+  margin-top: 41px;
 }
 
 #game-details .game-image{
@@ -429,7 +435,7 @@ color: #A7A7A7;
 }
 
 /*****************************
-/****  NPROGRESS 
+/****  NPROGRESS
 /*****************************/
 
 /* Make clicks pass-through */
