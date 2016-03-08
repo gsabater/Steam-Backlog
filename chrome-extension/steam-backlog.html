@@ -58,7 +58,7 @@
     </div>
 
     <div class="steam-backlog-container container">
-      <div ng-view ng-controller="dashboard"></div>
+      <div ng-view ng-controller="dashboard" scroll-position="scroll" ng-class="{SBfixed: scroll > 50}"></div>
     </div>
 
   <!-- Footer -->

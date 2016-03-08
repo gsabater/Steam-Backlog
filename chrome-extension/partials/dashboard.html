@@ -1,9 +1,10 @@
-<div class="row user-header" ng-if="!gameDetails">
+<div id="user-info" class="row" ng-if="!gameDetails">
   <div class="col-md-3">
     <img src="{{user.info.avatarfull}}" />
     <h1>{{user.info.personaname}}</h1>
     <h3>{{user.info.realname}}</h3>
   </div>
+
 </div>
 
 <!--
@@ -66,53 +67,72 @@
 
       </div>
     </div>
+
 </div>
-<div class="game-details-placeholder" style="height: 300px;" ng-if="gameDetails"></div>
 
-
-<div class="filter-bar">
+<div class="filter-bar" ng-class="{'has-details': gameDetails}">
   <div class="container" style="width: 970px;">
-    <i class="fa fa-search" style=" position: absolute; top: 20px; margin-left: 10px; opacity: 0.4; font-size: 12px;"></i>
-    <input type="text" placeholder="Filter by name" ng-model="filters.string" ng-change="search()" />
+    <div>
+      <i class="fa fa-search" style=" position: absolute; top: 20px; margin-left: 10px; opacity: 0.4; font-size: 12px;"></i>
+      <input type="text" placeholder="Filter by name" ng-model="filters.string" ng-change="search()" />
 
-    <div class="separator"></div>
+      <div class="separator"></div>
 
-    <i class="fa fa-filter"       ng-if="!toggleTags" style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
-    <i class="fa fa-minus-circle" ng-if="toggleTags"  style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
+      <i class="fa fa-filter"       ng-if="!toggleTags" style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
+      <i class="fa fa-minus-circle" ng-if="toggleTags"  style="position: absolute; top: 20px; margin-left: 91px; opacity: 0.4; font-size: 12px;"></i>
 
-    <div class="tags-selector" ng-click="toggleTags = !toggleTags">Select tags</div>
-    <span class="pull-right">showing 32 of {{games.length}} results</span>
+      <div class="tags-selector" ng-click="toggleTags = !toggleTags">Select tags</div>
 
-    <div class="separator"></div>
+      <div class="separator"></div>
 
-    <select ng-model="filters.orderBy" ng-change="search()">
-      <option selected="selected" disabled="disabled">Sort by...</option>
-      <option value="-playtime_forever">Time played</option>
-      <option value="-metascore">Metascore</option>
-      <option value="-steamscore">Steam Score</option>
-      <!-- <option>achievement %</option> -->
-    </select>
+      <select ng-model="filters.orderBy" ng-change="search()">
+        <option selected="selected" disabled="disabled">Sort by...</option>
+        <option value="-playtime_forever">Time played</option>
+        <option value="-metascore">Metascore</option>
+        <option value="-steamscore">Steam Score</option>
+        <!-- <option>achievement %</option> -->
+      </select>
 
-    <!--
+      <div class="inline-block pull-right" style="margin-top: 3px;">
+        <div class="filter" ng-class="{'filter-active': filters.singlePlayer}"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="fa fa-user"></i></div>
+        <div class="filter" ng-class="{'filter-active': filters.multiPlayer}"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="fa fa-users"></i></div>
+        <div class="filter" ng-class="{'filter-active': filters.coop}"          ng-click="filters.coop = !filters.coop; search()" ><i class="fa fa-comments"></i></div>
+        <div class="filter" ng-class="{'filter-active': filters.mmo}"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="fa fa-globe"></i></div>
+        <div class="filter" ng-class="{'filter-active': filters.controller}"    ng-click="filters.controller = !filters.controller; search()" ><i class="fa fa-gamepad"></i></div>
+        <div class="filter" ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
+      </div>
 
-    <div class="filter-list">
-      <span>Something <i class="fa fa-times"></i></span>
+
     </div>
-    -->
+
+    <div style="margin-top: 10px;">
+      <span class="pull-right" style="padding-right: 8px; line-height: 21px; margin-bottom: 5px;">Total of {{games.length}} games</span>
+
+      <div class="filter" ng-if="filters.singlePlayer"  ng-class="{'filter-active': filters.singlePlayer}"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="fa fa-user"></i></div>
+      <div class="filter" ng-if="filters.multiPlayer"   ng-class="{'filter-active': filters.multiPlayer}"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="fa fa-users"></i></div>
+      <div class="filter" ng-if="filters.coop"          ng-class="{'filter-active': filters.coop}"          ng-click="filters.coop = !filters.coop; search()" ><i class="fa fa-comments"></i></div>
+      <div class="filter" ng-if="filters.mmo"           ng-class="{'filter-active': filters.mmo}"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="fa fa-globe"></i></div>
+      <div class="filter" ng-if="filters.controller"    ng-class="{'filter-active': filters.controller}"    ng-click="filters.controller = !filters.controller; search()" ><i class="fa fa-gamepad"></i></div>
+      <div class="filter" ng-if="filters.achievements"  ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
+
+      <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="fa fa-times"></i></div>
+    </div>
+
   </div>
 </div>
 
-    <div class="tags-container" ng-if="toggleTags">
-      <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
-        {{tag}}
-      </span>
-    </div>
 
-<div class="filter-bar-placeholder"></div>
+<div class="tags-container" ng-if="toggleTags" ng-class="{'has-details': gameDetails}">
+  <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
+    {{tag}}
+  </span>
+</div>
 
-  <div class="warning" ng-if="filters.orderBy == '-metascore'">
-    <i class="fa fa-warning"></i> Some games might not appear on the list because it has no metascore or because we don't know it's score.
-  </div>
+
+<div class="warning" ng-if="filters.orderBy == '-metascore'">
+  <i class="fa fa-warning"></i> Some games might not appear on the list because it has no metascore or because we don't know it's score.
+</div>
+
 
 <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
   <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : 32 track by game.appid" class="game-card" ng-click="openDetails(game.appid)">

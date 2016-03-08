@@ -60,6 +60,14 @@ angular.module('SB.services', [])
           // Searchstring filter
           if(searchString && gameName.indexOf(searchString) == -1){ continue; }
 
+          // Attributes filter
+          if(filters.singlePlayer && !game.singlePlayer){ continue;}
+          if(filters.multiPlayer && !game.multiPlayer){ continue;}
+          if(filters.coop && !game.coop){ continue;}
+          if(filters.mmo && !game.mmo){ continue;}
+          if(filters.controller && !game.controller){ continue;}
+          if(filters.achievements && !game.achievements){ continue;}
+
           // Metascore filter
           if(filters.orderBy == "-metascore"){
             if(!game.metascore){ continue; }

@@ -18,13 +18,21 @@ angular.module('SB.controllers')
 //=================================================
   .controller('dashboard', function($rootScope, $scope, $location, SteamAPI, Games, Filter){
 
+    $scope.scroll = 0;
     $scope.toggleTags  = false;
     $scope.gameDetails = false;
 
     $scope.filters = {
-      string: "",
       tags: [],
-      orderBy: "-playtime_forever"
+      string: "",
+      orderBy: "-playtime_forever",
+
+      singlePlayer: false,
+      multiPlayer: false,
+      coop: false,
+      mmo: false,
+      controller: false,
+      achievements: false
     };
 
     //| Initial set of information
