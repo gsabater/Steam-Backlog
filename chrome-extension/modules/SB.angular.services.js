@@ -150,7 +150,7 @@ angular.module('SB.services', [])
           for(g in $rootScope.db){
             item = $rootScope.db[g];
             if(item.tags){
-              for(i in item.tags){
+              for(i in item.tags.slice(0, 4)){
                 if(tags.indexOf(item.tags[i]) == -1){
                   tags.push(item.tags[i]);
                 }else{

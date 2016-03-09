@@ -325,12 +325,13 @@ body{
   color: #FFF;
   /* background: #666; */
   border: none;
-  padding: 2px 18px;
+  padding: 2px 15px;
   /* border-radius: 0px; */
   outline: 1px solid rgba(255, 255, 255, 0.15);
   outline-offset: -1px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
   cursor: pointer;
+  font-size: 13px;
 }
 
 .filter.tag-active {
@@ -445,7 +446,7 @@ position: absolute;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 460px;
+  width: 440px;
   display: inline-block;
   margin-top: 41px;
 }
@@ -492,11 +493,52 @@ color: #A7A7A7;
   /* border-radius: 0px; */
   border-bottom: 1px dashed rgba(204, 204, 204, 0.25);
   cursor: pointer;
+
+  max-width: 120px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-#game-details .game-metascore, #game-details .game-steamscore {
-    padding-left: 270px;
+#game-details .game-features{
+  margin-top: -10px;
 }
+
+#game-details .game-features div {
+  font-size: 18px;
+  margin: 0 2px;
+  /* line-height: 50px; */
+  display: inline-block;
+  border: 1px solid #744F4A;
+  padding: 1px 6px;
+  margin: 10px 2px;
+  background-color: rgba(204, 204, 204, 0.15);
+  color: rgba(5, 20, 29, 0.87);
+  border-radius: 2px;
+  color: #FFF;
+  /* background: #666; */
+  border: none;
+  padding: 2px 10px;
+  /* border-radius: 0px; */
+  /* outline: 1px solid rgba(255, 255, 255, 0.15); */
+  outline-offset: -1px;
+  /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36); */
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#game-details .game-features div.not-available {
+  opacity: 0.4;
+}
+
+#game-details .game-scores {
+  margin-top: -52px;
+  line-height: 37px;
+}
+
+#game-details .game-scores .game-steamscore {
+    margin-left: 10px;
+  }
 
 /*****************************
 /****  NPROGRESS
@@ -576,3 +618,121 @@ color: #A7A7A7;
   100% { transform: rotate(360deg); }
 }
 
+
+/*****************************
+/****  codrops tooltip
+/*****************************/
+
+.tooltip {
+  display: inline;
+  position: relative;
+  z-index: 999;
+  opacity: 1;
+}
+
+/* Trigger text */
+
+.tooltip-item {
+  background: rgba(0,0,0,0.3);
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 700;
+  padding: 0 10px;
+}
+
+/* Gap filler */
+
+.tooltip-item::after {
+  content: '';
+  position: absolute;
+  width: 360px;
+  height: 20px;
+  bottom: 100%;
+  left: 50%;
+  pointer-events: none;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.tooltip:hover .tooltip-item::after {
+  pointer-events: auto;
+}
+
+/* Tooltip */
+
+.tooltip-content {
+  position: absolute;
+  z-index: 9999;
+  width: 160px;
+  left: 50%;
+  margin: 0 0 20px -180px;
+  bottom: 100%;
+  text-align: left;
+  /*
+  font-size: 0.765em;
+  line-height: 1.4;
+  */
+  font-family: 'Open Sans';
+
+  box-shadow: -5px -5px 15px rgba(48,54,61,0.2);
+  background: #2a3035;
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+
+  text-align: center;
+  padding: 6px 0;
+  font-size: 13px;
+  margin: 0 0 20px -80px;
+
+  -webkit-transform: translate3d(0,-10px,0);
+  transform: translate3d(0,-10px,0);
+  -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.tooltip:hover .tooltip-content {
+  pointer-events: auto;
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0) rotate3d(0,0,0,0);
+  transform: translate3d(0,0,0) rotate3d(0,0,0,0);
+}
+
+/* Arrow */
+
+.tooltip-content::after {
+  content: '';
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: transparent;
+  border-top-color: #2a3035;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+/* Tooltip content*/
+
+.tooltip-content img {
+  position: relative;
+  height: 170px;
+  display: block;
+  float: left;
+  margin-right: 1em;
+}
+
+.tooltip-text {
+  font-size: 0.68em;
+  line-height: 1.35;
+  display: block;
+  padding: 1.31em 1.21em 1.21em 0;
+  color: #fff;
+}
+
+.tooltip-text a {
+  font-weight: bold;
+}
