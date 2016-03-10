@@ -22,6 +22,20 @@ angular.module('SB.filters', [])
       };
     })
 
+
+  //| getAllTags
+  //| Returns an array of all tags found in
+  //| http://jsfiddle.net/2ZzZB/56/
+  //+---------------------------------------
+    .filter('startFrom', function() {
+      return function(input, start) {
+        if(!input){ return; }
+        start = +start; //parse to int
+        return input.slice(start);
+      }
+    })
+
+
   //| getAllTags
   //| Returns an array of all tags found in
   //+---------------------------------------
