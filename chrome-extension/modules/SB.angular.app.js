@@ -32,6 +32,8 @@
       window.setTimeout(function(){
         chrome.storage.local.get(null, function(items){
 
+          console.log(items);
+
           db   = items.db;
           user = items.user;
 

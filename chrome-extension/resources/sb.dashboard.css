@@ -97,7 +97,7 @@ body{
     position: absolute;
     top: 100px;
     width: 100%;
-    height: 300px;
+    height: 200px;
   }
 
 
@@ -107,7 +107,7 @@ body{
 
 .games-list{
   padding: 0;
-  padding-top: 400px;
+  padding-top: 300px;
 }
 
 .games-list.cards .game-card{
@@ -176,7 +176,7 @@ body{
 
 .filter-bar{
   position: absolute;
-  top: 400px;
+  top: 300px;
   left: 0;
   z-index: 9999;
   width: 100vw;
@@ -187,7 +187,7 @@ body{
 
 .SBfixed .filter-bar.has-details{
   position: fixed;
-  top: 300px;
+  top: 200px;
 }
 
 .filter-bar input{
@@ -334,9 +334,9 @@ position: absolute;
   z-index: 9999;
 
   left: 0;
-    
+
   width: 100vw;
-  height: 300px;
+  height: 200px;
 
   background-color: #1B2838;
   background-position: center top;
@@ -354,11 +354,11 @@ position: absolute;
 }
 
 #game-details .upper{
-  height: 100px;
+  height: 75px;
 }
 
 #game-details .lower{
-  height: 200px;
+  height: 125px;
   background-color: rgba(0, 0, 0, 0.29);
 }
 
@@ -370,9 +370,9 @@ position: absolute;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 440px;
+  width: 360px;
   display: inline-block;
-  margin-top: 41px;
+  margin-top: 13px;
 }
 
 #game-details .game-image{
@@ -427,7 +427,7 @@ color: #A7A7A7;
 }
 
 #game-details .game-features{
-  margin-top: -10px;
+  margin-top: 0;
 }
 
 #game-details .game-features div {
@@ -435,21 +435,21 @@ color: #A7A7A7;
   margin: 0 2px;
   /* line-height: 50px; */
   display: inline-block;
-  border: 1px solid #744F4A;
+  /* border: 1px solid #744F4A; */
   padding: 1px 6px;
   margin: 10px 2px;
-  background-color: rgba(204, 204, 204, 0.15);
-  color: rgba(5, 20, 29, 0.87);
-  border-radius: 2px;
+  /* background-color: rgba(204, 204, 204, 0.15); */
+  /* color: rgba(5, 20, 29, 0.87); */
+  /* border-radius: 2px; */
   color: #FFF;
   /* background: #666; */
-  border: none;
-  padding: 2px 10px;
+  /* border: none; */
+  /* padding: 2px 10px; */
   /* border-radius: 0px; */
   /* outline: 1px solid rgba(255, 255, 255, 0.15); */
-  outline-offset: -1px;
+  /* outline-offset: -1px; */
   /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36); */
-  cursor: pointer;
+  /* cursor: pointer; */
   font-size: 14px;
 }
 
@@ -458,17 +458,19 @@ color: #A7A7A7;
 }
 
 #game-details .game-scores {
-  margin-top: -52px;
+  margin-top: -20px;
   line-height: 37px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
+  padding-left: 250px;
 }
 
-#game-details .game-scores .game-steamscore {
-    margin-left: 10px;
+#game-details .game-scores .game-metascore {
+    margin-right: 10px;
   }
 
 #game-details .btn-store{
       /* margin-left: 252px; */
+      display: none !important;
     font-size: 18px;
     margin: 0 2px;
     /* line-height: 50px; */

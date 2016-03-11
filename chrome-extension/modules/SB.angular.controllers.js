@@ -32,12 +32,15 @@ angular.module('SB.controllers')
       coop: false,
       mmo: false,
       controller: false,
-      achievements: false
+      achievements: false,
+
+      limit: 30
     };
 
     //| Initial set of information
     //+-------------------------------------------------------
       window.setTimeout(function(){
+        console.log("init");
         $scope.tags    = Games.getAllTags();
         $scope.allTags = $scope.tags;
         $scope.games   = Filter.games($scope.filters).games;
@@ -66,6 +69,12 @@ angular.module('SB.controllers')
 
     //| jQuery Callback
     //+-------------------------------------------------------
+      $scope.loadMore = function(){
+        $scope.filters.limit = $scope.filters.limit + 30;
+      };
+
+    //| jQuery Callback
+    //+-------------------------------------------------------
       $scope.jQueryCallback = function(){
         $scope.search();
         $scope.$apply();
@@ -74,11 +83,11 @@ angular.module('SB.controllers')
     //| openDetails
     //+-------------------------------------------------------
       $scope.openDetails = function(gameID){
-        
+
         var prev = $scope.gameDetails;
         $scope.gameDetails = gameID;
         Games.setApp(gameID);
-        
+
         if(prev !== false){
           $(document.getElementById('game-details')).scope().loadDetails();  }
       }
