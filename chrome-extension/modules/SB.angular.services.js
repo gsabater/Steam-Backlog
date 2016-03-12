@@ -12,34 +12,11 @@
 angular.module('SB.services', [])
 
 //=================================================
-// $http calls
-//=================================================
-  .factory('SteamAPI',['$http',function($http){
-    return {
-      getGames : function(id){
-        return $http.get('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=76561198061541150&include_appinfo=1&include_played_free_games=1&format=json');
-      },
-      getPlayer : function(id){
-        return $http.get('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamids=76561198061541150');
-      },
-      getGameStats : function(id){
-        return $http.get('http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=246420&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=76561198061541150');
-      },
-      getDynamicStore : function(){
-        return $http.get('http://store.steampowered.com/dynamicstore/userdata/');
-      }
-      //http://steamspy.com/api.php
-    };
-  }])
-
-
-//=================================================
 // Filter
 //=================================================
   .factory('Filter', function($rootScope){
 
     var self   = this;
-    //var db     = $rootScope.db;
 
     //| Filter.games: Filter db
     //+ ------------------------
@@ -64,6 +41,7 @@ angular.module('SB.services', [])
           if(filters.singlePlayer && !game.singlePlayer){ continue;}
           if(filters.multiPlayer && !game.multiPlayer){ continue;}
           if(filters.coop && !game.coop){ continue;}
+          if(filters.localCoop && !game.localCoop){ continue;}
           if(filters.mmo && !game.mmo){ continue;}
           if(filters.controller && !game.controller){ continue;}
           if(filters.achievements && !game.achievements){ continue;}
@@ -76,6 +54,12 @@ angular.module('SB.services', [])
           // steamscore filter
           if(filters.orderBy == "-steamscore"){
             if(!game.steamscore){ continue; }
+          }
+
+          // Achievements filter
+          if(filters.orderBy == "-achievementProgress"){
+            if(!game.achievements){ continue; }
+            game.achievementProgress = game.achieved - game.achievements;
           }
 
           //Tag filter
@@ -97,46 +81,30 @@ angular.module('SB.services', [])
         return result;
       };
 
-    //| normalize: normalizes searchstring
-    //+---------------------------------------
-      self.normalize = function(string){
-
-        value = string
-
-        .toLowerCase()
-        .replace('pol.', 'poligono')
-
-        .replace(/á/g, 'a').replace(/à/g, 'a')
-        .replace(/é/g, 'e').replace(/è/g, 'e')
-        .replace(/:/g, '');
-
-        return value;
-      };
-
     return self;
   })
 
 
 //=================================================
 // Games
-// - incrementar (idParada)
-// - recientes (ultima)
-// - checkFavorito (idParada)
-// - ToggleFavorito (idParada)
+// - xxx
 //=================================================
   .factory('Games', function($rootScope){
 
     var activeApp = false;
     return{
 
-      //| checkFavorito
-      //| Returns true or false if stop is fav
+      //| setApp
+      //| Sets the app requested to other controller
       //+---------------------------------------
         setApp: function(newApp){
           activeApp = newApp;
           return true;
         },
 
+      //| getDetails
+      //| Returns the details of the active app
+      //+---------------------------------------
         getDetails: function(){
           return $rootScope.db[activeApp];
         },
@@ -153,8 +121,6 @@ angular.module('SB.services', [])
               for(i in item.tags.slice(0, 3)){
                 if(tags.indexOf(item.tags[i]) == -1){
                   tags.push(item.tags[i]);
-                }else{
-                  //console.log(tags);
                 }
               }
             }

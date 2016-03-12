@@ -16,7 +16,7 @@ angular.module('SB.controllers')
 // dashboard
 // + Function to check the active state and apply
 //=================================================
-  .controller('dashboard', function($rootScope, $scope, $location, SteamAPI, Games, Filter){
+  .controller('dashboard', function($rootScope, $scope, $location, Games, Filter){
 
     $scope.scroll = 0;
     $scope.toggleTags  = false;
@@ -37,25 +37,37 @@ angular.module('SB.controllers')
       limit: 30
     };
 
-    //| Initial set of information
-    //+-------------------------------------------------------
-      window.setTimeout(function(){
-        console.log("init");
-        $scope.tags    = Games.getAllTags();
-        $scope.allTags = $scope.tags;
-        $scope.games   = Filter.games($scope.filters).games;
-        $scope.$apply();
-      }, 100);
 
-    //| Search service
+    //| Initial function
+    //| db is ready, and all tags are gathered.
+    //+-------------------------------------------------------
+      $scope.init = function(){
+        if(!$scope.games){
+          console.log("Dashboard init");
+
+          $scope.tags    = Games.getAllTags();
+          $scope.allTags = $scope.tags;
+
+          $scope.games   = Filter.games($scope.filters).games;
+
+        }
+      };
+
+
+    //| Search function
+    //| Filter games again because filters have changed
     //+-------------------------------------------------------
       $scope.search = function(){
         var filtered = Filter.games($scope.filters);
         $scope.games = filtered.games;
         $scope.tags  = filtered.tags;
+
+        //$scope.filters.limit = 30;
       };
 
-    //| Apply tag and search
+
+    //| filterTag
+    //| Adds a tag to filters and trigger search again
     //+-------------------------------------------------------
       $scope.filterTag = function(tag){
 
@@ -67,18 +79,14 @@ angular.module('SB.controllers')
         $scope.search();
       };
 
-    //| jQuery Callback
+
+    //| loadMore a jQuery called function to
+    //| load elements via infinite scroll
     //+-------------------------------------------------------
       $scope.loadMore = function(){
         $scope.filters.limit = $scope.filters.limit + 30;
       };
 
-    //| jQuery Callback
-    //+-------------------------------------------------------
-      $scope.jQueryCallback = function(){
-        $scope.search();
-        $scope.$apply();
-      };
 
     //| openDetails
     //+-------------------------------------------------------
@@ -88,9 +96,32 @@ angular.module('SB.controllers')
         $scope.gameDetails = gameID;
         Games.setApp(gameID);
 
+        $scope.toggleTags = false;
+        
+        // Load details on games following the first one
         if(prev !== false){
           $(document.getElementById('game-details')).scope().loadDetails();  }
       }
+
+
+    //| jQuery Callback
+    //| is called when a game has been refreshed in jquery
+    //+-------------------------------------------------------
+      $scope.jQueryCallback = function(){
+        //$scope.search();
+        $scope.tags = Games.getAllTags();
+        console.log($scope.tags);
+        $scope.$apply();
+      };
+
+
+    //| Init controller when storage.local is ready and the 
+    //| db is loaded in rootScope.
+    //+-------------------------------------------------------
+      $rootScope.$watch('db', function(){
+        if($rootScope.db !== undefined){ $scope.init(); }
+      });
+
   })
 
 //=================================================
@@ -99,12 +130,57 @@ angular.module('SB.controllers')
 //=================================================
   .controller('gameDetails', function($rootScope, $scope, Games){
 
-    $scope.loadDetails = function(){
-      $scope.gameDetails = Games.getDetails();
-    }
+    NProgress.configure({
+      parent: '.filter-bar',
+    });
+
+    $scope.gameStatus = ["Backlog", "Abandoned", "Completed", "Mastered"]; //shelved (abandoned), backlog, completed, mastered, playing
+
+    //| Search function
+    //| Filter games again because filters have changed
+    //+-------------------------------------------------------
+      $scope.loadDetails = function(){
+        $scope.gameDetails = Games.getDetails();
+        
+        // The game is still missing
+        if(!$scope.gameDetails.updated){
+          $scope.refreshGameDetails(); }
+      }
+
+    //| Search function
+    //| Filter games again because filters have changed
+    //+-------------------------------------------------------
+      $scope.refreshGameDetails = function(){
+        NProgress.start();
+        scrapGame($scope.gameDetails.appid, "updateGameDetails");
+      }
+
+    //| Search function
+    //| Filter games again because filters have changed
+    //+-------------------------------------------------------
+      $scope.updateGameDetails = function(){
+        NProgress.done();
+      }
+
+    //| Search function
+    //| Filter games again because filters have changed
+    //+-------------------------------------------------------
+      $scope.saveGameDetails = function(){
+        db[$scope.gameDetails.appid] = $scope.gameDetails;
+        chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
+      }
+
+    //| Search function
+    //| Filter games again because filters have changed
+    //+-------------------------------------------------------
+      $scope.changeStatus = function(){
+        if(!$scope.gameDetails.status){ $scope.gameDetails.status = "Backlog"; }
+        var index = $scope.gameStatus.indexOf($scope.gameDetails.status);
+
+        $scope.gameDetails.status = $scope.gameStatus[index+1];
+        $scope.saveGameDetails();
+      }
 
     $scope.loadDetails();
-
-    console.warn("?",$scope.gameDetails);
 
   })

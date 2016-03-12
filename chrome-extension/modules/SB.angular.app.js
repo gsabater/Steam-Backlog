@@ -29,26 +29,23 @@
     // Get chrome.storage.local
     // And set user and db values got from jQuery
     //=================================================
-      window.setTimeout(function(){
-        chrome.storage.local.get(null, function(items){
+      chrome.storage.local.get(null, function(items){
 
-          console.log(items);
+        //console.log(items);
 
-          db   = items.db;
-          user = items.user;
+        db   = items.db;
+        user = items.user;
 
-          $rootScope.db   = items.db;
-          $rootScope.user = items.user;
+        $rootScope.db   = items.db;
+        $rootScope.user = items.user;
 
-          updateDB();
+        updateDB();
 
-        });
-      }, 50);
+      });
 
 
       $rootScope.app = {
         v: 0,
-        background: "440",
         listStyle: "cards" //table
       };
 

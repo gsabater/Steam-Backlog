@@ -17,7 +17,9 @@ var angular = false,
     user   = false,
     db     = false,
     dbTop  = false,
+    hltbs  = false,
     queue  = [],
+    QHLTBS = [],
 
   settings = {
     option: false
@@ -40,9 +42,9 @@ var angular = false,
 
     NProgress.configure({
       parent: '#sb-detected-games-bar',
-      trickleRate: 0.02,
-      trickleSpeed: 1000,
-      speed: 100
+      //trickleRate: 0.02,
+      //trickleSpeed: 1000,
+      //speed: 100
     });
 
     // Flag execution in dashboard
@@ -62,16 +64,14 @@ var angular = false,
 
     // Update user information
     GetPlayerSummaries();
-
   }
 
 
   //+-------------------------------------------------------
   //| jQuery Actions
-  //| Start getOwnedGames
   //+-------------------------------------------------------
     $("body").on("click", "#sb-btn-scan-games", function(){
-      getOwnedGames(); });
+      doFastScan(); });
 
     $("body").on("click", ".sb-close-panel", function(){
       $(this).closest(".profile_customization").remove(); });

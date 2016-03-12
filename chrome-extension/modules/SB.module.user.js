@@ -59,8 +59,16 @@
       return;
     }
 
-  //| Check that current url is own profile to avoid extra charge
-  //| update library if proceeds
+  //| Checks if the fastScan is not already done
+  //| This is done silently because some user enters the backlog
+  //| without a first scan, and is just an ajax query to steam
+  //+-------------------------------------------------------
+    if(Object.keys(db).length === 0){
+      doFastScan("silent");
+    }
+
+  //| Check current url, so it loads only on current profile
+  //| Or a product page the user owns.
   //+-------------------------------------------------------
     var playerURL = user.info.profileurl.split("steamcommunity.com")[1].replace(/^\/|\/$/g, '').toLowerCase();
     var windowURL = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
@@ -74,16 +82,16 @@
       console.warn(windowURL, playerURL);
       return; }
 
-      detectOwnedGames();
+      detectNewGames();
       updateDB();
   }
 
 
 //+-------------------------------------------------------
-//| detectOwnedGames()
+//| detectNewGames()
 //| + Gets owned games from all games and profile number.
 //+-------------------------------------------------------
-  function detectOwnedGames(){
+  function detectNewGames(){
 
   //| Get number of owned games
   //| If profile is higher, set a message.
@@ -113,40 +121,43 @@
 
     }
 
-    // On click, execute getOwnedGames
+    // On click, execute doFastScan
   }
 
 
 //+-------------------------------------------------------
-//| getOwnedGames()
+//| doFastScan()
 //| + Sets visual feedback for the profile, and calls
-//| + GetOwnedGames() and pass to createDB() to build db
+//| + doFastScan() and pass to createDB() to build db
 //+-------------------------------------------------------
-  function getOwnedGames(){
+  function doFastScan(silent){
 
-    $("#sb-btn-scan-games").hide();
-    NProgress.start();
+    if(!silent){
 
-    $('#sb-detected-games-content').addClass("detecting-games").html(
-     // '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'
-     'Adding games, please wait. This won\'t take long.<br><div class="sb-add-games-feedback">&nbsp;</div>');
+      $("#sb-btn-scan-games").hide();
+      NProgress.start();
 
-  //| Get all games by steamid
-  //| execute createDB to build db
-  //+-------------------------------------------------------
-    $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){
-      createDB(data.response);
-    });
+      $('#sb-detected-games-content').addClass("detecting-games").html(
+       // '<div id="sb-scan-games" class="btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'
+       'Adding games, please wait. This won\'t take long.<br><div class="sb-add-games-feedback">&nbsp;</div>');
+    }
+
+    //| Get all games by steamid
+    //| execute createDB to build db
+    //+-------------------------------------------------------
+      $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){
+        createDB(data.response, silent);
+      });
 
   }
 
 
 //+-------------------------------------------------------
 //| createDB()
-//| + Given the response from GetOwnedGames(),
+//| + Given the response from doFastScan(),
 //| + creates the initial db var that serves as library
 //+-------------------------------------------------------
-  function createDB(xhr){
+  function createDB(steam, silent){
 
     var d = new Date();
     var n = d.getTime();
@@ -154,12 +165,12 @@
     var topTen   = [];
     var SteamIDs = [];
 
-  //| iterate over all GetOwnedGames() ids
-  //| and push to db with time info
+  //| Iterate over any game in the steam api
+  //| and push to db with some initial data
   //+-------------------------------------------------------
-    for(var i = 0, len = xhr.games.length; i < len; i++){
+    for(var i = 0, len = steam.games.length; i < len; i++){
 
-      e = xhr.games[i];
+      e = steam.games[i];
       if(!db.hasOwnProperty(e.appid)){
 
         topTen.push([e.appid, e.playtime_forever]);
@@ -173,21 +184,28 @@
       }
     };
 
-    // Order all db by playtime_forever
-    topTen.sort(function(a, b) {return b[1] - a[1]});
-    for(var i = 0; i < topTen.length; i++){
-      SteamIDs.push(topTen[i][0]); }
+    // fill HLTB information on games 
+    howLongToBeatSteam("all");
 
-    // getGameInfo() for the first ten most played games
-    SteamIDs = SteamIDs.slice(0, 15);
-    queue = queue.concat(SteamIDs);
+    if(silent){
+      chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
+    }else{
 
-    getGameInfo();
+      // Order all db by playtime_forever
+      topTen = topTen.slice(0, 5);
+      topTen.sort(function(a, b) {return b[1] - a[1]});
+      for(var i = 0; i < topTen.length; i++){
+        SteamIDs.push(topTen[i][0]); }
 
-    // Set properties
-    user.ownedGames   = xhr.games.length;
-    var profileGames  = $(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text().replace(",", "");
-    user.profileGames = parseInt(profileGames);
+      // getGameInfo() for the most played games
+      queue = queue.concat(SteamIDs);
+      getGameInfo();
 
-    chrome.storage.local.set({'user': user}, function(){  /* console.warn("User saved", user); */ });
+      // Save user information
+      user.ownedGames   = steam.games.length;
+      var profileGames  = $(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text().replace(",", "");
+      user.profileGames = parseInt(profileGames);
+
+      chrome.storage.local.set({'user': user}, function(){  /* console.warn("User saved", user); */ });
+    }
   }

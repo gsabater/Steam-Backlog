@@ -3,7 +3,7 @@
 
   "name": "Steam Backlog DEV ALPHA",
   "description": "Chrome extension that helps you play and organize the always growing steam backlog of games.",
-  "version": "0.4.2",
+  "version": "0.5.0",
 
   "options_page": "sb.options.html",
 
@@ -27,11 +27,8 @@
   ],
 
   "page_action": {
-    "default_icon": {
-      "19": "assets/icon19.png",
-      "38": "assets/icon38.png"
-    },
-    "default_title": "Google Mail",
+
+    "default_title": "Steam Backlog",
     "default_popup": "popup.html"
   },
 
@@ -46,6 +43,7 @@
     "storage",
     "webRequest",
     "webRequestBlocking",
-    "notifications"
+    "notifications",
+    "http://www.howlongtobeatsteam.com/"
   ]
 }

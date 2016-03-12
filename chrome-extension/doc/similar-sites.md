@@ -10,6 +10,8 @@
 * http://steamcharts.com/ (scrapable)
 * http://www.lorenzostanco.com/lab/steam/
 * https://www.igdb.com/games/the-witcher-3-the-wild-hunt-hearts-of-stone
+* http://www.gaugepowered.com/
+*http://steamspy.com/about
 
 #### promo
 
