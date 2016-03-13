@@ -62,6 +62,12 @@ angular.module('SB.services', [])
             game.achievementProgress = game.achieved - game.achievements;
           }
 
+          //HLTB filter
+          if(filters.orderBy == "timeToBeat"){
+            if(!game.hltb == "unavailable"){ continue; }
+            game.timeToBeat = game.hltb.MainTtb; // - game.playtime_forever;
+          }
+
           //Tag filter
           if(filters.tags.length > 0){
             if(!game.tags){ continue; }

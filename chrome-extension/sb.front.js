@@ -12,14 +12,19 @@
 var v = "0.3";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
-var angular = false,
-    games  = false,
-    user   = false,
-    db     = false,
-    dbTop  = false,
-    hltbs  = false,
-    queue  = [],
-    QHLTBS = [],
+var angular = false,    // A flag in dashboard used in callbacks
+
+    user    = false,    // Main user chrome.local var
+    db      = false,    // Main games chrome.local var
+
+    dbScan  = true,     // Flag used to inform about updating
+    dbTop   = false,    // Array of top 5 most played games
+    hltbs   = false,    // howlongtobeatsteam ajax container
+
+    queue   = [],
+    QHLTBS  = [],
+
+//games   = false, remove in review
 
   settings = {
     option: false

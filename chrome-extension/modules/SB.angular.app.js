@@ -31,7 +31,7 @@
     //=================================================
       chrome.storage.local.get(null, function(items){
 
-        //console.log(items);
+        console.log(items);
 
         db   = items.db;
         user = items.user;

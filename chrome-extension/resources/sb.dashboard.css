@@ -639,6 +639,41 @@ margin-left: 252px; */
   color: rgba(224, 217, 217, 0.7) !important;
 }
 
+.game-hltb{
+  display: block !important;
+  color: #A7A7A7;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68) !important;
+  
+  line-height: 0px !important;
+  padding: 2px !important;
+  margin-top: -3px !important;
+}
+
+.game-hltb a {
+  color: #A7A7A7;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
+  text-decoration: none;
+}
+
+.game-hltb i {
+  color: #A7A7A7;
+  margin-left: 15px;
+}
+
+.game-hltb a:first-child i, .game-hltb .credit i{
+  margin-left: 0;
+}
+
+.game-hltb .credit{
+  display: block;
+  font-size: 10px;
+  color: #A7A7A7;
+  font-size: 11px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
+  text-decoration: none;
+  padding-top: 2px;
+}
 
 /*****************************
 /****  NPROGRESS
@@ -784,6 +819,10 @@ margin-left: 252px; */
   padding: 6px 0;
   font-size: 13px;
   margin: 0 0 20px -80px;
+
+  outline: 1px solid rgba(25, 17, 17, 0.54);
+  /* font-weight: bold; */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
 
   -webkit-transform: translate3d(0,-10px,0);
   transform: translate3d(0,-10px,0);

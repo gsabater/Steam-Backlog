@@ -18,6 +18,8 @@ angular.module('SB.controllers')
 //=================================================
   .controller('dashboard', function($rootScope, $scope, $location, Games, Filter){
 
+    $scope.scan = dbScan;
+    
     $scope.scroll = 0;
     $scope.toggleTags  = false;
     $scope.gameDetails = false;
@@ -109,8 +111,7 @@ angular.module('SB.controllers')
     //+-------------------------------------------------------
       $scope.jQueryCallback = function(){
         //$scope.search();
-        $scope.tags = Games.getAllTags();
-        console.log($scope.tags);
+        $scope.allTags = Games.getAllTags();
         $scope.$apply();
       };
 

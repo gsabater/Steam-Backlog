@@ -15,10 +15,17 @@ angular.module('SB.filters', [])
   //| Returns an array of all tags found in
   //+---------------------------------------
     .filter('minutesToHours', function(){
-      return function(minutes){
+      return function(minutes, rest){
         var hours = minutes / 60;
-        //var remaining = minutes - (hours.toFixed(0) * 60);
-        return hours.toFixed(0) + "h";// " + remaining + "'";
+
+        if(hours < 1){
+          return minutes + "'";
+        }else{
+          remaining = (rest)? " " + (minutes - (Math.floor(hours) * 60)) + "'" : "";
+          if(remaining == " 0'"){ remaining = ""; }
+          return hours.toFixed(0) + "h" + remaining;
+        }
+      
       };
     })
 

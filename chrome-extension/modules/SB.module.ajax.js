@@ -46,7 +46,13 @@
     }
 
     // Finally, get info for the selected game
-    if(gameID){ getGameInfo(gameID); }else{ clearTimeout(timeout); }
+    if(gameID){ getGameInfo(gameID); }else{
+      dbScan = false;
+      clearTimeout(timeout);
+      if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
+
+      console.warn("Everything is up to date");
+    }
   }
 
 
@@ -138,11 +144,18 @@
       db[gameID].updated    = n;
       db[gameID].released   = $('.release_date .date', xhr).text();
 
-      steamscore = $(".glance_ctn_responsive_left div[data-store-tooltip]", xhr).attr("data-store-tooltip");
-      steamscore = steamscore.split("%")[0];
+      if($(".game_review_summary", xhr).length){
 
-      db[gameID].steamscore    = steamscore;
-      db[gameID].steamscoreAlt = $(".game_review_summary", xhr).text();
+        steamscore = $(".glance_ctn_responsive_left div[data-store-tooltip]", xhr).attr("data-store-tooltip");
+        steamscore = steamscore.split("%")[0];
+
+        db[gameID].steamscore    = steamscore;
+        db[gameID].steamscoreAlt = $(".game_review_summary", xhr).text();
+
+      }else{
+        db[gameID].steamscore    = 0;
+        db[gameID].steamscoreAlt = "No score yet";
+      }
 
       // If Metascore
       if($("#game_area_metascore", xhr).length){
@@ -208,6 +221,7 @@
           }
         }
 
+        howLongToBeatSteam(gameID);
         saveGameInfo(gameID, extra);
 
       });
@@ -222,8 +236,9 @@
 //+-------------------------------------------------------
   function howLongToBeatSteam(gameID){
 
-    console.log(gameID, hltbs);
-
+  //| Get howlongtobeatsteam info
+  //| And call function again
+  //+-------------------------------------------------------
     if(hltbs == false){
       $.getJSON("http://www.howlongtobeatsteam.com/api/games/library/" + user.steamid + "?callback=jsonp", function(hltbs){
       }).always(function(xhr){
@@ -234,22 +249,33 @@
       return;
     }
 
-    // For every hltb game, save on db
+  //| For every game into howlongtobeatsteam
+  //| insert data on db
+  //+-------------------------------------------------------
     for(i in hltbs.Games){
       game = hltbs.Games[i].SteamAppData;
 
-      //if((gameID !== "all") && (game.SteamAppId !== gameID)){ continue; }
-      //if((gameID !== "all") && (game.SteamAppId == gameID)){ break; }
-
+      if((gameID !== "all") && (game.SteamAppId !== gameID)){ continue; }
       db[game.SteamAppId].hltb = game.HltbInfo;
+
+      if((gameID !== "all") && (game.SteamAppId == gameID)){ break; }
     }
 
-    // Mark shitty excluded games
-    if(gameID !== "all"){ console.log("not all"); return; }
-    for(i in db){
-      game = db[i];
-      if(!game.hasOwnProperty("hltb")){ db[i].hltb = "unavailable"; }
+
+  //| Mark missing games from HLTBS in db to avoid calling again
+  //+-------------------------------------------------------
+    if(gameID == "all"){
+      for(i in db){
+        game = db[i];
+        if(!game.hasOwnProperty("hltb")){ db[i].hltb = "unavailable"; } }
     }
+
+
+  //| Save totals and db objects in chrome.local
+  //+-------------------------------------------------------
+    user.hltbs = hltbs.Totals;
+    chrome.storage.local.set({'user': user}, function(){ /* console.warn("user saved", user); */ });
+    chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
 
   }
 
@@ -284,7 +310,7 @@
     if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
 
     if(angular && (extra == "updateGameDetails")){
-      if(angular){ $(document.getElementById('game-details')).scope().updateGameDetails(); }
+      $(document.getElementById('game-details')).scope().updateGameDetails();
       return;
     }
 
