@@ -1,14 +1,52 @@
 <div class="bg-overlay"></div>
 <div class="row">
-  <h2>Steam Backlog options</h2>
-  {{background}}
+  <h2 class="option-title">Steam Backlog options</h2>
+  <span class="pull-right note">v 4-5-6</span>
 </div>
 
 <div class="row container-boxed">
   <div class="col-md-12">
-    <h4>Lorem ipsum</h4>
-    asd
+    <h4>Library options</h4>
+
+    <div class="option-group">
+      <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox1" value="option1"> Scan games automatically
+      </label>
+      <p>If active, the Backlog will fetch game information from steam <span class="tooltip">every few seconds<span class="tooltip-content">Only when you are in the Backlog page</span></span> until all your library have been scanned. The game data is valid for a month before being scanned again.<br>
+      <span class="note">Archived games will not be scanned, reducing the library scan time and load.</span></p>
+    </div>
+
+    <div class="option-group">
+      <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox1" value="option1"> Include wishlist games
+      </label>
+      <p>If active, the Backlog will include your <a href="http://steamcommunity.com/profiles/{{user.steamid}}/wishlist" target="_blank">wishlisted games</a> in the list. Because, fuck you.</p>
+    </div>
+
   </div>
+
+<hr>
+
+  <div class="col-md-12">
+    <h4>Dashboard options</h4>
+
+    <div class="option-group">
+      <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox1" value="option1">Show MMO tag in the filter bar
+      </label>
+      <p>If active, it will show the <i class="ion-earth" style="margin: 1px 2px;   background-color: rgba(204, 204, 204, 0.15);    border-radius: 2px;    color: #FFF;    padding: 2px 9px;    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);    font-size: 11px;"></i> MMO tag option in the filter bar.</p>
+    </div>
+
+    <div class="option-group">
+      <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox1" value="option1">Include archived games in dashboard
+      </label>
+      <p>If active, any archived game will be included in the search results.<br>
+        Disable to completely hide archived games from your dashboard.</p>
+    </div>
+
+  </div>
+
 <hr>
   <div class="col-md-12">
     <h4>Restart library</h4>

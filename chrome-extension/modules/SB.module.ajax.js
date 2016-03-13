@@ -168,6 +168,7 @@
       $("#category_block .game_area_details_specs a", xhr).each(function(i,e){
         if($(e).attr("href").indexOf("category2=22") == -1){ db[gameID].achievements = false; }
 
+        if($(e).attr("href").indexOf("category2=29") > -1){ db[gameID].cards = true; }
         if($(e).attr("href").indexOf("category2=28") > -1){ db[gameID].controller = true; }
         if($(e).attr("href").indexOf("category2=18") > -1){ db[gameID].controller = true; }
 

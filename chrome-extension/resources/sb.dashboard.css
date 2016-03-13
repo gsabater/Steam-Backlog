@@ -93,7 +93,7 @@ body{
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.51);
   width: 360px;
   display: inline-block;
-  margin: 15px;
+  margin: 25px;
 }
 
 .container-boxed {
@@ -104,6 +104,9 @@ body{
 
   font-size: 13px;
   color: #A2A2A2;
+
+  width: 80%;
+  margin: auto;
 }
 
 .container-boxed hr{
@@ -715,10 +718,53 @@ margin-left: 252px; */
 /****  options page
 /*****************************/
 
+.option-title{
+  margin-left: 130px !important;
+}
 
+.option-group{
+  margin: 10px 0 20px 0;
+}
 
+.option-group label{
+font-weight: 400;
+    color: #577292;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.51);
+    font-family: 'Lato';
+    letter-spacing: 0.3px;
+    font-size: 15px;
+}
 
+.option-group [type='checkbox']{
+  opacity: 0.7;
+}
 
+.option-group p{
+  padding-left: 20px;
+}
+
+.option-group .tooltip {
+  font-family: "Open Sans";
+  font-size: inherit;
+  background-color: rgb(10, 15, 21);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.24);
+  border-radius: 0px;
+  padding: 1px 5px;
+  cursor: pointer;
+
+  margin: 1px 2px;
+  background-color: rgba(204, 204, 204, 0.06);
+  border-radius: 2px;
+  /* color: #FFF; */
+  padding: 2px 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
+  font-size: 11px;
+}
+
+span.note {
+    font-style: italic;
+    color: #636363;
+}
 /*****************************
 /****  NPROGRESS
 /*****************************/
@@ -848,8 +894,8 @@ margin-left: 252px; */
   bottom: 100%;
   text-align: left;
   /*
-  font-size: 0.765em;
-  line-height: 1.4;
+    font-size: 0.765em;
+    line-height: 1.4;
   */
   font-family: 'Open Sans';
 
@@ -860,7 +906,7 @@ margin-left: 252px; */
   pointer-events: none;
 
   text-align: center;
-  padding: 6px 0;
+  padding: 6px;
   font-size: 13px;
   margin: 0 0 20px -80px;
 

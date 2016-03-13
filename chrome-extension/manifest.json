@@ -3,9 +3,9 @@
 
   "name": "Steam Backlog DEV ALPHA",
   "description": "Chrome extension that helps you play and organize the always growing steam backlog of games.",
-  "version": "0.6.0",
+  "version": "0.6.1",
 
-  "options_page": "sb.options.html",
+  "options_page": "steam-backlog.html#/options",
 
   "content_scripts": [
     {

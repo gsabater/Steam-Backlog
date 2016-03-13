@@ -9,7 +9,7 @@
 //
 //=================================================================
 
-var v = "0.3";
+var v = "0.6.1";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
 var angular = false,    // A flag in dashboard used in callbacks
@@ -23,8 +23,6 @@ var angular = false,    // A flag in dashboard used in callbacks
 
     queue   = [],
     QHLTBS  = [],
-
-//games   = false, remove in review
 
   settings = {
     option: false
