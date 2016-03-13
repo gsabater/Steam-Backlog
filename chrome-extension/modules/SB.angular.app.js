@@ -75,14 +75,31 @@
           controller: 'dashboard'
         })
 
-        .when('/dashboard/:phoneId', {
-          templateUrl: 'partials/phone-detail.html',
-          controller: 'PhoneDetailCtrl'
+        .when('/progress', {
+          templateUrl: 'partials/progress.html',
+          controller: 'ProgressCtrl'
+        })
+
+        .when('/options', {
+          templateUrl: 'partials/options.html',
+          controller: 'OptionsCtrl'
+        })
+
+        .when('/about', {
+          templateUrl: 'partials/about.html',
+          controller: 'AboutCtrl'
         })
 
         .otherwise({
           redirectTo: '/dashboard'
         });
     }])
-
 ;
+
+
+/*
+.when('/dashboard/:phoneId', {
+  templateUrl: 'partials/phone-detail.html',
+  controller: 'PhoneDetailCtrl'
+})
+*/

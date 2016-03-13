@@ -145,13 +145,11 @@
       db[gameID].released   = $('.release_date .date', xhr).text();
 
       if($(".game_review_summary", xhr).length){
-
         steamscore = $(".glance_ctn_responsive_left div[data-store-tooltip]", xhr).attr("data-store-tooltip");
         steamscore = steamscore.split("%")[0];
 
-        db[gameID].steamscore    = steamscore;
+        db[gameID].steamscore    = steamscore.replace(/\D/g,'');
         db[gameID].steamscoreAlt = $(".game_review_summary", xhr).text();
-
       }else{
         db[gameID].steamscore    = 0;
         db[gameID].steamscoreAlt = "No score yet";

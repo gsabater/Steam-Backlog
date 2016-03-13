@@ -133,7 +133,17 @@ angular.module('SB.services', [])
           }
 
           return tags;
-        }
+        },
+
+
+      //| getRandomGame
+      //| Returns a random game.
+      //+---------------------------------------
+        getRandomGame: function(){
+          num = Math.floor((Math.random() * Object.keys(db).length));
+          console.log(num);
+          return $rootScope.db[num];
+        },
 
     };
   })

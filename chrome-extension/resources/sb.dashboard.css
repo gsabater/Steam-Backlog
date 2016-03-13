@@ -88,10 +88,47 @@ body{
   width: 970px;
 }
 
+.steam-backlog-container h2{
+  line-height: 40px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.51);
+  width: 360px;
+  display: inline-block;
+  margin: 15px;
+}
+
+.container-boxed {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  border-radius: 1px;
+  background: rgba(0, 0, 0, 0.4);
+
+  font-size: 13px;
+  color: #A2A2A2;
+}
+
+.container-boxed hr{
+  float: left;
+  width: 80%;
+  border-color: #1B2838;
+  margin-left: 10%;
+}
+
 .container{
   /*background-image: url('http://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/203160/716f4289fa8eb7cd5772c432671c60db2e00cfac.jpg'); */
 }
 
+.bg-overlay{
+      width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -10;
+    background-color: #1B2838;
+
+    background-position: center top;
+    background-repeat: no-repeat;
+}
 
 /*****************************
 /****  User info area
@@ -294,18 +331,17 @@ body{
 /****  tags
 /*****************************/
 .tags-container{
-position: absolute;
-  left: 0;
-  width: 100vw;
-  background: #1F1F1F;
-  /* background-color: rgba(0, 0, 0, 0.9); */
-  padding: 10px;
-  z-index: 99999;
-  text-align: center;
-  overflow: hidden;
-  height: 289px;
-  top: 100px;
-  min-height: 300px;
+    position: absolute;
+    left: 0;
+    width: calc(100vw - 5px);
+    background: #1F1F1F;
+    /* background-color: rgba(0, 0, 0, 0.9); */
+    padding: 10px;
+    z-index: 99999;
+    text-align: center;
+    overflow-y: scroll;
+    height: 200px;
+    top: 100px;
 }
 
 .SBfixed .tags-container.has-details{
@@ -674,6 +710,14 @@ margin-left: 252px; */
   text-decoration: none;
   padding-top: 2px;
 }
+
+/*****************************
+/****  options page
+/*****************************/
+
+
+
+
 
 /*****************************
 /****  NPROGRESS

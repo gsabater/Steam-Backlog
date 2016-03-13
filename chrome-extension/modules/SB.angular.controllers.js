@@ -16,7 +16,7 @@ angular.module('SB.controllers')
 // dashboard
 // + Function to check the active state and apply
 //=================================================
-  .controller('dashboard', function($rootScope, $scope, $location, Games, Filter){
+  .controller('dashboard', function($rootScope, $scope, Games, Filter){
 
     $scope.scan = dbScan;
     
@@ -183,5 +183,40 @@ angular.module('SB.controllers')
       }
 
     $scope.loadDetails();
+
+  })
+
+//=================================================
+// ProgressCtrl
+// + Function to check the active state and apply
+//=================================================
+  .controller('ProgressCtrl', function($rootScope, $scope){
+
+  })
+
+//=================================================
+// OptionsCtrl
+// + Function to check the active state and apply
+//=================================================
+  .controller('OptionsCtrl', function($rootScope, $scope, Games){
+
+    //background = Games.getRandomGame();
+    //$scope.background = background.appid;
+
+    //| Save Options
+    //| Updates chrome.local with the options settings.
+    //+-------------------------------------------------------
+      $scope.saveOptions = function(){
+        db[$scope.gameDetails.appid] = $scope.gameDetails;
+        chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
+      }
+
+  })
+
+//=================================================
+// AboutCtrl
+// + Function to check the active state and apply
+//=================================================
+  .controller('AboutCtrl', function($rootScope, $scope){
 
   })

@@ -98,7 +98,7 @@
             <a href="http://steamcommunity.com/stats/{{gameDetails.appid}}/achievements" target="_blank" class="tooltip" ng-if="gameDetails.achievements"><i class="ion-trophy"></i> {{gameDetails.achieved}} / {{gameDetails.achievements}} <span class="tooltip-content">Achieved {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% </span></a>
             <span class="credit"><i class="ion-ios-pulse-strong"></i> data provided by howlongtobeatsteam.com</span>
           </div>
-          <div class="game-hltb" ng-if="gameDetails.hltb !== 'unavailable'">
+          <div class="game-hltb" ng-if="gameDetails.hltb && (gameDetails.hltb !== 'unavailable')">
             <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-android-time"></i> {{gameDetails.hltb.MainTtb | minutesToHours: 'complete' }}<span class="tooltip-content">Main story</span></a>
             <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-ribbon-b"></i> {{gameDetails.hltb.ExtrasTtb | minutesToHours }}<span class="tooltip-content">Main + extras</span></a>
             <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-fireball"></i> {{gameDetails.hltb.CompletionistTtb | minutesToHours }}<span class="tooltip-content">Completionist</span></a>
@@ -123,6 +123,7 @@
   <div class="container" style="width: 970px;">
     <div>
       <i class="fa fa-search" style=" position: absolute; top: 20px; margin-left: 10px; opacity: 0.4; font-size: 12px;"></i>
+      <i class="ion-close-circled" ng-if="filters.string.length > 0" style="position: absolute; top: 16px; margin-left: 198px; opacity: 0.4; font-size: 14px; cursor: pointer;" ng-click="filters.string =''; search()"></i>
       <input type="text" placeholder="Filter by name" ng-model="filters.string" ng-change="search()" />
 
       <div class="separator"></div>
@@ -163,18 +164,17 @@
       <span class="pull-right"><i class="ion-grid"></i></span>
       <span class="pull-right" style="padding-right: 8px; line-height: 21px; margin-bottom: 5px;">Total of {{games.length}} games</span>
 
+      <div class="filter filter-active" ng-if="filters.singlePlayer"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i></div>
+      <div class="filter filter-active" ng-if="filters.multiPlayer"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i></div>
+      <div class="filter filter-active" ng-if="filters.mmo"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i></div>
 
-      <div class="filter" ng-if="filters.singlePlayer"  ng-class="{'filter-active': filters.singlePlayer}"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i></div>
-      <div class="filter" ng-if="filters.multiPlayer"   ng-class="{'filter-active': filters.multiPlayer}"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i></div>
-      <div class="filter" ng-if="filters.mmo"           ng-class="{'filter-active': filters.mmo}"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i></div>
+      <div class="filter filter-active" ng-if="filters.coop"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i></div>
+      <div class="filter filter-active" ng-if="filters.localCoop"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i></div>
 
-      <div class="filter" ng-if="filters.coop"          ng-class="{'filter-active': filters.coop}"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i></div>
-      <div class="filter" ng-if="filters.localCoop"     ng-class="{'filter-active': filters.localCoop}"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i></div>
+      <div class="filter filter-active" ng-if="filters.controller"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i></div>
+      <div class="filter filter-active" ng-if="filters.achievements"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
 
-      <div class="filter" ng-if="filters.controller"    ng-class="{'filter-active': filters.controller}"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i></div>
-      <div class="filter" ng-if="filters.achievements"  ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
-
-      <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="fa fa-times"></i></div>
+      <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="ion-android-close"></i></div>
     </div>
 
   </div>
