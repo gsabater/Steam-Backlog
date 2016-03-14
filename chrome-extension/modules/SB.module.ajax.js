@@ -93,7 +93,7 @@
               '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'
             + 'All untracked games have been added to the extension memory, and some <br>of your most played games have been scanned.<br><br>'
             + 'Why don\'t you take a look at your <a href="'+chrome.extension.getURL("/steam-backlog.html")+'" style="color: #bada55;">Backlog</a> ?</div>');
-      
+
       NProgress.done(); }
       return;
     }
@@ -253,28 +253,27 @@
   //+-------------------------------------------------------
     for(i in hltbs.Games){
       game = hltbs.Games[i].SteamAppData;
+      //console.log(game.SteamAppId, game);
 
-      if((gameID !== "all") && (game.SteamAppId !== gameID)){ continue; }
-      db[game.SteamAppId].hltb = game.HltbInfo;
-
-      if((gameID !== "all") && (game.SteamAppId == gameID)){ break; }
+      //if((gameID !== "all") && (game.SteamAppId !== gameID)){ continue; }
+      if(db[game.SteamAppId]){ db[game.SteamAppId].hltb = game.HltbInfo; }
+      //if((gameID !== "all") && (game.SteamAppId == gameID)){ break; }
     }
-
 
   //| Mark missing games from HLTBS in db to avoid calling again
   //+-------------------------------------------------------
-    if(gameID == "all"){
+    //if(gameID == "all"){
       for(i in db){
         game = db[i];
         if(!game.hasOwnProperty("hltb")){ db[i].hltb = "unavailable"; } }
-    }
-
+    //}
 
   //| Save totals and db objects in chrome.local
   //+-------------------------------------------------------
     user.hltbs = hltbs.Totals;
     chrome.storage.local.set({'user': user}, function(){ /* console.warn("user saved", user); */ });
     chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
+    if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
 
   }
 
