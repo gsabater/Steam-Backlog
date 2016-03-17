@@ -41,7 +41,7 @@
     <div class="upper">
       <div class="container">
         <div class="pull-right text-right game-updated">
-          Updated {{gameDetails.updated | date:'dd MMM, HH:mm:ss'}} 
+          Updated {{gameDetails.updated | date:'dd MMM, HH:mm:ss'}}
           <span class="btn-refresh" ng-click="refreshGameDetails();"><i class="ion-android-refresh"></i></span>
         </div>
 
@@ -56,7 +56,7 @@
     <div class="lower">
       <div class="container">
 
-        <div class="pull-right game-status">
+        <div class="game-status" style="display: none;">
           <!-- <div class="box game-achievements" ng-if="gameDetails.achievements"><h4>Achievements</h4><i class="fa fa-trophy"  style="font-size: 20px;"></i><br>{{gameDetails.achieved}} / {{gameDetails.achievements}} ( {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% )</div> -->
           <div class="box game-status {{gameDetails.status}}" ng-click="changeStatus()">
             <h4>Game status</h4>
@@ -74,6 +74,20 @@
           status: shelved (abandoned), backlog, completed, mastered, playing.<br>
           flags: replay, favorited
           -->
+        </div>
+
+        <div class="game-status">
+            <div style="display: block; margin: 0;">Game status</div>
+            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopesinglePlayer}"  ><i class="ion-ios-person"></i>   <span class="tooltip-content clearfix">Backlog</span></div>
+            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopemultiPlayer}"   ><i class="ion-ios-people"></i>   <span class="tooltip-content clearfix">Completed</span></div>
+            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">Mastered</span></div>
+            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">Abandoned</span></div>
+
+            <div style="display: block; margin: 0;">Tag your game</div>
+            <div class="tooltip" ng-class="{'active': !gameDetails.nopesinglePlayer}"  ><i class="ion-ios-person"></i>   <span class="tooltip-content clearfix">Currently playing</span></div>
+            <div class="tooltip" ng-class="{'active': !gameDetails.nopemultiPlayer}"   ><i class="ion-ios-people"></i>   <span class="tooltip-content clearfix">Favorited</span></div>
+            <div class="tooltip" ng-class="{'active': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">I really want to play this</span></div>
+            <div class="tooltip" ng-class="{'active': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">I Want to play it again</span></div>
         </div>
 
         <div class="game-scores">
@@ -105,10 +119,9 @@
             <a href="http://steamcommunity.com/stats/{{gameDetails.appid}}/achievements" target="_blank" class="tooltip" ng-if="gameDetails.achievements"><i class="ion-trophy"></i> {{gameDetails.achieved}} / {{gameDetails.achievements}} <span class="tooltip-content">Achieved {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% </span></a>
             <span class="credit"><i class="ion-ios-pulse-strong"></i> data provided by howlongtobeatsteam.com</span>
           </div>
-
         </div>
 
-        <!-- 
+        <!--
         <div class="game-tags">
           <span class="tag" ng-class="{'tag-active': filters.tags.indexOf(tag) > -1}" ng-repeat="tag in gameDetails.tags | limitTo: 3" ng-click="filterTag(tag)">{{tag}}</span>
         </div>
@@ -214,7 +227,7 @@
       <div class="game-steamscore card-second-line" ng-if="filters.orderBy == '-steamscore'"><i class="fa fa-steam"></i> {{game.steamscore}}, {{game.steamscoreAlt}}</div>
       <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div>
       <div class="game-timetobeat card-second-line" ng-if="filters.orderBy == 'timeToBeat'">Played {{game.playtime_forever | minutesToHours}}<span class="pull-right"><i class="ion-android-time"></i> {{game.hltb.MainTtb | minutesToHours }} <i class="ion-ribbon-b" style="margin-left: 5px;"></i> {{game.hltb.ExtrasTtb | minutesToHours }}</span></div>
-      
+
       <div class="game-tags card-second-line"      ng-if="filters.tags.length > 0">
         <span ng-repeat="tag in game.tags | limitTo : 5" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">{{tag}}</span>
       </div>

@@ -426,6 +426,7 @@ body{
 }
 
 #game-details .container{
+  position: relative;
   width: 970px !important;
   padding: 20px;
 }
@@ -607,10 +608,30 @@ margin-left: 252px; */
 }
 
 #game-details .game-status{
-  text-align: right;
-    width: 300px;
-    /* background: red; */
-    margin-top: 0px;
+text-align: right;
+  position: absolute;
+  right: 15px;
+  margin-top: 0px;
+  top: 10px;
+}
+
+.game-status div {
+  display: inline-block;
+  padding: 1px 6px;
+  margin: 0px 3px;
+  color: #FFF;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.game-status h5 {
+    text-align: left;
+    margin: 2px;
+    font-size: 15px;
+}
+
+.game-status i {
+  font-size: 20px;
 }
 
 #game-details .game-status .box{
@@ -682,7 +703,7 @@ margin-left: 252px; */
   display: block !important;
   color: #A7A7A7;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68) !important;
-  
+
   line-height: 0px !important;
   padding: 2px !important;
   margin-top: -3px !important;
