@@ -60,14 +60,14 @@
           <!-- <div class="box game-achievements" ng-if="gameDetails.achievements"><h4>Achievements</h4><i class="fa fa-trophy"  style="font-size: 20px;"></i><br>{{gameDetails.achieved}} / {{gameDetails.achievements}} ( {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% )</div> -->
           <div class="box game-status {{gameDetails.status}}" ng-click="changeStatus()">
             <h4>Game status</h4>
-            <i class="fa fa-cubes" ng-if="!gameDetails.status || gameDetails.status == 'Backlog'" style="font-size: 20px;"></i>
-            <i class="ion-android-notifications-off ng-scope" ng-if="gameDetails.status == 'Abandoned'"></i>
-            <i class="ion-flag" ng-if="gameDetails.status == 'Completed'"></i>
-            <i class="ion-ribbon-b" ng-if="gameDetails.status == 'Mastered'"></i>
+            <i class="fa fa-cubes" ng-if="!gameDetails.status || gameDetails.status == 'backlog'" style="font-size: 20px;"></i>
+            <i class="ion-android-notifications-off ng-scope" ng-if="gameDetails.status == 'abandoned'"></i>
+            <i class="ion-flag" ng-if="gameDetails.status == 'completed'"></i>
+            <i class="ion-ribbon-b" ng-if="gameDetails.status == 'mastered'"></i>
             <br>{{gameDetails.status || "Backlog"}}<i class="change-status ion-android-sync"></i>
           </div>
           <div class="box game-playing" style="display: none;"><h4>Currently playing</h4><i class="fa fa-user"></i></div>
-          <p class="game-updated ng-scope" ng-if="gameDetails.status == 'Abandoned'" style=" display: none; font-size: 10px;">If you abandon a game, it won't appear on the game list</p>
+          <p class="game-updated ng-scope" ng-if="gameDetails.status == 'abandoned'" style=" display: none; font-size: 10px;">If you abandon a game, it won't appear on the game list</p>
           <!-- Currently playing: yes / no -->
           <!--
           <br>
@@ -77,17 +77,17 @@
         </div>
 
         <div class="game-status">
-            <div style="display: block; margin: 0;">Game status</div>
-            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopesinglePlayer}"  ><i class="ion-ios-person"></i>   <span class="tooltip-content clearfix">Backlog</span></div>
-            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopemultiPlayer}"   ><i class="ion-ios-people"></i>   <span class="tooltip-content clearfix">Completed</span></div>
-            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">Mastered</span></div>
-            <div class="tooltip" ng-class="{'not-available': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">Abandoned</span></div>
+            <div class="status-heading" style="display: block; margin: 0; font-weight: 100; color: #A7A7A7; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);">Game status</div>
+            <div class="tooltip btn-b" ng-click="changeStatus('backlog')"   ng-class="{'active': gameDetails.status == 'backlog' || !gameDetails.status}"> <i class="ion-clipboard"></i>   <span class="tooltip-content clearfix">Backlog</span></div>
+            <div class="tooltip btn-c" ng-click="changeStatus('completed')" ng-class="{'active': gameDetails.status == 'completed'}">                      <i class="ion-flag"></i>   <span class="tooltip-content clearfix">Completed</span></div>
+            <div class="tooltip btn-m" ng-click="changeStatus('mastered')"  ng-class="{'active': gameDetails.status == 'mastered'}">                       <i class="ion-ribbon-b"></i>        <span class="tooltip-content clearfix">Mastered</span></div>
+            <div class="tooltip btn-a" ng-click="changeStatus('abandoned')" ng-class="{'active': gameDetails.status == 'abandoned'}">                      <i class="ion-folder"></i>        <span class="tooltip-content clearfix">Abandoned</span></div>
 
-            <div style="display: block; margin: 0;">Tag your game</div>
-            <div class="tooltip" ng-class="{'active': !gameDetails.nopesinglePlayer}"  ><i class="ion-ios-person"></i>   <span class="tooltip-content clearfix">Currently playing</span></div>
-            <div class="tooltip" ng-class="{'active': !gameDetails.nopemultiPlayer}"   ><i class="ion-ios-people"></i>   <span class="tooltip-content clearfix">Favorited</span></div>
-            <div class="tooltip" ng-class="{'active': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">I really want to play this</span></div>
-            <div class="tooltip" ng-class="{'active': !gameDetails.nopemmo}"           ><i class="ion-earth"></i>        <span class="tooltip-content clearfix">I Want to play it again</span></div>
+            <div class="status-heading" style="display: block; margin: 0; font-weight: 100; color: #A7A7A7; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);">Tag your game</div>
+            <div class="tooltip btn-t" ng-click="changeUserStatus('playing')"   ng-class="{'active': gameDetails.userStatus.playing}">      <i class="ion-android-navigate"></i>   <span class="tooltip-content clearfix">Currently playing</span></div>
+            <div class="tooltip btn-t" ng-click="changeUserStatus('favorite')"  ng-class="{'active': gameDetails.userStatus.favorite}">     <i class="ion-heart"></i>   <span class="tooltip-content clearfix">Favorited</span></div>
+            <div class="tooltip btn-t" ng-click="changeUserStatus('wanted')"    ng-class="{'active': gameDetails.userStatus.wanted}">       <i class="ion-bookmark"></i>        <span class="tooltip-content clearfix">I really want to play this someday</span></div>
+            <div class="tooltip btn-t" ng-click="changeUserStatus('replay')"    ng-class="{'active': gameDetails.userStatus.replay}">       <i class="ion-android-sync"></i>        <span class="tooltip-content clearfix">I Want to replay it again</span></div>
         </div>
 
         <div class="game-scores">

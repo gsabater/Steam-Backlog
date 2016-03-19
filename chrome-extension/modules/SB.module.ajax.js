@@ -206,15 +206,7 @@
 
             // Save mastered status if all achievements.
             if( data.playerstats.achievements.length == achieved){
-              db[gameID].status = "Mastered";
-              /*
-              if(!db[gameID].status){
-                db[gameID].status = "mastered";
-              }else{
-                db[gameID].status.completed = true;
-                db[gameID].status.mastered = true;
-              }
-              */
+              if( !db[gameID].status ){ db[gameID].status = "mastered"; }
             }
 
           }

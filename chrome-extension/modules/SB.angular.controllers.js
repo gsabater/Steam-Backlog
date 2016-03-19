@@ -174,11 +174,18 @@ angular.module('SB.controllers')
     //| Search function
     //| Filter games again because filters have changed
     //+-------------------------------------------------------
-      $scope.changeStatus = function(){
-        if(!$scope.gameDetails.status){ $scope.gameDetails.status = "Backlog"; }
-        var index = $scope.gameStatus.indexOf($scope.gameDetails.status);
+      $scope.changeStatus = function(newStatus){
+        $scope.gameDetails.status = newStatus;
+        $scope.saveGameDetails();
+      }
 
-        $scope.gameDetails.status = $scope.gameStatus[index+1];
+    //| Search function
+    //| Filter games again because filters have changed
+    //+-------------------------------------------------------
+      $scope.changeUserStatus = function(status){
+        if(!$scope.gameDetails.userStatus || (typeof $scope.gameDetails.userStatus !== "object")){ $scope.gameDetails.userStatus = {}; }
+        $scope.gameDetails.userStatus[status] = !$scope.gameDetails.userStatus[status];
+        
         $scope.saveGameDetails();
       }
 
