@@ -53,17 +53,17 @@
         </span>
       </div>
       <div class="supernav_container" style="width: 100%;">
-        <a class="menuitem supernav" href="#/dashboard">DASHBOARD</a>
-        <a class="menuitem supernav" href="#/progress">MY PROGRESS</a>
-        <a class="menuitem supernav" href="#/options">Configuration</a>
-        <a class="menuitem supernav" href="#/about">About</a>
+        <a class="menuitem supernav" ng-href="#/dashboard">DASHBOARD</a>
+        <a class="menuitem supernav" ng-href="#/progress">MY PROGRESS</a>
+        <a class="menuitem supernav" ng-href="#/options">Configuration</a>
+        <a class="menuitem supernav" ng-href="#/about">About</a>
         <a class="menuitem supernav pull-right" style="padding-right: 200px;" href="{{user.info.profileurl}}">BACK TO STEAM</a>
       </div>
       </div>
     </div>
 
     <div class="steam-backlog-container container">
-      <div ng-view ng-controller="dashboard" scroll-position="scroll" ng-class="{SBfixed: scroll > 50}"></div>
+      <div ng-view></div>
     </div>
 
   <!-- Footer -->

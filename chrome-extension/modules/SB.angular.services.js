@@ -115,27 +115,6 @@ angular.module('SB.services', [])
           return $rootScope.db[activeApp];
         },
 
-      //| getAllTags
-      //| Returns an array of all tags in db
-      //+---------------------------------------
-        getAllTags: function(){
-          tags = [];
-
-          for(g in $rootScope.db){
-            item = $rootScope.db[g];
-            if(item.tags){
-              for(i in item.tags.slice(0, 3)){
-                if(tags.indexOf(item.tags[i]) == -1){
-                  tags.push(item.tags[i]);
-                }
-              }
-            }
-          }
-
-          return tags;
-        },
-
-
       //| getRandomGame
       //| Returns a random game.
       //+---------------------------------------
@@ -143,6 +122,49 @@ angular.module('SB.services', [])
           num = Math.floor((Math.random() * Object.keys(db).length));
           console.log(num);
           return $rootScope.db[num];
+        },
+
+
+      //| getAllTags
+      //| Returns an array of all tags in db
+      //+---------------------------------------
+        overview: function(){
+          tags  = [];
+          games = {
+            backlog:    [],
+            completed:  [],
+            mastered:   [],
+            abandoned:  [],
+
+            playing:    []
+          };
+
+          for(i in $rootScope.db){
+            game = $rootScope.db[i];
+
+            // Game status
+            if(game.status == "backlog"){   games.backlog.push(i); }
+            if(game.status == "completed"){ games.completed.push(i); }
+            if(game.status == "mastered"){  games.mastered.push(i); }
+            if(game.status == "abandoned"){ games.abandoned.push(i); }
+
+            // Game User status
+            if(game.userStatus){
+              console.warn(game);
+              if(game.userStatus.playing == true){   games.playing.push(i); }
+            }
+
+            // Game tags
+            if(game.tags){
+              for(t in game.tags.slice(0, 3)){
+                if(tags.indexOf(game.tags[t]) == -1){
+                  tags.push(game.tags[t]);
+                }
+              }
+            }
+          }
+
+          return {games: games, tags: tags};
         },
 
     };

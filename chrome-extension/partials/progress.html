@@ -1,1 +1,56 @@
--
+<div class="bg-overlay"></div>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-12">
+
+    <h4><i class="ion-android-navigate"></i> Currently playing</h4>
+
+    <p class="msg" ng-if="overview.playing.length == 0">
+      You have no games in the "currently playing" list.<br>
+      Add games by clicking the tag <i class="ion-android-navigate" style="margin: 1px 2px; background-color: rgba(204, 204, 204, 0.15); border-radius: 2px; color: #FFF; padding: 2px 9px; font-size: 11px;"></i> in the game details.
+    </p>
+
+    <div class="games-list cards" style="padding-top: 0; margin-bottom: 50px;">
+
+      <div ng-repeat="game in overview.playing | limitTo : filters.limit track by game" class="game-card" ng-click="openDetails(game.appid)">
+        <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game}}/capsule_231x87.jpg" /></div>
+        <div class="game-name">{{db[game].name}}</div>
+        <div class="game-playime card-second-line">
+          Played {{db[game].playtime_forever | minutesToHours}}
+          <span class="pull-right" ng-if="db[game].achievements"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{db[game].achieved}} / {{db[game].achievements}}</span></div>
+      </div>
+
+    </div>
+
+    <h4><i class="ion-ribbon-a"></i> Mastered games</h4>
+
+    <div class="games-list cards" style="padding-top: 0; margin-bottom: 50px;">
+
+      <div ng-repeat="game in overview.mastered | limitTo : filters.limit track by game" class="game-card" ng-click="openDetails(game.appid)">
+        <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game}}/capsule_231x87.jpg" /></div>
+        <div class="game-name">{{db[game].name}}</div>
+        <div class="game-playime card-second-line">
+          Played {{db[game].playtime_forever | minutesToHours}}
+          <span class="pull-right" ng-if="db[game].achievements"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{db[game].achieved}} / {{db[game].achievements}}</span></div>
+      </div>
+
+    </div>
+
+    <h4><i class="ion-flag"></i> Completed games</h4>
+
+    <div class="games-list cards" style="padding-top: 0;">
+
+      <div ng-repeat="game in overview.completed | limitTo : filters.limit track by game" class="game-card" ng-click="openDetails(game.appid)">
+        <div class="game-image"><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game}}/capsule_231x87.jpg" /></div>
+        <div class="game-name">{{db[game].name}}</div>
+        <div class="game-playime card-second-line">
+          Played {{db[game].playtime_forever | minutesToHours}}
+          <span class="pull-right" ng-if="db[game].achievements"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{db[game].achieved}} / {{db[game].achievements}}</span></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

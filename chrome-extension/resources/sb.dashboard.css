@@ -104,8 +104,6 @@ body{
 
   font-size: 13px;
   color: #A2A2A2;
-
-  width: 80%;
   margin: auto;
 }
 
@@ -700,6 +698,14 @@ text-align: right;
   text-decoration: none;
   padding-top: 2px;
 }
+
+/*****************************
+/****  progress page
+/*****************************/
+  .msg{
+    color: #6E7174;
+    padding: 10px 5px;
+  }
 
 /*****************************
 /****  options page

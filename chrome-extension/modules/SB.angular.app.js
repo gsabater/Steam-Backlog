@@ -65,7 +65,7 @@
   //+-------------------------------------------------------
     .config(['$routeProvider', '$compileProvider',
     function($routeProvider, $compileProvider){
-
+      
       $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|steam):/);
 
       $routeProvider
@@ -76,8 +76,8 @@
         })
 
         .when('/progress', {
-          templateUrl: 'partials/progress.html',
-          controller: 'ProgressCtrl'
+          templateUrl: 'partials/progress.html'
+          //controller: 'ProgressCtrl'
         })
 
         .when('/options', {

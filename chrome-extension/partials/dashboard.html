@@ -218,7 +218,7 @@
     </div>
 
     <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openDetails(game.appid)">
-    <div class="bookmark" ng-if="($index%10 == 0) && $index > 0"><i class="ion-bookmark"></i> {{ ::$index}}</div>
+    <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div>
       <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
 

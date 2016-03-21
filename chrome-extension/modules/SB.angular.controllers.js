@@ -47,10 +47,13 @@ angular.module('SB.controllers')
         if(!$scope.games){
           console.log("Dashboard init");
 
-          $scope.tags    = Games.getAllTags();
-          $scope.allTags = $scope.tags;
+          $scope.overview = Games.overview();
 
-          $scope.games   = Filter.games($scope.filters).games;
+          $scope.overview = $scope.overview.games;
+          $scope.tags     = $scope.overview.tags;
+          $scope.allTags  = $scope.tags;
+
+          $scope.games    = Filter.games($scope.filters).games;
 
         }
       };
@@ -197,7 +200,16 @@ angular.module('SB.controllers')
 // ProgressCtrl
 // + Function to check the active state and apply
 //=================================================
-  .controller('ProgressCtrl', function($rootScope, $scope){
+  .controller('ProgressCtrl', function($rootScope, $scope, Games){
+
+    $scope.filters = {
+
+
+      limit: 12
+    };
+
+    $scope.overview = Games.overview();
+    $scope.overview = $scope.overview.games;
 
   })
 

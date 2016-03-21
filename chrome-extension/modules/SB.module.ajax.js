@@ -15,7 +15,7 @@
 //+-------------------------------------------------------
   function updateDB(){
 
-    var time    = (angular)? 3000 : 15000;
+    var time    = (isAngular)? 3000 : 15000;
     var timeout = window.setTimeout(function(){ updateDB(); }, time);
 
     // stop execution if we don't have any games
@@ -49,7 +49,7 @@
     if(gameID){ getGameInfo(gameID); }else{
       dbScan = false;
       clearTimeout(timeout);
-      if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
+      if(isAngular){ $("div[ng-view]").scope().jQueryCallback(); }
 
       console.warn("Everything is up to date");
     }
@@ -265,7 +265,7 @@
     user.hltbs = hltbs.Totals;
     chrome.storage.local.set({'user': user}, function(){ /* console.warn("user saved", user); */ });
     chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
-    if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
+    if(isAngular){ $("div[ng-view]").scope().jQueryCallback(); }
 
   }
 
@@ -297,9 +297,9 @@
     //console.log("Steam Backlog: Done updating ", gameID, db[gameID]);
 
     // Callback
-    if(angular){ $("div[ng-view]").scope().jQueryCallback(); }
+    if(isAngular){ $("div[ng-view]").scope().jQueryCallback(); }
 
-    if(angular && (extra == "updateGameDetails")){
+    if(isAngular && (extra == "updateGameDetails")){
       $(document.getElementById('game-details')).scope().updateGameDetails();
       return;
     }
