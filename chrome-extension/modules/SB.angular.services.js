@@ -125,7 +125,7 @@ angular.module('SB.services', [])
         },
 
 
-      //| getAllTags
+      //| overview
       //| Returns an array of all tags in db
       //+---------------------------------------
         overview: function(){

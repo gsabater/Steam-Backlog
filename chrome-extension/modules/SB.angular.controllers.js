@@ -114,7 +114,11 @@ angular.module('SB.controllers')
     //+-------------------------------------------------------
       $scope.jQueryCallback = function(){
         //$scope.search();
-        $scope.allTags = Games.getAllTags();
+        //$scope.allTags = Games.getAllTags();
+
+        $scope.overview = Games.overview();
+        $scope.allTags  = $scope.overview.tags;
+
         $scope.$apply();
       };
 

@@ -15,9 +15,9 @@
       ],
 
       "js": [
-        "lib/jquery-2.1.4.min.js",
+        "lib/jquery.backlog.min.js",
         "lib/nprogress.js",
-        "sb.front.js",
+        "SB.front.js",
         "modules/SB.module.ajax.js",
         "modules/SB.module.user.js"
       ],
