@@ -14,8 +14,13 @@
     <link rel="stylesheet" type="text/css" href="resources/component.css" />
 
     <!-- Page and plugin styles -->
+    <!--
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    -->
     <link rel="stylesheet" href="lib/magnific-popup.css" type="text/css">
+
     <link rel="stylesheet" href="resources/sb.dashboard.css" type="text/css">
+    <link rel="stylesheet" href="resources/sb.dashboard-layout.css" type="text/css">
 
     <script src="resources/modernizr-custom.js"></script>
 
@@ -36,7 +41,16 @@
       </header>
 
       <button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
-      <nav id="ml-menu" class="menu">
+
+      <nav class="menu SB-sidemenu">
+        <ul>
+          <li>Dashboard</li>
+          <li>Settings</li>
+        </ul>
+      </nav>
+
+      <nav id="ml-menu" class="menu SB-sidemenu-categories">
+
         <button class="action action--close" aria-label="Close Menu"><span class="icon icon--cross"></span></button>
         <div class="menu__wrap">
           <ul data-menu="main" class="menu__level">
@@ -106,6 +120,7 @@
             <li class="menu__item"><a class="menu__link" href="#">Allergy Free</a></li>
           </ul>
         </div>
+
       </nav>
 
       <div class="content">
