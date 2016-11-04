@@ -9,7 +9,8 @@
 //
 //=================================================================
 
-var v = "0.6.5";
+var v = "0.7.0";
+
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
 var isAngular = false,    // A flag in dashboard used in callbacks
@@ -43,6 +44,8 @@ var isAngular = false,    // A flag in dashboard used in callbacks
 //| + Adds menu option
 //+-------------------------------------------------------
   function init(storage){
+
+    return false;
 
     NProgress.configure({
       parent: '#sb-detected-games-bar',

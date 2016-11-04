@@ -39,6 +39,8 @@
         $rootScope.db   = items.db;
         $rootScope.user = items.user;
 
+        console.log("stopped DB update");
+        return false;
         updateDB();
 
       });
@@ -65,7 +67,7 @@
   //+-------------------------------------------------------
     .config(['$routeProvider', '$compileProvider',
     function($routeProvider, $compileProvider){
-      
+
       $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|steam):/);
 
       $routeProvider
