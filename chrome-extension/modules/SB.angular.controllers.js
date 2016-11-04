@@ -18,8 +18,9 @@ angular.module('SB.controllers')
 //=================================================
   .controller('dashboard', function($rootScope, $scope, Games, Filter){
 
-    $scope.scan = dbScan;
-    
+    // dbscan is an indicator of currently doing ajax
+    //$scope.scan = dbScan;
+
     $scope.scroll = 0;
     $scope.toggleTags  = false;
     $scope.gameDetails = false;
@@ -102,7 +103,7 @@ angular.module('SB.controllers')
         Games.setApp(gameID);
 
         $scope.toggleTags = false;
-        
+
         // Load details on games following the first one
         if(prev !== false){
           $(document.getElementById('game-details')).scope().loadDetails();  }
@@ -123,7 +124,7 @@ angular.module('SB.controllers')
       };
 
 
-    //| Init controller when storage.local is ready and the 
+    //| Init controller when storage.local is ready and the
     //| db is loaded in rootScope.
     //+-------------------------------------------------------
       $rootScope.$watch('db', function(){
@@ -149,7 +150,7 @@ angular.module('SB.controllers')
     //+-------------------------------------------------------
       $scope.loadDetails = function(){
         $scope.gameDetails = Games.getDetails();
-        
+
         // The game is still missing
         if(!$scope.gameDetails.updated){
           $scope.refreshGameDetails(); }
@@ -192,7 +193,7 @@ angular.module('SB.controllers')
       $scope.changeUserStatus = function(status){
         if(!$scope.gameDetails.userStatus || (typeof $scope.gameDetails.userStatus !== "object")){ $scope.gameDetails.userStatus = {}; }
         $scope.gameDetails.userStatus[status] = !$scope.gameDetails.userStatus[status];
-        
+
         $scope.saveGameDetails();
       }
 
