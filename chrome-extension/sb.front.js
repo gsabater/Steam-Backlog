@@ -44,7 +44,7 @@ var isAngular = false,    // A flag in dashboard used in callbacks
 //| + Adds menu option
 //+-------------------------------------------------------
   function init(storage){
-
+    $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
     return false;
 
     NProgress.configure({
