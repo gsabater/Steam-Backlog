@@ -7,6 +7,21 @@ header{
   font-size: 75%;
 }
 
+.SB-sidemenu ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.SB-sidemenu li{
+  padding: 8px;
+  padding-left: 50px;
+}
+
+.SB-sidemenu li.active {
+  background-color: rgba(105, 105, 146, 0.64);
+}
+
 .SB-sidemenu-categories{
   top:250px;
 }
