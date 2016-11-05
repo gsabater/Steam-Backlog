@@ -5,6 +5,7 @@
   <h1 class="bp-header__title">Steam Backlog</h1>
 </div>
 -->
+
 <div class="SB-filter-bar">
 
   <div class="SB-filter-bar-search">
@@ -18,7 +19,7 @@
     <i class="ion-android-more-vertical"></i>
   </div>
 
-  <div class="SB-filter-bar-results">
+  <div class="SB-filter-bar-layout">
     <span><i class="ion-grid"></i></span>
     <span><i class="ion-navicon-round"></i></span>
   </div>
@@ -40,8 +41,24 @@
     </select>
   </div>
 
-  <i class="fa fa-filter"       ng-if="!toggleTags" style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
-  <i class="fa fa-minus-circle" ng-if="toggleTags"  style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
+  <div class="SB-filter-bar-tags SB-btn">
+    <i class="fa fa-filter"></i>
+  </div>
+  <!--
+  <div style="margin-top: 10px;">
+
+    <div class="filter filter-active" ng-if="filters.singlePlayer"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i></div>
+    <div class="filter filter-active" ng-if="filters.multiPlayer"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i></div>
+    <div class="filter filter-active" ng-if="filters.mmo"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i></div>
+
+    <div class="filter filter-active" ng-if="filters.coop"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i></div>
+    <div class="filter filter-active" ng-if="filters.localCoop"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i></div>
+
+    <div class="filter filter-active" ng-if="filters.controller"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i></div>
+    <div class="filter filter-active" ng-if="filters.achievements"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
+
+    <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="ion-android-close"></i></div>
+  </div>
 
   <div class="inline-block pull-right" style="margin-top: 3px;">
     <div class="filter tooltip" ng-class="{'filter-active': filters.singlePlayer}"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i>       <span class="tooltip-content clearfix">Single Player</span></div>
@@ -54,8 +71,8 @@
     <div class="filter tooltip" ng-class="{'filter-active': filters.controller}"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i>        <span class="tooltip-content clearfix">Controller support</span></div>
     <div class="filter tooltip" ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i><span class="tooltip-content clearfix">Achievements</span></div>
   </div>
-  
-  <div class="tags-container" ng-if="toggleTags" ng-class="{'has-details': gameDetails}">
+-->
+  <div class="tags-container" ng-class="{'has-details': gameDetails}">
     <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
       {{tag}}
     </span>
@@ -69,32 +86,10 @@
   <div class="container" style="width: 970px;">
     <div>
 
-
-      <i class="fa fa-filter"       ng-if="!toggleTags" style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
-      <i class="fa fa-minus-circle" ng-if="toggleTags"  style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
-
       <div class="tags-selector" ng-click="toggleTags = !toggleTags">Select tags</div>
 
 
 
-
-    </div>
-
-    <div style="margin-top: 10px;">
-      <span class="pull-right"><i class="ion-grid"></i></span>
-      <span class="pull-right" style="padding-right: 8px; line-height: 21px; margin-bottom: 5px;">Total of {{games.length}} games</span>
-
-      <div class="filter filter-active" ng-if="filters.singlePlayer"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i></div>
-      <div class="filter filter-active" ng-if="filters.multiPlayer"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i></div>
-      <div class="filter filter-active" ng-if="filters.mmo"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i></div>
-
-      <div class="filter filter-active" ng-if="filters.coop"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i></div>
-      <div class="filter filter-active" ng-if="filters.localCoop"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i></div>
-
-      <div class="filter filter-active" ng-if="filters.controller"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i></div>
-      <div class="filter filter-active" ng-if="filters.achievements"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
-
-      <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="ion-android-close"></i></div>
     </div>
 
   </div>

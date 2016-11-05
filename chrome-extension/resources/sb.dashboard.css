@@ -242,6 +242,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 250px;
+  width: 150px;
   /* color: #fff; */
   /* background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126); */
   background-color: #14181f;
@@ -307,7 +308,7 @@
   background-color: rgba(56, 97, 65, 0.4) !important;
 }
 
-.SB-filter-bar-results{
+.SB-filter-bar-layout{
   display: inline-block;
   float: right;
   margin-right: 50px;
@@ -317,11 +318,11 @@
   font-size: 14px;
 }
 
-.SB-filter-bar-results span {
+.SB-filter-bar-layout span {
   padding: 0 2px;
 }
 
-.SB-filter-bar-results span i {
+.SB-filter-bar-layout span i {
   font-size: 19px;
 }
 
@@ -342,6 +343,9 @@
 
 .SB-games-count.has-secondary-bar{
   top: -23px;
+}
+
+.SB-filter-bar-tags{
 
 }
 

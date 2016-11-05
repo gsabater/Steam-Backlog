@@ -55,7 +55,6 @@ angular.module('SB.controllers')
           $scope.allTags  = $scope.tags;
 
           $scope.games    = Filter.games($scope.filters).games;
-
         }
       };
 
