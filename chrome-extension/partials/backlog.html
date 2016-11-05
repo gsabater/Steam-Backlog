@@ -1,3 +1,29 @@
+<!-- <h1><i class="fa fa-gamepad"></i> Backlog</h1> -->
+<!--
+<div class="bp-header__main">
+  <span class="bp-header__present">Gohrum </span>
+  <h1 class="bp-header__title">Steam Backlog</h1>
+</div>
+-->
+<div class="SB-filter-bar">
+  <div class="SB-filter-bar-search">
+    <i class="fa fa-search"></i>
+    <i class="ion-close-circled" ng-if="filters.string.length > 0" style="position: absolute; top: 16px; margin-left: 198px; opacity: 0.4; font-size: 14px; cursor: pointer;" ng-click="filters.string =''; search()"></i>
+    <input type="text" placeholder="search your games" ng-model="filters.string" ng-change="search()" />
+  </div>
+
+  <div class="SB-filter-bar-results">
+    <span>{{games.length}} games</span>
+  </div>
+
+  <div class="tags-container" ng-if="toggleTags" ng-class="{'has-details': gameDetails}">
+    <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
+      {{tag}}
+    </span>
+  </div>
+
+</div>
+
 <div class="filter-bar" ng-class="{'has-details': gameDetails}" style="display:none;">
   <div class="container" style="width: 970px;">
     <div>
@@ -36,7 +62,6 @@
         <div class="filter tooltip" ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i><span class="tooltip-content clearfix">Achievements</span></div>
       </div>
 
-
     </div>
 
     <div style="margin-top: 10px;">
@@ -66,7 +91,7 @@
   </span>
 </div>
 
-<div class="inner-content">
+<div class="inner-content" style="margin-top: 50px;">
   <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
 
     <div class="scan-alert">
