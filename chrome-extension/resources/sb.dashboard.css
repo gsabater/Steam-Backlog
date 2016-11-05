@@ -154,11 +154,24 @@
   background-color: rgba(9, 11, 14, 0.7);
   border-bottom: 1px solid rgba(245, 245, 245, 0.10);
 
-  transition: all 0.5s;
+  transition: background-color 0.5s, height 0.5s;
 }
 
 .SB-filter-bar:hover{
   background-color: rgba(9, 11, 14, 1); }
+
+.SB-filter-bar.secondary-bar {
+  height: 0;
+  top: 45px;
+  background-color: #262c38;
+  overflow: hidden;
+  padding: 0;
+}
+
+.SB-filter-bar.secondary-bar.show {
+  height: auto;
+  padding: 10px;
+}
 
 .SB-filter-bar-search{
   display: inline-block;
@@ -171,13 +184,13 @@
   margin: 0;
   padding: 0;
   line-height: 0;
-  width: 36px;
+  width: 30px;
   text-align: center;
   border-radius: 3px;
 }
 
 .SB-filter-bar-expand:hover{
-  background-color: rgba(33, 40, 51, 0.55); }
+  background-color: rgba(47, 58, 74, 0.85); }
 
 .SB-filter-bar .fa-search{
   margin-left: 10px;
@@ -186,7 +199,7 @@
 }
 
 .SB-filter-bar .fa-sort{
-  margin-left: 0px;
+  margin-left: 12px;
   margin-right: 8px;
   opacity: 0.4;
   font-size: 12px;
@@ -264,24 +277,24 @@
 }
 
 .filter-bar .filter{
-    display: inline-block;
-    border: 1px solid #744F4A;
-    padding: 1px 6px;
-    margin: 1px 2px;
-    background-color: rgba(204, 204, 204, 0.15);
-    color: rgba(5, 20, 29, 0.87);
-    border-radius: 2px;
-    color: #FFF;
-    /* background: #666; */
-    border: none;
-    padding: 2px 16px;
-    /* border-radius: 0px; */
-    outline: 1px solid rgba(255, 255, 255, 0.15);
-    outline-offset: -1px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
-    cursor: pointer;
-    font-size: 15px;
-    padding-top: 2px;
+  display: inline-block;
+  border: 1px solid #744F4A;
+  padding: 1px 6px;
+  margin: 1px 2px;
+  background-color: rgba(204, 204, 204, 0.15);
+  color: rgba(5, 20, 29, 0.87);
+  border-radius: 2px;
+  color: #FFF;
+  /* background: #666; */
+  border: none;
+  padding: 2px 16px;
+  /* border-radius: 0px; */
+  outline: 1px solid rgba(255, 255, 255, 0.15);
+  outline-offset: -1px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
+  cursor: pointer;
+  font-size: 15px;
+  padding-top: 2px;
 }
 
 .filter.tag-active {
@@ -315,6 +328,21 @@
 .SB-filter-bar-sort{
   display: inline-block;
   margin-right: 50px;
+}
+
+.SB-games-count{
+  position: absolute;
+  right: 60px;
+  top: 8px;
+
+  color: #9d9fa0;
+  text-shadow: 1px 0px 3px rgba(0, 0, 0, 0.68);
+  z-index: 999999999;
+}
+
+.SB-games-count.has-secondary-bar{
+  top: -23px;
+
 }
 
 /*****************************

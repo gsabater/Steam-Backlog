@@ -64,3 +64,11 @@ header{
 .inner-content{
   padding: 20px;
 }
+
+.inner-content.has-filter-bar{
+  margin-top: 40px;
+}
+
+.inner-content.has-secondary-bar{
+  margin-top: 80px;
+}
