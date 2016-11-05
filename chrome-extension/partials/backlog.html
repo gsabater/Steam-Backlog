@@ -12,8 +12,29 @@
     <input type="text" placeholder="search your games" ng-model="filters.string" ng-change="search()" />
   </div>
 
+  <!-- <div class="separator"></div> -->
+  <div class="SB-filter-bar-expand ">
+    <i class="ion-android-more-vertical"></i>
+  </div>
+  <!--
+  <div class="SB-filter-bar-sort">
+    <i class="fa fa-sort"></i>
+    <select ng-model="filters.orderBy" ng-change="search()">
+      <option selected="selected" disabled="disabled">Sort by...</option>
+      <option value="-playtime_forever">Time played</option>
+      <option value="-metascore">Metascore</option>
+      <option value="-steamscore">Steam Score</option>
+      <option value="-achievementProgress">Achievements</option>
+      <option value="timeToBeat">Beating time</option>
+      <!- - <option>achievement %</option> - ->
+    </select>
+  </div>
+  -->
+
   <div class="SB-filter-bar-results">
     <span>{{games.length}} games</span>
+    <span><i class="ion-grid"></i></span>
+    <span><i class="ion-navicon-round"></i></span>
   </div>
 
   <div class="tags-container" ng-if="toggleTags" ng-class="{'has-details': gameDetails}">
