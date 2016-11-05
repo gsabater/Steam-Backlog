@@ -63,12 +63,16 @@
   function($routeProvider, $compileProvider){
 
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|steam):/);
-
     $routeProvider
 
       .when('/dashboard', {
         templateUrl: 'partials/dashboard.html',
-        controller: 'dashboard'
+        controller: 'DashboardCtrl'
+      })
+
+      .when('/backlog', {
+        templateUrl: 'partials/backlog.html',
+        controller: 'BacklogCtrl'
       })
 
       .when('/progress', {
@@ -76,9 +80,9 @@
         //controller: 'ProgressCtrl'
       })
 
-      .when('/options', {
-        templateUrl: 'partials/options.html',
-        controller: 'OptionsCtrl'
+      .when('/settings', {
+        templateUrl: 'partials/settings.html',
+        controller: 'SettingsCtrl'
       })
 
       .when('/about', {

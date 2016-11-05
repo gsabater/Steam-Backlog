@@ -13,12 +13,12 @@ angular.module('SB.controllers', []);
 angular.module('SB.controllers')
 
 //=================================================
-// dashboard
-// + Function to check the active state and apply
+// BacklogCtrl
+// +
 //=================================================
-  .controller('dashboard', function($rootScope, $scope, Games, Filter){
+  .controller('BacklogCtrl', function($rootScope, $scope, Games, Filter){
 
-    // dbscan is an indicator of currently doing ajax
+    // dbscan is an indicator of currently doing ajax calls
     //$scope.scan = dbScan;
 
     $scope.scroll = 0;
@@ -107,7 +107,7 @@ angular.module('SB.controllers')
         // Load details on games following the first one
         if(prev !== false){
           $(document.getElementById('game-details')).scope().loadDetails();  }
-      }
+      };
 
 
     //| jQuery Callback
@@ -234,6 +234,14 @@ angular.module('SB.controllers')
         db[$scope.gameDetails.appid] = $scope.gameDetails;
         chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
       }
+
+  })
+
+//=================================================
+// DashboardCtrl
+// +
+//=================================================
+  .controller('DashboardCtrl', function($rootScope, $scope){
 
   })
 

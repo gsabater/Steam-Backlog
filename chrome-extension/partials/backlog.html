@@ -1,39 +1,104 @@
-<div id="user-info" class="row" ng-if="!gameDetails">
-    <div class="col-md-3">
-      <img src="{{user.info.avatarfull}}" />
+<div class="filter-bar" ng-class="{'has-details': gameDetails}" style="display:none;">
+  <div class="container" style="width: 970px;">
+    <div>
+      <i class="fa fa-search" style=" position: absolute; top: 20px; margin-left: 10px; opacity: 0.4; font-size: 12px;"></i>
+      <i class="ion-close-circled" ng-if="filters.string.length > 0" style="position: absolute; top: 16px; margin-left: 198px; opacity: 0.4; font-size: 14px; cursor: pointer;" ng-click="filters.string =''; search()"></i>
+      <input type="text" placeholder="Filter by name" ng-model="filters.string" ng-change="search()" />
+
+      <div class="separator"></div>
+
+      <i class="fa fa-filter"       ng-if="!toggleTags" style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
+      <i class="fa fa-minus-circle" ng-if="toggleTags"  style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
+
+      <div class="tags-selector" ng-click="toggleTags = !toggleTags">Select tags</div>
+
+      <div class="separator"></div>
+
+      <select ng-model="filters.orderBy" ng-change="search()">
+        <option selected="selected" disabled="disabled">Sort by...</option>
+        <option value="-playtime_forever">Time played</option>
+        <option value="-metascore">Metascore</option>
+        <option value="-steamscore">Steam Score</option>
+        <option value="-achievementProgress">Achievements</option>
+        <option value="timeToBeat">Beating time</option>
+        <!-- <option>achievement %</option> -->
+      </select>
+
+      <div class="inline-block pull-right" style="margin-top: 3px;">
+        <div class="filter tooltip" ng-class="{'filter-active': filters.singlePlayer}"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i>       <span class="tooltip-content clearfix">Single Player</span></div>
+        <div class="filter tooltip" ng-class="{'filter-active': filters.multiPlayer}"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i>        <span class="tooltip-content clearfix">Multiplayer</span></div>
+        <div class="filter tooltip" ng-class="{'filter-active': filters.mmo}"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i>                        <span class="tooltip-content clearfix">Mmo</span></div>
+
+        <div class="filter tooltip" ng-class="{'filter-active': filters.coop}"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i>                   <span class="tooltip-content clearfix">Co-op</span></div>
+        <div class="filter tooltip" ng-class="{'filter-active': filters.localCoop}"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i>         <span class="tooltip-content clearfix">Local Co-op</span></div>
+
+        <div class="filter tooltip" ng-class="{'filter-active': filters.controller}"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i>        <span class="tooltip-content clearfix">Controller support</span></div>
+        <div class="filter tooltip" ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i><span class="tooltip-content clearfix">Achievements</span></div>
+      </div>
+
+
     </div>
-    <div class="col-md-9">
-      <h1>{{user.info.personaname}}</h1>
-      <h3>{{user.info.realname}}</h3>
-      <p>Played: ~{{user.hltbs.Playtime | minutesToHours}}</p>
+
+    <div style="margin-top: 10px;">
+      <span class="pull-right"><i class="ion-grid"></i></span>
+      <span class="pull-right" style="padding-right: 8px; line-height: 21px; margin-bottom: 5px;">Total of {{games.length}} games</span>
+
+      <div class="filter filter-active" ng-if="filters.singlePlayer"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i></div>
+      <div class="filter filter-active" ng-if="filters.multiPlayer"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i></div>
+      <div class="filter filter-active" ng-if="filters.mmo"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i></div>
+
+      <div class="filter filter-active" ng-if="filters.coop"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i></div>
+      <div class="filter filter-active" ng-if="filters.localCoop"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i></div>
+
+      <div class="filter filter-active" ng-if="filters.controller"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i></div>
+      <div class="filter filter-active" ng-if="filters.achievements"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
+
+      <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="ion-android-close"></i></div>
     </div>
+
   </div>
 </div>
 
-<!--
-<div  style="float: left">
-  <img src="{{user.info.avatarfull}}" /><br>
-  <h1>{{user.info.personaname}}</h1>
-  <h3>{{user.info.realname}}</h3>
-  <p><a href="{{user.info.profileurl}}">Perfil</a></p>
+
+<div class="tags-container" ng-if="toggleTags" ng-class="{'has-details': gameDetails}">
+  <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
+    {{tag}}
+  </span>
 </div>
 
-<div style="float: right">
-  <br>
-  Panels: <br>
-  Tiempo jugado: {{games.hoursPlayed/60}} horas<br>
-  Total games (+ DLC) = {{games.length}}<br>
-  Juegos: xx<br>
-  achievements: xx<br>
-  completed games: xx<br>
-  perfect games: xx<br>
-  Steam level: xxx<br>
-  Barajas necesarias para subir al próximo nivel: XX / 10 niveles: xx<br>
-  CTA_ launch random game
-</div>
+<div class="inner-content">
+  <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
 
-<div style="clear: both;"/></div>
--->
+    <div class="scan-alert">
+      <p class="tooltip" ng-if="scan == true">Your library is being currently scanned <i class="fa fa-spin ion-load-c"></i><span class="tooltip-content clearfix">Single Player</span></p>
+    </div>
+
+    <div class="warning" ng-if="filters.orderBy == '-metascore'">
+      <i class="fa fa-warning"></i> Some games might not appear on the list because it has no metascore or because we don't know it's score.
+    </div>
+
+    <div class="warning" ng-if="games.length == 0">
+      <i class="fa fa-warning"></i> No games match the selected filters
+    </div>
+
+    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openDetails(game.appid)">
+    <!-- <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div> -->
+      <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
+      <div class="game-name">{{game.name}}</div>
+
+      <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
+      <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-metascore'"><i class="fa fa-star"></i> {{game.metascore}}</div>
+      <div class="game-steamscore card-second-line" ng-if="filters.orderBy == '-steamscore'"><i class="fa fa-steam"></i> {{game.steamscore}}, {{game.steamscoreAlt}}</div>
+      <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div>
+      <div class="game-timetobeat card-second-line" ng-if="filters.orderBy == 'timeToBeat'">Played {{game.playtime_forever | minutesToHours}}<span class="pull-right"><i class="ion-android-time"></i> {{game.hltb.MainTtb | minutesToHours }} <i class="ion-ribbon-b" style="margin-left: 5px;"></i> {{game.hltb.ExtrasTtb | minutesToHours }}</span></div>
+
+      <div class="game-tags card-second-line"      ng-if="filters.tags.length > 0">
+        <span ng-repeat="tag in game.tags | limitTo : 5" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">{{tag}}</span>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 <div id="game-details" ng-controller="gameDetails" ng-if="gameDetails" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/page_bg_generated_v6b.jpg');">
@@ -131,130 +196,3 @@
     </div>
 
 </div>
-
-<div class="filter-bar" ng-class="{'has-details': gameDetails}">
-  <div class="container" style="width: 970px;">
-    <div>
-      <i class="fa fa-search" style=" position: absolute; top: 20px; margin-left: 10px; opacity: 0.4; font-size: 12px;"></i>
-      <i class="ion-close-circled" ng-if="filters.string.length > 0" style="position: absolute; top: 16px; margin-left: 198px; opacity: 0.4; font-size: 14px; cursor: pointer;" ng-click="filters.string =''; search()"></i>
-      <input type="text" placeholder="Filter by name" ng-model="filters.string" ng-change="search()" />
-
-      <div class="separator"></div>
-
-      <i class="fa fa-filter"       ng-if="!toggleTags" style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
-      <i class="fa fa-minus-circle" ng-if="toggleTags"  style="position: absolute; top: 20px; margin-left: 97px; opacity: 0.4; font-size: 12px;"></i>
-
-      <div class="tags-selector" ng-click="toggleTags = !toggleTags">Select tags</div>
-
-      <div class="separator"></div>
-
-      <select ng-model="filters.orderBy" ng-change="search()">
-        <option selected="selected" disabled="disabled">Sort by...</option>
-        <option value="-playtime_forever">Time played</option>
-        <option value="-metascore">Metascore</option>
-        <option value="-steamscore">Steam Score</option>
-        <option value="-achievementProgress">Achievements</option>
-        <option value="timeToBeat">Beating time</option>
-        <!-- <option>achievement %</option> -->
-      </select>
-
-      <div class="inline-block pull-right" style="margin-top: 3px;">
-        <div class="filter tooltip" ng-class="{'filter-active': filters.singlePlayer}"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i>       <span class="tooltip-content clearfix">Single Player</span></div>
-        <div class="filter tooltip" ng-class="{'filter-active': filters.multiPlayer}"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i>        <span class="tooltip-content clearfix">Multiplayer</span></div>
-        <div class="filter tooltip" ng-class="{'filter-active': filters.mmo}"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i>                        <span class="tooltip-content clearfix">Mmo</span></div>
-
-        <div class="filter tooltip" ng-class="{'filter-active': filters.coop}"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i>                   <span class="tooltip-content clearfix">Co-op</span></div>
-        <div class="filter tooltip" ng-class="{'filter-active': filters.localCoop}"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i>         <span class="tooltip-content clearfix">Local Co-op</span></div>
-
-        <div class="filter tooltip" ng-class="{'filter-active': filters.controller}"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i>        <span class="tooltip-content clearfix">Controller support</span></div>
-        <div class="filter tooltip" ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i><span class="tooltip-content clearfix">Achievements</span></div>
-      </div>
-
-
-    </div>
-
-    <div style="margin-top: 10px;">
-      <span class="pull-right"><i class="ion-grid"></i></span>
-      <span class="pull-right" style="padding-right: 8px; line-height: 21px; margin-bottom: 5px;">Total of {{games.length}} games</span>
-
-      <div class="filter filter-active" ng-if="filters.singlePlayer"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i></div>
-      <div class="filter filter-active" ng-if="filters.multiPlayer"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i></div>
-      <div class="filter filter-active" ng-if="filters.mmo"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i></div>
-
-      <div class="filter filter-active" ng-if="filters.coop"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i></div>
-      <div class="filter filter-active" ng-if="filters.localCoop"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i></div>
-
-      <div class="filter filter-active" ng-if="filters.controller"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i></div>
-      <div class="filter filter-active" ng-if="filters.achievements"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
-
-      <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="ion-android-close"></i></div>
-    </div>
-
-  </div>
-</div>
-
-
-<div class="tags-container" ng-if="toggleTags" ng-class="{'has-details': gameDetails}">
-  <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
-    {{tag}}
-  </span>
-</div>
-
-
-<!-- games-list-->
-<!-- Listing of current db games -->
-  <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
-
-    <div class="scan-alert">
-      <p class="tooltip" ng-if="scan == true">Your library is being currently scanned <i class="fa fa-spin ion-load-c"></i><span class="tooltip-content clearfix">Single Player</span></p>
-    </div>
-
-    <div class="warning" ng-if="filters.orderBy == '-metascore'">
-      <i class="fa fa-warning"></i> Some games might not appear on the list because it has no metascore or because we don't know it's score.
-    </div>
-
-    <div class="warning" ng-if="games.length == 0">
-      <i class="fa fa-warning"></i> No games match the selected filters
-    </div>
-
-    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openDetails(game.appid)">
-    <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div>
-      <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
-      <div class="game-name">{{game.name}}</div>
-
-      <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
-      <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-metascore'"><i class="fa fa-star"></i> {{game.metascore}}</div>
-      <div class="game-steamscore card-second-line" ng-if="filters.orderBy == '-steamscore'"><i class="fa fa-steam"></i> {{game.steamscore}}, {{game.steamscoreAlt}}</div>
-      <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div>
-      <div class="game-timetobeat card-second-line" ng-if="filters.orderBy == 'timeToBeat'">Played {{game.playtime_forever | minutesToHours}}<span class="pull-right"><i class="ion-android-time"></i> {{game.hltb.MainTtb | minutesToHours }} <i class="ion-ribbon-b" style="margin-left: 5px;"></i> {{game.hltb.ExtrasTtb | minutesToHours }}</span></div>
-
-      <div class="game-tags card-second-line"      ng-if="filters.tags.length > 0">
-        <span ng-repeat="tag in game.tags | limitTo : 5" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">{{tag}}</span>
-      </div>
-
-    </div>
-
-  </div>
-
-
-<!--
-<hr>
-<h2>Your tags</h2>
-<span ng-repeat="tag in tags track by $index" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
-  {{tag}}
-</span>
-
-<hr>
-<h2>Completed games</h2>
--
-
-<hr>
-<h2>Currently playing</h2>
--
-<hr>
-<h2>Recommended tags for you</h2>
-<span ng-repeat="tag in dynamic.rgRecommendedTags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
-  {{tag.name}}
-</span>
-
--->

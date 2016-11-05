@@ -46,7 +46,7 @@
 }
 
 /*****************************
-/****  User info area
+/**  User info area
 /*****************************/
 
   #user-info{
@@ -58,13 +58,15 @@
 
 
 /*****************************
-/****  Game list and game card
+/**  Game list and game card
 /*****************************/
 
 .games-list{
+  /*
   position: relative;
   padding: 0;
   padding-top: 300px;
+  */
 }
 
 .games-list.cards .game-card{
@@ -105,6 +107,7 @@
   overflow: hidden;
 
   font-family: 'Lato';
+  font-size: 14px;
 }
 
 .game-card .game-image{
