@@ -1,57 +1,74 @@
-<div id="user-info" class="row" ng-if="!gameDetails">
-    <div class="col-md-3">
-      <img src="{{user.info.avatarfull}}" />
-    </div>
-    <div class="col-md-9">
-      <h1>{{user.info.personaname}}</h1>
-      <h3>{{user.info.realname}}</h3>
-      <p>Played: ~{{user.hltbs.Playtime | minutesToHours}}</p>
-    </div>
-
+<div class="SB-tutorial" ng-if="!user">
+  <p>
+    Looks like the backlog is not connected to your steam account.<br />
+    <h3>How to install?</h3>
+    <ul>
+      <li>First, set your profile public. The extension cannot access your information if your profile is private.</li>
+      <li>Then, acces your profile page in the browser while logged in. The extension will detect your profile and then will fetch your game list automatically.</li>
+      <li>Worried about your account security? The extension source code is <a href="https://github.com/gsabater/Steam-Backlog">available to everyone on Github</a>.</li>
+      <li>Your backlog is not shared between browsers. So you can only browse your backlog in this computer.</li>
+    </ul>
+    <strong>Note:</strong> This extension uses the Steam API to get your games and its related information. If you reach the limit of usage you may need to wait a little before continue using the extension.
+  </p>
 </div>
 
+<div class="SB-dashboard-profile" ng-if="user">
 
-<div  style="float: left">
 
-  <h1>{{user.info.personaname}}</h1>
-  <h3>{{user.info.realname}}</h3>
-  <p><a href="{{user.info.profileurl}}">Perfil</a></p>
+  <div id="user-info" class="row" ng-if="!gameDetails">
+      <div class="col-md-3">
+        <img src="{{user.info.avatarfull}}" />
+      </div>
+      <div class="col-md-9">
+        <h1>{{user.info.personaname}}</h1>
+        <h3>{{user.info.realname}}</h3>
+        <p>Played: ~{{user.hltbs.Playtime | minutesToHours}}</p>
+      </div>
+
+  </div>
+
+
+
+  <div  style="float: left">
+
+    <h1>{{user.info.personaname}}</h1>
+    <h3>{{user.info.realname}}</h3>
+    <p><a href="{{user.info.profileurl}}">Perfil</a></p>
+  </div>
+
+  <div style="float: right">
+    <br>
+    Panels: <br>
+    Tiempo jugado: {{games.hoursPlayed/60}} horas<br>
+    Total games (+ DLC) = {{games.length}}<br>
+    Juegos: xx<br>
+    achievements: xx<br>
+    completed games: xx<br>
+    perfect games: xx<br>
+    Steam level: xxx<br>
+    Barajas necesarias para subir al próximo nivel: XX / 10 niveles: xx<br>
+    CTA_ launch random game
+  </div>
+
+
+
+  <hr>
+  <h2>Your tags</h2>
+  <span ng-repeat="tag in tags track by $index" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
+    {{tag}}
+  </span>
+
+  <hr>
+  <h2>Completed games</h2>
+  -
+
+  <hr>
+  <h2>Currently playing</h2>
+  -
+  <hr>
+  <h2>Recommended tags for you</h2>
+  <span ng-repeat="tag in dynamic.rgRecommendedTags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
+    {{tag.name}}
+  </span>
+
 </div>
-
-<div style="float: right">
-  <br>
-  Panels: <br>
-  Tiempo jugado: {{games.hoursPlayed/60}} horas<br>
-  Total games (+ DLC) = {{games.length}}<br>
-  Juegos: xx<br>
-  achievements: xx<br>
-  completed games: xx<br>
-  perfect games: xx<br>
-  Steam level: xxx<br>
-  Barajas necesarias para subir al próximo nivel: XX / 10 niveles: xx<br>
-  CTA_ launch random game
-</div>
-
-<div style="clear: both;"/></div>
-
-
-
-
-<hr>
-<h2>Your tags</h2>
-<span ng-repeat="tag in tags track by $index" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
-  {{tag}}
-</span>
-
-<hr>
-<h2>Completed games</h2>
--
-
-<hr>
-<h2>Currently playing</h2>
--
-<hr>
-<h2>Recommended tags for you</h2>
-<span ng-repeat="tag in dynamic.rgRecommendedTags" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">
-  {{tag.name}}
-</span>
