@@ -21,6 +21,8 @@ var isAngular = false,    // flag used for the dashboard to make ajax calls
     dbTop   = false,    // Array of top most played games
     hltbs   = false,    // howlongtobeatsteam var
 
+    isOwnProfile = false, // flag if window.location is own profile
+
     queue   = [],
     QHLTBS  = [],
 
@@ -30,43 +32,32 @@ var isAngular = false,    // flag used for the dashboard to make ajax calls
     };
 
 
-  // Initialize app by local data
+  // Initialize app only when needed
   window.setTimeout(function(){
-    chrome.storage.local.get(null, function(items){ console.warn(items); init(items); });
+    init();
   }, 50);
 
 
 //+-------------------------------------------------------
 //| init()
 //+--------------------------------
-//| + Sets global db and user vars
-//| + Adds menu option
+//| + gets chrome.local information when needed
+//| + Adds layout modifications
 //+-------------------------------------------------------
-  function init(storage){
-    $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
-    return false;
+  function init(){
 
-    NProgress.configure({
-      parent: '#sb-detected-games-bar',
-      //trickleRate: 0.02,
-      //trickleSpeed: 1000,
-      //speed: 100
-    });
-
-    // Flag execution in dashboard
+    // Flag if angular app (dashboard / backlog)
     var windowURL = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
     isAngular = (windowURL == "steam-backlog.html")? true : false;
 
-    // Stop execution if client is not logged in
+    // Stop if client is not logged in
     if(!$("a.user_avatar.playerAvatar").length){ console.warn("Steam Backlog: User not logged in"); return; }
 
     // Add backlog menu option
     $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
 
-    // Set global user and db vars
-    options = (storage.options)? storage.options : window.options;
-    user    = (storage.user)? storage.user : {};
-    db      = (storage.db)? storage.db : {};
+    // Initialize db fetch
+    initChromeLocal();
 
     /* // Update notification
     if(parseFloat(options.v) == parseFloat(v)){
@@ -75,10 +66,32 @@ var isAngular = false,    // flag used for the dashboard to make ajax calls
     }
     */
 
-    // Update user information
-    GetPlayerSummaries();
   }
 
+  //+-------------------------------------------------------
+  //| init()
+  //+--------------------------------
+  //| + gets chrome.local information when needed
+  //| + Sets global db and user vars
+  //+-------------------------------------------------------
+    function initChromeLocal(storage){
+
+      if(!storage){
+        chrome.storage.local.get(null, function(items){
+          console.warn("Steam Backlog stored vars", items); initChromeLocal(items); });
+          return;
+      }else{
+
+        // Set global user and db vars
+        options = (storage.options)? storage.options : window.options;
+        user    = (storage.user)? storage.user : {};
+        db      = (storage.db)? storage.db : {};
+      }
+
+     // Update user information
+     // -> module.user
+     GetPlayerSummaries();
+ }
 
   //+-------------------------------------------------------
   //| jQuery Actions
