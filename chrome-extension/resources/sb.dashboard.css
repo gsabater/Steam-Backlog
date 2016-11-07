@@ -344,11 +344,15 @@
   display: none;
   position: absolute;
   top: 0;
-  left: calc(50% - (750px/2) - 150px);
+  left: calc(50% - (750px/2) - 150px + 150px);
   width: 750px;
   height: auto;
   background-color: white;
   z-index: 99999;
+}
+
+#SB-game-card.show{
+  display: block !important;
 }
 
 #game-details{

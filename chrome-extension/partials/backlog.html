@@ -64,22 +64,7 @@
     <div class="SB-btn tooltip" ng-class="{'filter-active': filters.achievements}"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i><span class="tooltip-content clearfix">Achievements</span></div>
   </div>
 
-<!--
-<div style="margin-top: 10px;">
 
-  <div class="filter filter-active" ng-if="filters.singlePlayer"  ng-click="filters.singlePlayer = !filters.singlePlayer; search()" ><i class="ion-ios-person"></i></div>
-  <div class="filter filter-active" ng-if="filters.multiPlayer"   ng-click="filters.multiPlayer = !filters.multiPlayer; search()" ><i class="ion-ios-people"></i></div>
-  <div class="filter filter-active" ng-if="filters.mmo"           ng-click="filters.mmo = !filters.mmo; search()" ><i class="ion-earth"></i></div>
-
-  <div class="filter filter-active" ng-if="filters.coop"          ng-click="filters.coop = !filters.coop; search()" ><i class="ion-ios-infinite"></i></div>
-  <div class="filter filter-active" ng-if="filters.localCoop"     ng-click="filters.localCoop = !filters.localCoop; search()" ><i class="ion-monitor"></i></div>
-
-  <div class="filter filter-active" ng-if="filters.controller"    ng-click="filters.controller = !filters.controller; search()" ><i class="ion-ios-game-controller-b"></i></div>
-  <div class="filter filter-active" ng-if="filters.achievements"  ng-click="filters.achievements = !filters.achievements; search()" ><i class="fa fa-certificate"></i></div>
-
-  <div class="filter tag-active" ng-repeat="tag in filters.tags" ng-click="filterTag(tag)">{{tag}} <i class="ion-android-close"></i></div>
-</div>
--->
   <div class="tags-container" ng-class="{'has-details': gameDetails}">
     <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
       {{tag}}
@@ -110,7 +95,7 @@
       <i class="fa fa-warning"></i> No games match the selected filters
     </div>
 
-    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openDetails(game.appid)">
+    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openGameCard(game.appid)">
     <!-- <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div> -->
       <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
@@ -129,8 +114,8 @@
   </div>
 </div>
 
-<div id="SB-game-card">
-  13 - {{gameDetails}}
+<div id="SB-game-card" ng-class="{'show': showGameCard}" ng-controller="gameDetails">
+  13 - {{gameDetails}} - {{showGameCard}}
 </div>
 
 <div id="game-details" ng-controller="gameDetails" ng-if="gameDetails" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/page_bg_generated_v6b.jpg');">

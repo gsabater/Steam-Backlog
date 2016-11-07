@@ -21,9 +21,10 @@ angular.module('SB.controllers')
     // dbscan is an indicator of currently doing ajax calls
     //$scope.scan = dbScan;
 
-    $scope.scroll = 0;
-    $scope.toggleTags  = false;
-    $scope.gameDetails = false;
+    $scope.scroll       = 0;
+    $scope.toggleTags   = false;
+    $scope.gameDetails  = false;
+    $scope.showGameCard = false;
 
     $scope.filters = {
       tags: [],
@@ -31,43 +32,44 @@ angular.module('SB.controllers')
       orderBy: "-playtime_forever",
 
       singlePlayer: false,
-      multiPlayer: false,
-      coop: false,
-      mmo: false,
-      controller: false,
+      multiPlayer:  false,
+      coop:         false,
+      mmo:          false,
+      controller:   false,
       achievements: false,
 
       limit: 30
     };
 
 
-    //| Initial function
-    //| db is ready, and all tags are gathered.
+    //| init()
+    //| Init scope vars from db information
     //+-------------------------------------------------------
       $scope.init = function(){
-        if(!$scope.games){
-          console.log("Dashboard init");
+        console.log("backlog: init()");
 
+        if(!$scope.games){
           $scope.overview = Games.overview();
 
           $scope.overview = $scope.overview.games;
           $scope.tags     = $scope.overview.tags;
           $scope.allTags  = $scope.tags;
-
           $scope.games    = Filter.games($scope.filters).games;
+
+          $scope.updated  = 150; //number of updated games
         }
       };
 
 
-    //| Search function
-    //| Filter games again because filters have changed
+    //| Search()
+    //| Update scope vars when filter change
     //+-------------------------------------------------------
       $scope.search = function(){
+        console.log("backlog: search()");
+
         var filtered = Filter.games($scope.filters);
         $scope.games = filtered.games;
         $scope.tags  = filtered.tags;
-
-        //$scope.filters.limit = 30;
       };
 
 
@@ -93,9 +95,11 @@ angular.module('SB.controllers')
       };
 
 
-    //| openDetails
+    //| openGameCard
     //+-------------------------------------------------------
-      $scope.openDetails = function(gameID){
+      $scope.openGameCard = function(gameID){
+
+        $scope.showGameCard = true;
 
         var prev = $scope.gameDetails;
         $scope.gameDetails = gameID;
@@ -138,9 +142,11 @@ angular.module('SB.controllers')
 //=================================================
   .controller('gameDetails', function($rootScope, $scope, Games){
 
+    /*
     NProgress.configure({
       parent: '.filter-bar',
     });
+    */
 
     $scope.gameStatus = ["Backlog", "Abandoned", "Completed", "Mastered"]; //shelved (abandoned), backlog, completed, mastered, playing
 
@@ -151,9 +157,9 @@ angular.module('SB.controllers')
         $scope.gameDetails = Games.getDetails();
 
         // The game is still missing
-        if(!$scope.gameDetails.updated){
-          $scope.refreshGameDetails(); }
-      }
+        //if(!$scope.gameDetails.updated){
+        //  $scope.refreshGameDetails(); }
+      };
 
     //| Search function
     //| Filter games again because filters have changed
@@ -161,14 +167,14 @@ angular.module('SB.controllers')
       $scope.refreshGameDetails = function(){
         NProgress.start();
         scrapGame($scope.gameDetails.appid, "updateGameDetails");
-      }
+      };
 
     //| Search function
     //| Filter games again because filters have changed
     //+-------------------------------------------------------
       $scope.updateGameDetails = function(){
         NProgress.done();
-      }
+      };
 
     //| Search function
     //| Filter games again because filters have changed
@@ -176,7 +182,7 @@ angular.module('SB.controllers')
       $scope.saveGameDetails = function(){
         db[$scope.gameDetails.appid] = $scope.gameDetails;
         chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
-      }
+      };
 
     //| Search function
     //| Filter games again because filters have changed
