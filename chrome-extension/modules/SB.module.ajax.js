@@ -14,40 +14,42 @@
 //| + updates database for each game for an interval
 //+-------------------------------------------------------
   function updateDB(){
-    console.log("UPDATE THIS SHIT");
-    return;
 
-    var time    = (isAngular)? 3000 : 15000;
-    var timeout = window.setTimeout(function(){ updateDB(); }, time);
-
-    // stop execution if we don't have any games
-    if(!db || Object.keys(db).length == 0){
-      console.warn("Steam Backlog: db is empty.");
-      return; }
-
-    // First load, order the games by played
-    if(!dbTop){
-      dbTop = [];
-      for(i in db){
-        dbTop.push([i,db[i].playtime_forever]); }
-        dbTop.sort(function(a, b){ return b[1] - a[1]; });
-    }
-
-    var gameID = false;
     var d = new Date();
     var n = d.getTime();
 
-    // Check top list and remove recently updated
-    for(var i = 0; i < dbTop.length; i++){
-      if((n - db[dbTop[i][0]].updated) < 2592000000 ){
-        dbTop.splice(i,1);  //console.log("remove " + dbTop[i][0], db[dbTop[i][0]].name);
-      }else{
-        gameID = parseInt(dbTop[i][0]);
-        if(queue.indexOf(gameID) === -1){ break; }
+    // 1. stop execution if we don't have any games
+    if(!db || Object.keys(db).length == 0){
+      console.warn("Steam Backlog: db is empty. Stopping updateDB()");
+      return; }
+
+    //1.5 if the queue to update games has been already processed
+    if(isQueue){ console.warn("Steam Backlog: db queue is completed. Stopping updateDB()"); return; }
+    
+    // 2. Order all db games by playtime
+    // if the game is updated recently, remove from list
+    if(queue.length === 0){
+
+      for(var i in db){
+        g = db[i];
+        if(!g.updated || (n - g.updated) > 2592000000 ){ // 30 dias
+          queue.push([g.appid, g.playtime_forever]);
+        }
       }
+
+      queue.sort(function(a, b){ return b[1] - a[1]; });
     }
 
-    // Finally, get info for the selected game
+    // 3. Create a stopwatch to process the queue in background
+    var time    = (isAngular)? 5000 : 15000;
+    var timeout = window.setTimeout(function(){ /* updateDB();*/ }, time);
+
+    if(queue.length > 0){
+      console.log("hay queue", queue.length);
+    }else{
+      console.log("everything ok");
+    }
+    /*
     if(gameID){ getGameInfo(gameID); }else{
       dbScan = false;
       clearTimeout(timeout);
@@ -55,6 +57,7 @@
 
       console.warn("Everything is up to date");
     }
+    */
   }
 
 

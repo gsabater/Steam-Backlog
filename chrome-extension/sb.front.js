@@ -18,13 +18,13 @@ var isAngular = false,    // flag used for the dashboard to make ajax calls
     db      = false,    // chrome.local var
 
     dbScan  = false,    // Flag used to inform about update in progress
-    dbTop   = false,    // Array of top most played games
     hltbs   = false,    // howlongtobeatsteam var
 
     isOwnProfile = false, // flag if window.location is own profile
 
     queue   = [],
     QHLTBS  = [],
+    isQueue = false,
 
     options = {
       v: v,
