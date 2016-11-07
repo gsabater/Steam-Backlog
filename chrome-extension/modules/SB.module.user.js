@@ -75,7 +75,7 @@
       scanLibrary(); return; }
 
     var profileGames  = parseInt($(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text().replace(",", ""));
-    if(isOwnProfile && (user.profileGames < profileGames) ){
+    if(isOwnProfile && (user.profileGames != profileGames) ){
       scanLibrary(); return; }
 
   }
@@ -116,6 +116,7 @@
           appid: e.appid,
           name: e.name,
           cached: n,
+          fetch: false,
           playtime_forever: e.playtime_forever,
         };
       }

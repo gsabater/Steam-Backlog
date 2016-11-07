@@ -48,8 +48,6 @@
       $rootScope.user = items.user;
 
       console.log("stopped DB update");
-      return false;
-      updateDB();
 
     });
 
@@ -91,7 +89,7 @@
       })
 
       .otherwise({
-        redirectTo: '/dashboard'
+        redirectTo: '/backlog'
       });
   }])
 ;
