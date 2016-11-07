@@ -14,6 +14,8 @@
 //| + updates database for each game for an interval
 //+-------------------------------------------------------
   function updateDB(){
+    console.log("UPDATE THIS SHIT");
+    return;
 
     var time    = (isAngular)? 3000 : 15000;
     var timeout = window.setTimeout(function(){ updateDB(); }, time);

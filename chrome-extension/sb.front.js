@@ -96,12 +96,6 @@ var isAngular = false,    // flag used for the dashboard to make ajax calls
   //+-------------------------------------------------------
   //| jQuery Actions
   //+-------------------------------------------------------
-    $("body").on("click", "#sb-btn-scan-games", function(){
-      doFastScan(); });
-
-    $("body").on("click", ".sb-close-panel", function(){
-      $(this).closest(".profile_customization").remove(); });
-
     $("body").on("click", ".profile_flag", function(){
       chrome.storage.local.remove("user",  function(){console.error("removed"); });
       chrome.storage.local.remove("db",    function(){console.error("removed"); });

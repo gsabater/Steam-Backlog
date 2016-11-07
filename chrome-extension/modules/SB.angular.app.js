@@ -47,7 +47,8 @@
       $rootScope.db   = items.db;
       $rootScope.user = items.user;
 
-      console.log("stopped DB update");
+      console.log("DB update");
+      updateDB();
 
     });
 

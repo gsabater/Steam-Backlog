@@ -342,12 +342,16 @@
 
 #SB-game-card{
   display: none;
-  position: absolute;
-  top: 0;
-  left: calc(50% - (750px/2) - 150px + 150px);
+  position: fixed;
+  top: 50px;
+  left: calc(50% - (750px/2));
   width: 750px;
   height: auto;
-  background-color: white;
+
+  background-color: #1B2838;
+  background-position: center top;
+  background-repeat: no-repeat;
+
   z-index: 99999;
 }
 
@@ -355,41 +359,7 @@
   display: block !important;
 }
 
-#game-details{
-  position: absolute;
-  z-index: 9999;
-
-  left: 0;
-
-  width: 100vw;
-  height: 200px;
-
-  background-color: #1B2838;
-  background-position: center top;
-  background-repeat: no-repeat;
-}
-
-.SBfixed #game-details{
-  position: fixed;
-  top: 0;
-}
-
-#game-details .container{
-  position: relative;
-  width: 970px !important;
-  padding: 20px;
-}
-
-#game-details .upper{
-  height: 75px;
-}
-
-#game-details .lower{
-  height: 125px;
-  background-color: rgba(0, 0, 0, 0.29);
-}
-
-#game-details .game-name{
+#SB-game-card .game-name{
   font-size: 30px;
   line-height: 40px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.51);
@@ -402,7 +372,7 @@
   margin-top: 13px;
 }
 
-#game-details .game-image{
+#SB-game-card .game-image{
   position: relative;
   display: inline-block;
   outline: 1px solid rgba(255, 255, 255, 0.15);
@@ -410,7 +380,7 @@
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
 }
 
-#game-details .game-image-overlay{
+#SB-game-card .game-image-overlay{
   opacity: 0;
   width: 100%;
   height: 100%;
@@ -424,11 +394,11 @@
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
 }
 
-#game-details .game-image:hover .game-image-overlay{
+#SB-game-card .game-image:hover .game-image-overlay{
   opacity: 1;
 }
 
-#game-details .game-updated{
+#SB-game-card .game-updated{
 color: #A7A7A7;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
 }

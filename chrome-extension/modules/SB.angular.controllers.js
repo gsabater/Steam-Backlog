@@ -87,19 +87,12 @@ angular.module('SB.controllers')
       };
 
 
-    //| loadMore a jQuery called function to
-    //| load elements via infinite scroll
-    //+-------------------------------------------------------
-      $scope.loadMore = function(){
-        $scope.filters.limit = $scope.filters.limit + 30;
-      };
-
-
     //| openGameCard
     //+-------------------------------------------------------
       $scope.openGameCard = function(gameID){
 
         $scope.showGameCard = true;
+        $(".SB-backdrop").show();
 
         var prev = $scope.gameDetails;
         $scope.gameDetails = gameID;
@@ -109,7 +102,7 @@ angular.module('SB.controllers')
 
         // Load details on games following the first one
         if(prev !== false){
-          $(document.getElementById('game-details')).scope().loadDetails();  }
+          $(document.getElementById('SB-game-card')).scope().loadDetails();  }
       };
 
 
@@ -126,6 +119,13 @@ angular.module('SB.controllers')
         $scope.$apply();
       };
 
+
+    //| loadMore a jQuery called function to
+    //| load elements via infinite scroll
+    //+-------------------------------------------------------
+      $scope.loadMore = function(){
+        $scope.filters.limit = $scope.filters.limit + 30;
+      };
 
     //| Init controller when storage.local is ready and the
     //| db is loaded in rootScope.
@@ -148,13 +148,12 @@ angular.module('SB.controllers')
     });
     */
 
-    $scope.gameStatus = ["Backlog", "Abandoned", "Completed", "Mastered"]; //shelved (abandoned), backlog, completed, mastered, playing
-
-    //| Search function
-    //| Filter games again because filters have changed
+    //| loadDetails
+    //| Fetch game information from db
     //+-------------------------------------------------------
       $scope.loadDetails = function(){
         $scope.gameDetails = Games.getDetails();
+        console.log($scope.gameDetails);
 
         // The game is still missing
         //if(!$scope.gameDetails.updated){
@@ -190,7 +189,7 @@ angular.module('SB.controllers')
       $scope.changeStatus = function(newStatus){
         $scope.gameDetails.status = newStatus;
         $scope.saveGameDetails();
-      }
+      };
 
     //| Search function
     //| Filter games again because filters have changed
@@ -200,7 +199,7 @@ angular.module('SB.controllers')
         $scope.gameDetails.userStatus[status] = !$scope.gameDetails.userStatus[status];
 
         $scope.saveGameDetails();
-      }
+      };
 
     $scope.loadDetails();
 

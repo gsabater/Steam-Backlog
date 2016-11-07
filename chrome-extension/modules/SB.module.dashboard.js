@@ -11,15 +11,20 @@
 
 $(document).ready(function(){
 
-  //+-------------------------------------------------------
-  //| + Removes one game id from the queue
-  //+-------------------------------------------------------
-	    $(window).scroll(function(){
-	    	if($(window).scrollTop() >= ($(document).height() - $(window).height() - 100)){
-	    		$("div[ng-view]").scope().loadMore();
-	    	}
-	    });
+//+-------------------------------------------------------
+//| + Scroll event on dashboard
+//+-------------------------------------------------------
+  $("body").scroll(".content", function(){ console.log("asd");
+    if($(window).scrollTop() >= ($(document).height() - $(window).height() - 100)){
+      $("div[ng-view]").scope().loadMore();
+    }
+  });
 
-
+  $(".SB-backdrop").on("click", function(){
+    $(this).hide();
+    $("#SB-game-card").removeClass('show');
+    $("div[ng-view]").scope().showGameCard = false;
+    $("div[ng-view]").scope().$apply();
+  });
 
 });
