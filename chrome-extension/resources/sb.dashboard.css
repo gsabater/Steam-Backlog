@@ -116,6 +116,7 @@
   width: calc(100vw - 304px);
   padding: 10px;
   background-color: rgba(9, 11, 14, 0.7);
+  background-color: rgba(9, 11, 14, 1);
   border-bottom: 1px solid rgba(245, 245, 245, 0.10);
 
   transition: background-color 0.5s, height 0.5s;
@@ -248,17 +249,14 @@
 }
 
 .SB-games-count{
-  position: absolute;
-  right: 60px;
-  top: 8px;
-
+  /* position: absolute; */
+  /* right: 60px; */
+  /* top: 8px; */
   color: #9d9fa0;
   text-shadow: 1px 0px 3px rgba(0, 0, 0, 0.68);
   z-index: 1000;
-}
-
-.SB-games-count.has-secondary-bar{
-  top: -23px;
+  float: right;
+  margin-right: 50px;
 }
 
 /*****************************

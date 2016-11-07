@@ -14,10 +14,11 @@
     <input type="text" placeholder="search your games" ng-model="filters.string" ng-change="search()" />
   </div>
 
-  <!-- <div class="separator"></div> -->
+  <!-- <div class="separator"></div>
   <div class="SB-filter-bar-expand" ng-init="secondary_bar = false" ng-click="secondary_bar = !secondary_bar">
     <i class="ion-android-more-vertical"></i>
   </div>
+  -->
 
   <div class="SB-filter-bar-layout">
     <span><i class="ion-grid"></i></span>
@@ -26,7 +27,11 @@
 
 </div>
 
-<div class="SB-filter-bar secondary-bar" ng-class="{'show': secondary_bar}">
+<div class="SB-filter-bar secondary-bar show">
+  <!--  ng-class="{'show': secondary_bar}" -->
+
+  <div class="SB-games-count">{{games.length}} games</div>
+  <!-- ng-class="{'has-secondary-bar': secondary_bar}" -->
 
   <div class="SB-filter-bar-sort">
     <i class="fa fa-sort"></i>
@@ -83,15 +88,14 @@
 
 </div>
 
-<div class="SB-games-count" ng-class="{'has-secondary-bar': secondary_bar}">{{games.length}} games</div>
-
 <div class="tags-container" ng-if="toggleTags" ng-class="{'has-details': gameDetails}">
   <span ng-repeat="tag in allTags | orderBy: 'toString()'" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
     {{tag}}
   </span>
 </div>
 
-<div class="inner-content has-filter-bar" ng-class="{'has-secondary-bar': secondary_bar}">
+<div class="inner-content has-filter-bar has-secondary-bar">
+  <!-- ng-class="{'has-secondary-bar': secondary_bar}" -->
   <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
 
     <div class="scan-alert">

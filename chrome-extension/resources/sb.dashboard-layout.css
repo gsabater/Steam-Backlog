@@ -60,6 +60,46 @@ header{
   top:250px;
 }
 
+.SB-sidemenu-user-card{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: auto;
+}
+
+.SB-user-card-container{
+  display: block;
+  background-color: #14181f;
+  margin: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  height: 60px;
+}
+
+.SB-sidemenu-user-card img{
+  width: 50px;
+  float: left;
+  border-radius: 3px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.71);
+  margin-right: 10px;
+}
+
+.SB-sidemenu-user-card .user-name{
+  display: block;
+  font-weight: 100;
+  font-size: 18px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.52);
+}
+
+.SB-sidemenu-user-card .backlink{
+  font-size: 0.55em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 35px;
+  color: #636363;
+}
+
 /******************/
 /** Main Content
 /******************/

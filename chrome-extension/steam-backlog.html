@@ -25,7 +25,6 @@
     <script src="modules/SB.module.ajax.js"></script>
     <script src="modules/SB.module.dashboard.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="resources/organicfoodicons.css" />
     <link rel="stylesheet" type="text/css" href="resources/demo.css" />
     <link rel="stylesheet" type="text/css" href="resources/component.css" />
 
@@ -62,6 +61,15 @@
           <li><a ng-href="#/about">About</a></li>
         </ul>
       </nav>
+
+      <div class="SB-sidemenu-user-card">
+        <a href="{{user.info.profileurl}}" class="SB-user-card-container">
+          <img ng-src="{{user.info.avatarmedium}}" />
+          <span class="user-name">{{user.info.personaname}}</span>
+          <span class="backlink">Back to Steam</a>
+        </a>
+      </div>
+
       <!--
       <nav id="ml-menu" class="menu SB-sidemenu-categories">
 
@@ -143,7 +151,7 @@
       </div>
 
       <div class="SB-backdrop"></div>
-      
+
     </div>
 
     <script src="resources/classie.js"></script>
