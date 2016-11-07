@@ -19,13 +19,13 @@
     var n = d.getTime();
 
     // 1. stop execution if we don't have any games
-    if(!db || Object.keys(db).length == 0){
+    if(!db || Object.keys(db).length === 0){
       console.warn("Steam Backlog: db is empty. Stopping updateDB()");
       return; }
 
     //1.5 if the queue to update games has been already processed
     if(isQueue){ console.warn("Steam Backlog: db queue is completed. Stopping updateDB()"); return; }
-    
+
     // 2. Order all db games by playtime
     // if the game is updated recently, remove from list
     if(queue.length === 0){
@@ -46,16 +46,18 @@
 
     if(queue.length > 0){
       console.log("hay queue", queue.length);
+      getGameInfo();
+
     }else{
+      isQueue = true;
+      clearTimeout(timeout);
+      //if(isAngular){ $("div[ng-view]").scope().jQueryCallback(); }
       console.log("everything ok");
     }
     /*
     if(gameID){ getGameInfo(gameID); }else{
       dbScan = false;
-      clearTimeout(timeout);
-      if(isAngular){ $("div[ng-view]").scope().jQueryCallback(); }
 
-      console.warn("Everything is up to date");
     }
     */
   }
@@ -67,43 +69,27 @@
 //| + scrapes information from the steam public page
 //| + and saves into game db
 //+-------------------------------------------------------
-  function getGameInfo(concatID){ //console.warn(concatID, queue);
+  function getGameInfo(injectID){ //console.warn(injectID, queue);
 
     var gameID = queue[0];
+    gameID = (Array.isArray(gameID))? gameID[0] : gameID;
+
     var d = new Date();
     var n = d.getTime();
 
-  //| Add games to queue if concatID is set
+  //| 1. Add games to queue if injectID is set
   //+-------------------------------------------------------
-    if(concatID){
-      if(typeof concatID == "string"){ concatID = [concatID]; }
+    if(injectID){
 
-      var remaining = queue.length;
-      queue = queue.concat(concatID);
+      if(typeof injectID == "string"){ queue.unshift(injectID); }
+      if(Array.isArray(injectID)){ queue.unshift(injectID[0]); }
 
-      if(remaining    === 0){ getGameInfo(); }
-      if(queue.length >= 20){ getGameInfo(); }
-
+      getGameInfo();
       return;
     }
 
-  //| Initial possible exceptions
-  //| if queue is empty or recently updated
-  //+-------------------------------------------------------
-    if(queue.length == 0){
-      //console.log("Steam Backlog: No queue remaining");
-
-      if($("#sb-detected-games-content").hasClass("detecting-games")){
-          $('#sb-detected-games-content').html(
-              '<div class="sb-close-panel btn_profile_action btn_medium" style="float: right; border:none;"><span>Close</span></div>'
-            + 'All untracked games have been added to the extension memory, and some <br>of your most played games have been scanned.<br><br>'
-            + 'Why don\'t you take a look at your <a href="'+chrome.extension.getURL("/steam-backlog.html")+'" style="color: #bada55;">Backlog</a> ?</div>');
-
-      NProgress.done(); }
-      return;
-    }
-
-    //stop execution if the game have been recently updated
+    //| 2. stop execution if the game have been recently updated
+    //+-------------------------------------------------------
     if( db[gameID].hasOwnProperty("updated")){
       if( (n - db[gameID].updated) < 2592000000 ){
 
@@ -111,7 +97,8 @@
       getGameInfo();
       return; } }
 
-    // scrap that game
+    //| 3. scrap that game
+    //+-------------------------------------------------------
     scrapGame(gameID);
   }
 
@@ -126,8 +113,8 @@
     var d = new Date();
     var n = d.getTime();
 
-    console.log("%c Steam Backlog: Scraping " + gameID + " - " + db[gameID].name + " ", 'background: #222; color: #bada55');
-    $('.sb-add-games-feedback').html("Getting extended information for <strong style='color: #bada55;'>(" + queue.length + ") " + db[gameID].name + "</strong>");
+    console.log("%c Steam Backlog: Scrap Game -> " + gameID + " ( " + db[gameID].name + " ) ", 'background: #222; color: #bada55');
+    return;
 
   //| Initialize scanning process
   //| Sets flag and initial time vars
