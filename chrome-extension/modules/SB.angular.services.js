@@ -28,7 +28,7 @@ angular.module('SB.services', [])
         var result       = {games: [], tags: []};
         var searchString = (filters)? filters.string.toLowerCase() : false;
 
-        dance: for(i in $rootScope.db){
+        dance: for(var i in $rootScope.db){
 
           game = $rootScope.db[i];
           game.appid = i;
@@ -130,33 +130,14 @@ angular.module('SB.services', [])
       //+---------------------------------------
         overview: function(){
           tags  = [];
-          games = {
-            backlog:    [],
-            completed:  [],
-            mastered:   [],
-            abandoned:  [],
+          games = [];
 
-            playing:    []
-          };
-
-          for(i in $rootScope.db){
+          for(var i in $rootScope.db){
             game = $rootScope.db[i];
-
-            // Game status
-            if(game.status == "backlog"){   games.backlog.push(i); }
-            if(game.status == "completed"){ games.completed.push(i); }
-            if(game.status == "mastered"){  games.mastered.push(i); }
-            if(game.status == "abandoned"){ games.abandoned.push(i); }
-
-            // Game User status
-            if(game.userStatus){
-              console.warn(game);
-              if(game.userStatus.playing == true){   games.playing.push(i); }
-            }
 
             // Game tags
             if(game.tags){
-              for(t in game.tags.slice(0, 3)){
+              for(var t in game.tags.slice(0, 3)){
                 if(tags.indexOf(game.tags[t]) == -1){
                   tags.push(game.tags[t]);
                 }

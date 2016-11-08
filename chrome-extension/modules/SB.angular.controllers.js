@@ -50,8 +50,6 @@ angular.module('SB.controllers')
 
         if(!$scope.games){
           $scope.overview = Games.overview();
-
-          $scope.overview = $scope.overview.games;
           $scope.tags     = $scope.overview.tags;
           $scope.allTags  = $scope.tags;
           $scope.games    = Filter.games($scope.filters).games;
@@ -70,16 +68,6 @@ angular.module('SB.controllers')
         $scope.tags  = filtered.tags;
       };
 
-/*
-    //| toggleTags
-    //| Show tags panel
-    //+-------------------------------------------------------
-      $scope.toggleTags = function(pep){
-        console.log(pep);
-        $scope.showTags = true;
-        $(".SB-backdrop").show();
-      };
-      */
 
     //| filterTag
     //| Adds a tag to filters and trigger search again
