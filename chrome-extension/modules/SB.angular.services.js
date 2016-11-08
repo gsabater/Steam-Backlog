@@ -137,7 +137,7 @@ angular.module('SB.services', [])
 
             // Game tags
             if(game.tags){
-              for(var t in game.tags.slice(0, 3)){
+              for(var t in game.tags.slice(0, 4)){
                 if(tags.indexOf(game.tags[t]) == -1){
                   tags.push(game.tags[t]);
                 }
