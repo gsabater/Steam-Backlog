@@ -100,7 +100,7 @@ header{
   color: #636363;
 }
 
-.SB-backdrop{
+#SB-backdrop{
   display: none;
   position: fixed;
   top: 0;
@@ -109,6 +109,10 @@ header{
   z-index: 9999;
   width: 100vw;
   height: 100vh;
+}
+
+#SB-backdrop.show{
+  display: block;
 }
 
 /******************/

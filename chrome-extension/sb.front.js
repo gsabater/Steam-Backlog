@@ -22,7 +22,7 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
 
     queue   = [],
     QHLTBS  = [],
-    isQueue = false,
+    isQueue = true, //false,
 
     options = {
       v: v,

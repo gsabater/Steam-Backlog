@@ -20,9 +20,10 @@ $(document).ready(function(){
     }
   });
 
-  $(".SB-backdrop").on("click", function(){
-    $(this).hide();
-    $("#SB-game-card").removeClass('show');
+
+  $("#SB-backdrop").on("click", function(){
+    //console.log($("div[ng-view]").scope());
+    $("div[ng-view]").scope().showTags = false;
     $("div[ng-view]").scope().showGameCard = false;
     $("div[ng-view]").scope().$apply();
   });

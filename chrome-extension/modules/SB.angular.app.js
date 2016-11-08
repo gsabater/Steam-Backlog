@@ -28,7 +28,8 @@
 
     $rootScope.app = {
       v: 0,
-      listStyle: "cards" // - list
+      listStyle: "cards",  // - list
+      backdrop: false
     };
 
     $rootScope.stats = {

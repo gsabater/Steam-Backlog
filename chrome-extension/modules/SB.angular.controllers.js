@@ -19,8 +19,9 @@ angular.module('SB.controllers')
   .controller('BacklogCtrl', function($rootScope, $scope, Games, Filter){
 
     $scope.scroll       = 0;
-    $scope.toggleTags   = false;
     $scope.gameDetails  = false;
+
+    $scope.showTags     = false;
     $scope.showGameCard = false;
 
     $scope.queue = queue;
@@ -69,6 +70,16 @@ angular.module('SB.controllers')
         $scope.tags  = filtered.tags;
       };
 
+/*
+    //| toggleTags
+    //| Show tags panel
+    //+-------------------------------------------------------
+      $scope.toggleTags = function(pep){
+        console.log(pep);
+        $scope.showTags = true;
+        $(".SB-backdrop").show();
+      };
+      */
 
     //| filterTag
     //| Adds a tag to filters and trigger search again
@@ -89,7 +100,7 @@ angular.module('SB.controllers')
       $scope.openGameCard = function(gameID){
 
         $scope.showGameCard = true;
-        $(".SB-backdrop").show();
+        $rootScope.app.backdrop = true;
 
         var prev = $scope.gameDetails;
         $scope.gameDetails = gameID;
