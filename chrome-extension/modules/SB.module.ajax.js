@@ -101,7 +101,16 @@
     function(data){
 
       var jsonData = data[gameID].data;
-      console.log(jsonData);
+      //console.log(jsonData);
+
+      // 0. Check if game is removed
+      if(data[gameID].hasOwnProperty("success")){
+        if(data[gameID].success === false){
+          console.warn("Game not available");
+          db[gameID].removed = true;
+          saveGameInfo(gameID);
+          return;
+        }}
 
       // Dates
       db[gameID].updated  = n;
@@ -207,7 +216,7 @@
   //| Get howlongtobeatsteam info
   //| And call function again
   //+-------------------------------------------------------
-    if(hltbs == false){
+    if(hltbs === false){
       $.getJSON("http://www.howlongtobeatsteam.com/api/games/library/" + user.steamid + "?callback=jsonp", function(hltbs){
       }).always(function(xhr){
         hltbs = xhr;
@@ -220,7 +229,7 @@
   //| For every game into howlongtobeatsteam
   //| insert data on db
   //+-------------------------------------------------------
-    for(i in hltbs.Games){
+    for(var i in hltbs.Games){
       game = hltbs.Games[i].SteamAppData;
       //console.log(game.SteamAppId, game);
 
@@ -284,7 +293,7 @@
     }
 
     // 3. Create a stopwatch to process the queue in background
-    var time = (isAngular)? 5000 : 15000;
+    var time = (isAngular)? 3000 : 10000;
     window.setTimeout(function(){ updateDB(); }, time);
 
   }

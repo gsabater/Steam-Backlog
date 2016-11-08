@@ -30,7 +30,7 @@
 <div class="SB-filter-bar secondary-bar show">
   <!--  ng-class="{'show': secondary_bar}" -->
 
-  <div class="SB-games-count">{{games.length}} games</div>
+  <div class="SB-games-count">{{games.length}} games ( {{ (100-(queue.length * 100) / games.length).toFixed(2) }}% )</div>
   <!-- ng-class="{'has-secondary-bar': secondary_bar}" -->
 
   <div class="SB-filter-bar-sort">
@@ -98,7 +98,7 @@
     <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openGameCard(game.appid)">
     <!-- <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div> -->
       <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
-      <div class="game-name">{{game.name}}</div>
+      <div class="game-name">{{game.appid}} {{game.name}}</div>
 
       <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
       <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-metascore'"><i class="fa fa-star"></i> {{game.metascore}}</div>

@@ -18,13 +18,12 @@ angular.module('SB.controllers')
 //=================================================
   .controller('BacklogCtrl', function($rootScope, $scope, Games, Filter){
 
-    // dbscan is an indicator of currently doing ajax calls
-    //$scope.scan = dbScan;
-
     $scope.scroll       = 0;
     $scope.toggleTags   = false;
     $scope.gameDetails  = false;
     $scope.showGameCard = false;
+
+    $scope.queue = queue;
 
     $scope.filters = {
       tags: [],
@@ -55,8 +54,6 @@ angular.module('SB.controllers')
           $scope.tags     = $scope.overview.tags;
           $scope.allTags  = $scope.tags;
           $scope.games    = Filter.games($scope.filters).games;
-
-          $scope.updated  = 150; //number of updated games
         }
       };
 

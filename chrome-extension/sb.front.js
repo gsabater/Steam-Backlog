@@ -12,15 +12,13 @@
 var v = "0.7.0";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
-var isAngular = false,    // flag used for the dashboard to make ajax calls
+var isAngular    = false,    // flag used for the dashboard to make ajax calls
+    isOwnProfile = false, // flag if window.location is own profile
 
     user    = false,    // chrome.local var
     db      = false,    // chrome.local var
 
-    dbScan  = false,    // Flag used to inform about update in progress
     hltbs   = false,    // howlongtobeatsteam var
-
-    isOwnProfile = false, // flag if window.location is own profile
 
     queue   = [],
     QHLTBS  = [],
