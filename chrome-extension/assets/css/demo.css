@@ -1,13 +1,3 @@
-/* General Blueprint Style */
-
-@font-face {
-	font-family: 'bpicons';
-	font-weight: normal;
-	font-style: normal;
-	src: url('fonts/bpicons/bpicons.eot');
-	src: url('fonts/bpicons/bpicons.eot?#iefix') format('embedded-opentype'), url('fonts/bpicons/bpicons.woff') format('woff'), url('fonts/bpicons/bpicons.ttf') format('truetype'), url('fonts/bpicons/bpicons.svg#bpicons') format('svg');
-}/* Made with http://icomoon.io/ */
-
 
 /* Resets */
 
@@ -154,28 +144,6 @@ a:hover {
 
 .bp-nav__item:hover {
 	background: #5c5edc;
-}
-
-.bp-icon:after {
-	font-family: 'bpicons';
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	text-align: center;
-	text-transform: none;
-	color: #5c5edc;
-	-webkit-font-smoothing: antialiased;
-	speak: none;
-}
-
-.bp-nav .bp-icon:after {
-	line-height: 2.4;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	text-indent: 0;
 }
 
 .bp-nav a:hover:after {
