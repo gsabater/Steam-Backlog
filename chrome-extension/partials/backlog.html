@@ -116,20 +116,38 @@
 
 <div id="SB-game-card" ng-class="{'show': showGameCard}" ng-controller="gameDetails" ng-if="gameDetails" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/page_bg_generated_v6b.jpg');">
 
-  <div class="upper">
-    <div class="container">
-      <div class="pull-right text-right game-updated">
-        Updated {{gameDetails.updated | date:'dd MMM, HH:mm:ss'}}
-        <span class="btn-refresh" ng-click="refreshGameDetails();"><i class="ion-android-refresh"></i></span>
-      </div>
+  <div class="game-bg" style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(9, 11, 15, 0.2);
+      width: 100%;
+      height: 100px;
+      z-index: -1;
+  "></div>
+  <div class="game-bg" style="
+    position: absolute;
+    top: 100px;
+    left: 0;
+    background-color: rgba(9, 11, 15, 0.45);
+    width: 100%;
+    height: calc(100% - 100px);
+    z-index: -1;
+"></div>
 
-      <div class="game-image">
-        <a href="steam://rungameid/{{gameDetails.appid}}" class="game-image-overlay"><i class="ion-steam"></i> Launch</a>
-        <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/capsule_231x87.jpg" />
-      </div>
-      <div class="game-name">{{gameDetails.name}}</div>
-    </div>
+  <div class="pull-right text-right game-updated">
+    Updated {{gameDetails.updated | date:'dd MMM, HH:mm:ss'}}
+    <span class="btn-refresh" ng-click="refreshGameDetails();"><i class="ion-android-refresh"></i></span>
   </div>
+
+  <div class="game-name">{{gameDetails.name}}</div>
+  
+  <div class="game-image">
+    <a href="steam://rungameid/{{gameDetails.appid}}" class="game-image-overlay"><i class="ion-steam"></i> Launch</a>
+    <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/header.jpg" />
+  </div>
+
+
 
   <div class="game-scores">
     <div style="display: inline-block;" class="game-metascore" ng-if="gameDetails.metascore"><i class="fa fa-star"></i> {{gameDetails.metascore}} </div>

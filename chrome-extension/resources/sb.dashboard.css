@@ -361,16 +361,18 @@
 #SB-game-card{
   display: none;
   position: fixed;
-  top: 50px;
-  left: calc(50% - (750px/2));
-  width: 750px;
+  top: 95px;
+  left: calc(50% - (850px/2));
+  width: 850px;
   height: auto;
-
   background-color: #1B2838;
   background-position: center top;
   background-repeat: no-repeat;
-
   z-index: 99999;
+  padding: 20px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  outline: 1px solid rgba(255, 255, 255, 0.15);
+  outline-offset: -1px;
 }
 
 #SB-game-card.show{
@@ -421,11 +423,11 @@ color: #A7A7A7;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
 }
 
-#game-details .game-tags{
+#SB-game-card .game-tags{
 
 }
 
-#game-details .game-tags span{
+#SB-game-card .game-tags span{
   display: inline-block;
   padding: 1px 5px;
   color: white;
@@ -441,11 +443,11 @@ color: #A7A7A7;
     overflow: hidden;
 }
 
-#game-details .game-features{
+#SB-game-card .game-features{
   margin-top: 0;
 }
 
-#game-details .game-features div {
+#SB-game-card .game-features div {
   font-size: 18px;
   /* line-height: 50px; */
   display: inline-block;
@@ -467,22 +469,22 @@ color: #A7A7A7;
   font-size: 14px;
 }
 
-#game-details .game-features div.not-available {
+#SB-game-card .game-features div.not-available {
   opacity: 0.4;
 }
 
-#game-details .game-scores {
+#SB-game-card .game-scores {
   margin-top: -20px;
   line-height: 37px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
   padding-left: 250px;
 }
 
-#game-details .game-scores .game-metascore {
+#SB-game-card .game-scores .game-metascore {
     margin-right: 10px;
   }
 
-#game-details .btn-store{
+#SB-game-card .btn-store{
 margin-left: 252px; */
     font-size: 18px;
     margin: 0 2px;
@@ -514,7 +516,7 @@ margin-left: 252px; */
     line-height: 19px;
 }
 
-#game-details .btn-refresh{
+#SB-game-card .btn-refresh{
     font-size: 15px;
     /* margin: 0 2px; */
     /* line-height: 50px; */
@@ -544,7 +546,7 @@ margin-left: 252px; */
     text-decoration: none;
 }
 
-#game-details .game-status{
+#SB-game-card .game-status{
 text-align: right;
   position: absolute;
   right: 15px;
