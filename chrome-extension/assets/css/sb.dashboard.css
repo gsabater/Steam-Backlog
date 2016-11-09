@@ -381,23 +381,30 @@
 
 #SB-game-card .game-name{
   font-size: 30px;
-  line-height: 40px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.51);
-  padding-left: 15px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 360px;
-  display: inline-block;
-  margin-top: 13px;
+	line-height: 30px;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.51);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 500px;
+	display: inline-block;
+	font-weight: 400;
+	padding: 0;
+	margin: 0;
+  margin-bottom: 11px;
 }
 
 #SB-game-card .game-image{
   position: relative;
-  display: inline-block;
-  outline: 1px solid rgba(255, 255, 255, 0.15);
-  outline-offset: -1px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
+	display: inline-block;
+	outline: 1px solid rgba(255, 255, 255, 0.15);
+	outline-offset: -1px;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
+	float: right;
+}
+
+#SB-game-card .game-image img{
+  width: 280px;
 }
 
 #SB-game-card .game-image-overlay{
@@ -419,54 +426,34 @@
 }
 
 #SB-game-card .game-updated{
-color: #A7A7A7;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
+  color: #A7A7A7;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
+	padding-top: 2px;
 }
 
 #SB-game-card .game-tags{
-
+  margin-top: 17px;
 }
 
 #SB-game-card .game-tags span{
-  display: inline-block;
-  padding: 1px 5px;
-  color: white;
-  background-color: rgba(52, 52, 52, 0.72);
-  margin: 3px 3px;
-  /* border-radius: 0px; */
-  border-bottom: 1px dashed rgba(204, 204, 204, 0.25);
-  cursor: pointer;
-
-  max-width: 120px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  color: rgba(255, 255, 255, 0.65);
+	margin-right: 5px;
+	padding: 2px 8px;
+	max-width: 120px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 #SB-game-card .game-features{
-  margin-top: 0;
+  margin-top: 10px;
 }
 
 #SB-game-card .game-features div {
-  font-size: 18px;
-  /* line-height: 50px; */
   display: inline-block;
-  /* border: 1px solid #744F4A; */
-  padding: 1px 6px;
-  margin: 10px 3px;
-  /* background-color: rgba(204, 204, 204, 0.15); */
-  /* color: rgba(5, 20, 29, 0.87); */
-  /* border-radius: 2px; */
-  color: #FFF;
-  /* background: #666; */
-  /* border: none; */
-  /* padding: 2px 10px; */
-  /* border-radius: 0px; */
-  /* outline: 1px solid rgba(255, 255, 255, 0.15); */
-  /* outline-offset: -1px; */
-  /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36); */
-  /* cursor: pointer; */
-  font-size: 14px;
+	padding: 1px 9px;
+	color: #FFF;
+	font-size: 16px;
 }
 
 #SB-game-card .game-features div.not-available {
@@ -474,10 +461,9 @@ color: #A7A7A7;
 }
 
 #SB-game-card .game-scores {
-  margin-top: -20px;
-  line-height: 37px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
-  padding-left: 250px;
+	padding-left: 3px;
+	padding-top: 3px;
 }
 
 #SB-game-card .game-scores .game-metascore {
@@ -485,35 +471,35 @@ color: #A7A7A7;
   }
 
 #SB-game-card .btn-store{
-margin-left: 252px; */
-    font-size: 18px;
-    margin: 0 2px;
-    /* line-height: 50px; */
-    display: inline-block;
-    border: 1px solid #744F4A;
-    padding: 1px 6px;
-    /* margin: 10px 2px; */
-    background-color: rgba(204, 204, 204, 0.15);
-    /* color: rgba(5, 20, 29, 0.87); */
-    border-radius: 2px;
-    /* color: #FFF; */
-    /* background: #666; */
-    border: none;
-    padding: 1px 10px;
-    /* border-radius: 0px; */
-    /* outline: 1px solid rgba(255, 255, 255, 0.15); */
-    outline-offset: -1px;
-    /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36); */
-    cursor: pointer;
-    font-size: 13px;
-    color: #7CA7F9;
-    /* margin-left: 200px; */
-    /* position: absolute; */
-    /* top: 115px; */
-    /* float: left; */
-    /* margin-left: 250px; */
-    text-decoration: none;
-    line-height: 19px;
+  margin-left: 252px; */
+  font-size: 18px;
+  margin: 0 2px;
+  /* line-height: 50px; */
+  display: inline-block;
+  border: 1px solid #744F4A;
+  padding: 1px 6px;
+  /* margin: 10px 2px; */
+  background-color: rgba(204, 204, 204, 0.15);
+  /* color: rgba(5, 20, 29, 0.87); */
+  border-radius: 2px;
+  /* color: #FFF; */
+  /* background: #666; */
+  border: none;
+  padding: 1px 10px;
+  /* border-radius: 0px; */
+  /* outline: 1px solid rgba(255, 255, 255, 0.15); */
+  outline-offset: -1px;
+  /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36); */
+  cursor: pointer;
+  font-size: 13px;
+  color: #7CA7F9;
+  /* margin-left: 200px; */
+  /* position: absolute; */
+  /* top: 115px; */
+  /* float: left; */
+  /* margin-left: 250px; */
+  text-decoration: none;
+  line-height: 19px;
 }
 
 #SB-game-card .btn-refresh{
@@ -699,6 +685,7 @@ span.note {
     font-style: italic;
     color: #636363;
 }
+
 /*****************************
 /****  NPROGRESS
 /*****************************/
