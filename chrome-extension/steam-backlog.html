@@ -54,11 +54,11 @@
 
       <nav class="menu SB-sidemenu">
         <ul>
-          <li><a ng-href="#/dashboard">Dashboard</a></li>
-          <li><a ng-href="#/backlog">Backlog</a></li>
-          <li><a href="javascript:void(0);">Libraries</a></li>
-          <li><a ng-href="#/settings">Settings</a></li>
-          <li><a ng-href="#/about">About</a></li>
+          <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
+          <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}"><a ng-href="#/backlog">Backlog</a></li>
+          <!-- <li><a href="javascript:void(0);">Libraries</a></li> -->
+          <li ng-click="menu_active = 'settings'" ng-class="{'active': menu_active == 'settings'}"><a ng-href="#/settings">Settings</a></li>
+          <li ng-click="menu_active = 'about'" ng-class="{'active': menu_active == 'about'}"><a ng-href="#/about">About</a></li>
         </ul>
       </nav>
 
@@ -70,82 +70,6 @@
         </a>
       </div>
 
-      <!--
-      <nav id="ml-menu" class="menu SB-sidemenu-categories">
-
-        <button class="action action--close" aria-label="Close Menu"><span class="icon icon--cross"></span></button>
-        <div class="menu__wrap">
-          <ul data-menu="main" class="menu__level">
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-1" href="#">Vegetables</a></li>
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-2" href="#">Fruits</a></li>
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-3" href="#">Grains</a></li>
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-4" href="#">Mylk &amp; Drinks</a></li>
-          </ul>
-          <!-- Submenu 1 - ->
-          <ul data-menu="submenu-1" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Stalk Vegetables</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Roots &amp; Seeds</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Cabbages</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Salad Greens</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Mushrooms</a></li>
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-1-1" href="#">Sale %</a></li>
-          </ul>
-          <!-- Submenu 1-1 - ->
-          <ul data-menu="submenu-1-1" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Fair Trade Roots</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Dried Veggies</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Our Brand</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Homemade</a></li>
-          </ul>
-          <!-- Submenu 2 - ->
-          <ul data-menu="submenu-2" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Citrus Fruits</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Berries</a></li>
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-2-1" href="#">Special Selection</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Tropical Fruits</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Melons</a></li>
-          </ul>
-          <!-- Submenu 2-1 - ->
-          <ul data-menu="submenu-2-1" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Exotic Mixes</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Wild Pick</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Vitamin Boosters</a></li>
-          </ul>
-          <!-- Submenu 3 - ->
-          <ul data-menu="submenu-3" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Buckwheat</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Millet</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Quinoa</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Wild Rice</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Durum Wheat</a></li>
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-3-1" href="#">Promo Packs</a></li>
-          </ul>
-          <!-- Submenu 3-1 - ->
-          <ul data-menu="submenu-3-1" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Starter Kit</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">The Essential 8</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Bolivian Secrets</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Flour Packs</a></li>
-          </ul>
-          <!-- Submenu 4 - ->
-          <ul data-menu="submenu-4" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Grain Mylks</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Seed Mylks</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Nut Mylks</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Nutri Drinks</a></li>
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-4-1" href="#">Selection</a></li>
-          </ul>
-          <!-- Submenu 4-1 - ->
-          <ul data-menu="submenu-4-1" class="menu__level">
-            <li class="menu__item"><a class="menu__link" href="#">Nut Mylk Packs</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Amino Acid Heaven</a></li>
-            <li class="menu__item"><a class="menu__link" href="#">Allergy Free</a></li>
-          </ul>
-        </div>
-
-      </nav>
-      -->
-
       <div class="content" ng-view>
         <p class="info">Please choose a category</p>
       </div>
@@ -153,9 +77,6 @@
       <div id="SB-backdrop" ng-class="{'show': app.backdrop}" ng-click="app.backdrop = false"></div>
 
     </div>
-
-    <script src="lib/classie.js"></script>
-    <script src="modules/main.js"></script>
 
   </body>
 </html>

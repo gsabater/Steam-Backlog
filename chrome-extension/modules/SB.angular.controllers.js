@@ -138,12 +138,6 @@ angular.module('SB.controllers')
 //=================================================
   .controller('gameDetails', function($rootScope, $scope, Games){
 
-    /*
-    NProgress.configure({
-      parent: '.filter-bar',
-    });
-    */
-
     //| loadDetails
     //| Fetch game information from db
     //+-------------------------------------------------------
@@ -160,8 +154,12 @@ angular.module('SB.controllers')
     //| Filter games again because filters have changed
     //+-------------------------------------------------------
       $scope.refreshGameDetails = function(){
+        NProgress.configure({
+          parent: '#SB-game-card',
+          showSpinner: false
+        });
         NProgress.start();
-        scrapGame($scope.gameDetails.appid, "updateGameDetails");
+        getGameInfo($scope.gameDetails.appid);
       };
 
     //| Search function
@@ -208,8 +206,6 @@ angular.module('SB.controllers')
   .controller('ProgressCtrl', function($rootScope, $scope, Games){
 
     $scope.filters = {
-
-
       limit: 12
     };
 

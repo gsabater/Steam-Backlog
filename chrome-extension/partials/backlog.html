@@ -20,10 +20,12 @@
   </div>
   -->
 
+  <!--
   <div class="SB-filter-bar-layout">
     <span><i class="ion-grid"></i></span>
     <span><i class="ion-navicon-round"></i></span>
   </div>
+  -->
 
 </div>
 
@@ -115,6 +117,7 @@
 </div>
 
 <div id="SB-game-card" ng-class="{'show': showGameCard}" ng-controller="gameDetails" ng-if="gameDetails" style="background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/page_bg_generated_v6b.jpg');">
+
   <div class="game-bg" style="
       position: absolute;
       top: 0;
@@ -124,33 +127,12 @@
       height: 100%;
       z-index: -1;
   "></div>
-<!--
-  <div class="game-bg" style="
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: rgba(9, 11, 15, 0.1);
-      width: 100%;
-      height: 57px;
-      z-index: -1;
-  "></div>
-
-  <div class="game-bg" style="
-    position: absolute;
-    top: 55px;
-    left: 0;
-    background-color: rgba(9, 11, 15, 0.25);
-    width: 100%;
-    height: calc(100% - 55px);
-    z-index: -1;
-"></div>
--->
 
   <div class="row row-header">
 
     <div class="header-btns">
-      <a href="#" class="SB-btn"><i class="ion-arrow-down-c"></i> Download</a>
-      <a href="#" class="SB-btn"><i class="fa fa-steam"></i> Page Store</a>
+      <a href="steam://run/{{gameDetails.appid}}" class="SB-btn"><i class="ion-arrow-down-c"></i> Download</a>
+      <a href="https://store.steampowered.com/app/{{gameDetails.appid}}" target="_blank" class="SB-btn"><i class="fa fa-steam"></i> Store Page</a>
     </div>
     <div class="game-name">{{gameDetails.name}}</div>
   </div>
@@ -160,7 +142,7 @@
 
       <div class="game-scores">
         <div style="display: inline-block;" class="game-metascore" ng-if="gameDetails.metascore"><i class="fa fa-star"></i> {{gameDetails.metascore}} </div>
-        <div style="display: inline-block;" class="game-steamscore" ng-if="gameDetails.steamscore"><i class="fa fa-steam"></i> {{gameDetails.steamscore}}, Overwhemingly positive {{ gameDetailsnope.steamscoreAlt}}</div>
+        <div style="display: inline-block;" class="game-steamscore" ng-if="gameDetails.steamscore"><i class="fa fa-steam"></i> {{gameDetails.steamscore}}, {{ gameDetails.steamscoreAlt}}</div>
         <a class="btn-store" href="http://store.steampowered.com/app/{{gameDetails.appid}}" target="_blank" style="display: none;"><i class="ion-steam"></i> Store</a>
       </div>
 
@@ -174,14 +156,6 @@
 
         <div class="SB-btn tooltip" ng-class="{'not-available': !gameDetails.controller}"    ><i class="ion-ios-game-controller-b"></i>    <span class="tooltip-content clearfix">Controller support</span></div>
         <div class="SB-btn tooltip" ng-class="{'not-available': !gameDetails.achievements}"  ><i class="fa fa-certificate"></i><span class="tooltip-content clearfix">Achievements</span></div>
-<!--
-        <div class="game-hltb" nng-if="gameDetails.hltb == 'unavailable'">
-          <a href="javascript:void(0);" target="_blank" class="tooltip"><i class="ion-android-time"></i> HLTB not available</a>
-          <a href="http://steamcommunity.com/stats/{{gameDetails.appid}}/achievements" target="_blank" class="tooltip" ng-if="gameDetails.achievements"><i class="ion-trophy"></i> {{gameDetails.achieved}} / {{gameDetails.achievements}} <span class="tooltip-content">Achieved {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% </span></a>
-          <span class="credit"><i class="ion-ios-pulse-strong"></i> data provided by howlongtobeatsteam.com</span>
-        </div>
-      -->
-
       </div>
 
       <div class="game-tags">
@@ -194,16 +168,25 @@
       <div class="game-image">
         <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/header.jpg" />
       </div>
-      <div class="game-hltb" nng-if="gameDetails.hltb && (gameDetails.hltb !== 'unavailable')">
+
+      <div class="game-hltb" ng-if="gameDetails.hltb == 'unavailable'">
+        <a href="javascript:void(0);" target="_blank" class="tooltip"><i class="ion-android-time"></i> HLTB not available</a>
+        <a href="http://steamcommunity.com/stats/{{gameDetails.appid}}/achievements" target="_blank" class="tooltip" ng-if="gameDetails.achievements"><i class="ion-trophy"></i> {{gameDetails.achieved}} / {{gameDetails.achievements}} <span class="tooltip-content">Achieved {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% </span></a>
+        <span class="credit"><i class="ion-ios-pulse-strong"></i> data provided by howlongtobeatsteam.com</span>
+      </div>
+
+      <div class="game-hltb" ng-if="gameDetails.hltb && (gameDetails.hltb !== 'unavailable')">
         <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-android-time"></i> {{gameDetails.hltb.MainTtb | minutesToHours: 'complete' }}<span class="tooltip-content">Main story</span></a>
         <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-ribbon-b"></i> {{gameDetails.hltb.ExtrasTtb | minutesToHours }}<span class="tooltip-content">Main + extras</span></a>
         <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-fireball"></i> {{gameDetails.hltb.CompletionistTtb | minutesToHours }}<span class="tooltip-content">Completionist</span></a>
         <a href="http://steamcommunity.com/stats/{{gameDetails.appid}}/achievements" target="_blank" class="tooltip" ng-if="gameDetails.achievements"><i class="ion-trophy"></i> {{gameDetails.achieved}} / {{gameDetails.achievements}} <span class="tooltip-content">Achieved {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% </span></a>
         <span class="credit"><i class="ion-ios-pulse-strong"></i> data provided by howlongtobeatsteam.com</span>
       </div>
+
     </div>
   </div>
 
+<!--
   <div class="row row-categories">
     <div>Your categories</div>
     <div class="game-categories">
@@ -212,6 +195,7 @@
       </span>
     </div>
   </div>
+-->
 
   <div class="row row-update">
     <div class="pull-right text-right game-updated">

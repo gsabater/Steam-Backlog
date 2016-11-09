@@ -162,7 +162,7 @@
           steamscore = steamscore.split("%")[0];
 
           db[gameID].steamscore    = steamscore.replace(/\D/g,'');
-          db[gameID].steamscoreAlt = $(".game_review_summary", xhr).text();
+          db[gameID].steamscoreAlt = $(".game_review_summary[itemprop='description']", xhr).text();
         }else{
           db[gameID].steamscore    = 0;
           db[gameID].steamscoreAlt = "No score yet";
@@ -196,7 +196,7 @@
             }
           }
 
-          //howLongToBeatSteam(gameID);
+          howLongToBeatSteam(gameID);
           saveGameInfo(gameID);
 
         });
@@ -217,7 +217,7 @@
   //| And call function again
   //+-------------------------------------------------------
     if(hltbs === false){
-      $.getJSON("http://www.howlongtobeatsteam.com/api/games/library/" + user.steamid + "?callback=jsonp", function(hltbs){
+      $.getJSON("https://www.howlongtobeatsteam.com/api/games/library/" + user.steamid + "?callback=jsonp", function(hltbs){
       }).always(function(xhr){
         hltbs = xhr;
         howLongToBeatSteam(gameID);

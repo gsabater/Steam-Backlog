@@ -47,7 +47,7 @@ header{
 }
 
 .SB-sidemenu li.active {
-  background-color: rgba(105, 105, 146, 0.64);
+  /* background-color: rgb(43, 51, 70); */
 }
 
 .SB-sidemenu li a{
