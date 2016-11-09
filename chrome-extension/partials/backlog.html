@@ -140,14 +140,12 @@
     <span class="btn-refresh" ng-click="refreshGameDetails();"><i class="ion-android-refresh"></i></span>
   </div>
 
-  <div class="game-name">{{gameDetails.name}}</div>
-  
+  <h3>{{gameDetails.name}}</h3>
+
   <div class="game-image">
     <a href="steam://rungameid/{{gameDetails.appid}}" class="game-image-overlay"><i class="ion-steam"></i> Launch</a>
     <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/header.jpg" />
   </div>
-
-
 
   <div class="game-scores">
     <div style="display: inline-block;" class="game-metascore" ng-if="gameDetails.metascore"><i class="fa fa-star"></i> {{gameDetails.metascore}} </div>
@@ -183,5 +181,7 @@
   <div class="game-tags">
     <span class="tag" ng-class="{'tag-active': filters.tags.indexOf(tag) > -1}" ng-repeat="tag in gameDetails.tags | limitTo: 3" ng-click="filterTag(tag)">{{tag}}</span>
   </div>
+
+  <h3>Your categories</h3>
 
 </div>
