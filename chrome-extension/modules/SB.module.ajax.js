@@ -158,7 +158,7 @@
 
         // Steam Score
         if($(".game_review_summary", xhr).length){
-          steamscore = $(".glance_ctn_responsive_left div[data-store-tooltip]", xhr).attr("data-store-tooltip");
+          steamscore = $(".user_reviews_summary_row[itemprop='aggregateRating']", xhr).attr("data-store-tooltip");
           steamscore = steamscore.split("%")[0];
 
           db[gameID].steamscore    = steamscore.replace(/\D/g,'');

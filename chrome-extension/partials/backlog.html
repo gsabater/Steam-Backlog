@@ -176,7 +176,6 @@
       <div class="game-hltb" ng-if="gameDetails.hltb == 'unavailable'">
         <a href="javascript:void(0);" target="_blank" class="tooltip"><i class="ion-android-time"></i> HLTB not available</a>
         <a href="http://steamcommunity.com/stats/{{gameDetails.appid}}/achievements" target="_blank" class="tooltip" ng-if="gameDetails.achievements"><i class="ion-trophy"></i> {{gameDetails.achieved}} / {{gameDetails.achievements}} <span class="tooltip-content">Achieved {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% </span></a>
-        <span class="credit"><i class="ion-ios-pulse-strong"></i> data provided by howlongtobeatsteam.com</span>
       </div>
 
       <div class="game-hltb" ng-if="gameDetails.hltb && (gameDetails.hltb !== 'unavailable')">
@@ -184,7 +183,7 @@
         <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-ribbon-b"></i> {{gameDetails.hltb.ExtrasTtb | minutesToHours }}<span class="tooltip-content">Main + extras</span></a>
         <a href="http://howlongtobeat.com/game.php?id={{gameDetails.hltb.Id}}" target="_blank" class="tooltip"><i class="ion-fireball"></i> {{gameDetails.hltb.CompletionistTtb | minutesToHours }}<span class="tooltip-content">Completionist</span></a>
         <a href="http://steamcommunity.com/stats/{{gameDetails.appid}}/achievements" target="_blank" class="tooltip" ng-if="gameDetails.achievements"><i class="ion-trophy"></i> {{gameDetails.achieved}} / {{gameDetails.achievements}} <span class="tooltip-content">Achieved {{((100*gameDetails.achieved)/gameDetails.achievements).toFixed(0)}}% </span></a>
-        <span class="credit"><i class="ion-ios-pulse-strong"></i> data provided by howlongtobeatsteam.com</span>
+        <span class="credit"><i class="ion-ios-pulse-strong"></i> Completion data provided by howlongtobeatsteam.com</span>
       </div>
 
     </div>
