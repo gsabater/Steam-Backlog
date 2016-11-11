@@ -587,7 +587,7 @@ text-align: right;
 
   padding: 0px 0px 15px 0px;
   padding: 0;
-  
+
   width: 100%;
   text-align: center;
 }
@@ -596,7 +596,7 @@ text-align: right;
   width: 80%;
 	height: 1px;
 	border: none;
-	background-color: rgba(255, 255, 255, 0.19);
+	background-color: rgba(255, 255, 255, 0.10);
 }
 
 .game-hltb a {
