@@ -415,6 +415,8 @@
 
 #SB-game-card .row-body .body-image{
   width: 40%;
+  background-color: rgba(0, 0, 0, 0.25);
+	border-radius: 2px;
 }
 
 #SB-game-card .game-name{
@@ -434,6 +436,7 @@
   outline: 1px solid rgba(255, 255, 255, 0.15);
   outline-offset: -1px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
+  margin: 10px;
 }
 
 #SB-game-card .game-image img{
@@ -582,9 +585,18 @@ text-align: right;
   color: #A7A7A7;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68) !important;
 
-  padding: 15px 0px;
+  padding: 0px 0px 15px 0px;
+  padding: 0;
+  
   width: 100%;
   text-align: center;
+}
+
+.game-hltb hr{
+  width: 80%;
+	height: 1px;
+	border: none;
+	background-color: rgba(255, 255, 255, 0.19);
 }
 
 .game-hltb a {
