@@ -131,7 +131,7 @@ header{
   margin-top: 80px;
 }
 
-#SB-card{
+.SB-card{
   left: calc(50% - (850px/2));
   width: 850px;
   height: auto;
@@ -146,26 +146,58 @@ header{
   margin-bottom: 15px;
 }
 
-#SB-card .row{
+.SB-card .row{
   margin-bottom: 20px;
   padding: 0 20px;
 }
 
-#SB-card p{
-
+.SB-card p{
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.3px;
 }
 
-#SB-card h3 {
+.SB-card h2 {
   font-weight: 100;
   letter-spacing: 1px;
   font-size: 25px;
   text-shadow: 1px 1px 3px rgba(33, 44, 101, 0.51);
   color: #ffffff;
-  margin-bottom: -10px;
+  margin-bottom: -5px;
   margin-top: 10px;
 }
 
-#SB-card .game-name{
+.SB-card select{
+  -webkit-appearance: button;
+  -webkit-border-radius: 2px;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -webkit-user-select: none;
+  /* background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5); */
+  /* background-position: 97% center; */
+  border: none;
+  border-bottom: 1px solid #1d222b;
+  color: #555;
+  /* font-size: inherit; */
+  /* margin: 20px; */
+  overflow: hidden;
+  padding: 4px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 250px;
+  width: 150px;
+  /* color: #fff; */
+  /* background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126); */
+  background-color: #14181f;
+  /* -webkit-border-radius: 20px; */
+  -moz-border-radius: 20px;
+  /* border-radius: 20px; */
+  /* padding-left: 15px; */
+  outline: none;
+}
+
+.SB-card .game-name{
   font-size: 30px;
   line-height: 30px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.51);
@@ -178,19 +210,19 @@ header{
   margin: 0;
 }
 
-#SB-card .game-image{
+.SB-card .game-image{
   outline: 1px solid rgba(255, 255, 255, 0.15);
   outline-offset: -1px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.36);
   margin: 10px;
 }
 
-#SB-card .game-image img{
+.SB-card .game-image img{
   width: 100%;
   display: block;
 }
 
-#SB-card .game-image-overlay{
+.SB-card .game-image-overlay{
   opacity: 0;
   width: 100%;
   height: 100%;
@@ -204,18 +236,18 @@ header{
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
 }
 
-#SB-card .game-image:hover .game-image-overlay{
+.SB-card .game-image:hover .game-image-overlay{
   opacity: 1;
 }
 
-#SB-card .game-updated{
+.SB-card .game-updated{
   color: #A7A7A7;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
   padding-top: 2px;
   font-size: 12px;
 }
 
-#SB-card .game-categories span{
+.SB-card .game-categories span{
   color: rgba(255, 255, 255, 0.65);
   margin-right: 5px;
   padding: 5px 12px;
@@ -225,35 +257,35 @@ header{
   overflow: hidden;
 }
 
-#SB-card .game-scores {
+.SB-card .game-scores {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
   margin-bottom: 17px;
 }
 
-#SB-card .game-scores .game-metascore {
+.SB-card .game-scores .game-metascore {
     margin-right: 10px;
 }
 
-#SB-card .game-features{
+.SB-card .game-features{
   margin-bottom: 17px;
 }
 
-#SB-card .game-features div {
+.SB-card .game-features div {
   display: inline-block;
   padding: 1px 9px;
   color: #FFF;
   font-size: 16px;
 }
 
-#SB-card .game-features div.not-available {
+.SB-card .game-features div.not-available {
   opacity: 0.4;
 }
 
-#SB-card .game-tags{
+.SB-card .game-tags{
 
 }
 
-#SB-card .game-tags span{
+.SB-card .game-tags span{
   color: rgba(255, 255, 255, 0.65);
   margin-right: 5px;
   margin-bottom: 3px;
@@ -264,11 +296,11 @@ header{
   overflow: hidden;
 }
 
-#SB-card .game-categories{
+.SB-card .game-categories{
   margin-top: 17px;
 }
 
-#SB-card .btn-refresh{
+.SB-card .btn-refresh{
   font-size: 15px;
   display: inline-block;
   border: 1px solid #744F4A;
@@ -284,12 +316,37 @@ header{
   text-decoration: none;
 }
 
-#SB-card .game-status{
-text-align: right;
-  position: absolute;
-  right: 15px;
-  margin-top: 0px;
-  top: 5px;
+
+/*****************************
+/****  options page
+/*****************************/
+.option-group{
+  margin: 10px 0 20px 0;
+}
+
+.option-group label{
+  color: #577292;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.51);
+  letter-spacing: 0.3px;
+  font-size: 15px;
+}
+
+.option-group [type='checkbox']{
+  opacity: 0.7;
+}
+
+.option-group p{
+  padding-left: 10px;
+  border-left: 1px solid #314763;
+  margin: 10px 0;
+}
+
+span.note {
+  display: block;
+  color: #A7A7A7;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
+  padding-top: 2px;
+  font-size: 12px;
 }
 
 /*****************************

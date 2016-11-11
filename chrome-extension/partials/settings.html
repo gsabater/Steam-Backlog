@@ -1,26 +1,62 @@
 <div class="inner-content">
 
-  <div id="SB-card">
+  <div class="SB-card">
 
     <div class="row">
-      <h3>About this project</h3>
-      <p>
-        This project, called "Steam Backlog", is an attempt of providing easier and better way to browse our always growing steam libraries, and helping users discover and pick their next game.
+      <h2>Scan games</h2>
 
-      </p>
+      <!--
+      <div class="option-group">
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> Scan games in background
+        </label>
+        <p>If active, the Backlog will fetch game information from steam <span class="tooltip">every few seconds<span class="tooltip-content">Only when you are in the Backlog page</span></span> until all your library have been scanned. The game data is valid for a month before being scanned again.<br>
+        <span class="note">Archived games will not be scanned, reducing the library scan time and load.</span></p>
+      </div>
+      -->
+
+      <div class="option-group">
+        <label class="checkbox-inline">
+          Scan a game every
+          <select style="margin-left: 10px;">
+            <option>second</option>
+            <option>2 seconds</option>
+            <option>3 seconds</option>
+            <option>5 seconds</option>
+            <option>10 seconds</option>
+            <option>30 seconds</option>
+            <option>60 seconds</option>
+          </select>
+        </label>
+        <p>If active, the Backlog will fetch game information from steam <span class="tooltip">every few seconds<span class="tooltip-content">Only when you are in the Backlog page</span></span> until all your library have been scanned. The game data is valid for a month before being scanned again.<br>
+        <span class="note">Archived games will not be scanned, reducing the library scan time and load.</span></p>
+      </div>
+
+
+
     </div>
-
   </div>
-  
+
+  <div class="SB-card">
+    <h2>Restart database</h2>
+    <p>
+      If you have problems with your backlog, your howlongtobeat info is not showing up, or you think that something might be wrong,
+      you may want to reset your data and start the scanning process again.
+      <span class="note">This process is irreversible.</span>
+    </p>
+    <p>
+      <div class="SB-btn" style="background-color: rgba(255, 0, 0, 0.17); color: white;">
+        Restart now
+      </div>
+    </p>
+  </div>
+
 </div>
+
+
 
 
 <!--
-<div class="SB-btn profile_flag" style="background-color:red;">
-  Delete localstorage
-</div>
-
-<hr />
 
 <div class="bg-overlay"></div>
 <div class="row">
@@ -31,14 +67,6 @@
 <div class="row container-boxed">
   <div class="col-md-12">
     <h4>Library options</h4>
-
-    <div class="option-group">
-      <label class="checkbox-inline">
-        <input type="checkbox" id="inlineCheckbox1" value="option1"> Scan games automatically
-      </label>
-      <p>If active, the Backlog will fetch game information from steam <span class="tooltip">every few seconds<span class="tooltip-content">Only when you are in the Backlog page</span></span> until all your library have been scanned. The game data is valid for a month before being scanned again.<br>
-      <span class="note">Archived games will not be scanned, reducing the library scan time and load.</span></p>
-    </div>
 
     <div class="option-group">
       <label class="checkbox-inline">
