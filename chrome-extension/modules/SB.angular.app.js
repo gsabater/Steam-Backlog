@@ -42,11 +42,13 @@
 
       console.log("chrome.storage", items);
 
-      db   = items.db;
-      user = items.user;
+      db       = items.db;
+      user     = items.user;
+      //settings = items.settings;
 
-      $rootScope.db   = items.db;
-      $rootScope.user = items.user;
+      $rootScope.db       = items.db;
+      $rootScope.user     = items.user;
+      $rootScope.settings = (items.settings)? items.settings : settings;
 
       console.log("DB update");
       updateDB();

@@ -24,9 +24,11 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
     QHLTBS  = [],
     isQueue = true, //false,
 
-    options = {
+    settings = {
       v: v,
-      option: false
+      scan: {
+        interval: "5"
+      }
     };
 
 
@@ -54,7 +56,7 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
     // Add backlog menu option
     $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
 
-    // Initialize db fetch
+    // Initialize localstorage
     initChromeLocal();
 
     /* // Update notification
@@ -81,9 +83,9 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
       }else{
 
         // Set global user and db vars
-        options = (storage.options)? storage.options : window.options;
-        user    = (storage.user)? storage.user : {};
-        db      = (storage.db)? storage.db : {};
+        db       = (storage.db)? storage.db : {};
+        user     = (storage.user)? storage.user : {};
+        settings = (storage.settings)? storage.settings : settings;
       }
 
      // Update user information

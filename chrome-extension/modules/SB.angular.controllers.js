@@ -132,6 +132,7 @@ angular.module('SB.controllers')
 
   })
 
+
 //=================================================
 // gameDetails
 // + Function to check the active state and apply
@@ -199,37 +200,28 @@ angular.module('SB.controllers')
 
   })
 
+
 //=================================================
-// ProgressCtrl
+// SettingsCtrl
 // + Function to check the active state and apply
 //=================================================
-  .controller('ProgressCtrl', function($rootScope, $scope, Games){
+  .controller('SettingsCtrl', function($rootScope, $scope, Games){
 
-    $scope.filters = {
-      limit: 12
-    };
+    $scope.scan    = $rootScope.settings.scan;
+    $scope.library = $rootScope.settings.library;
 
-    $scope.overview = Games.overview();
-    $scope.overview = $scope.overview.games;
 
-  })
-
-//=================================================
-// OptionsCtrl
-// + Function to check the active state and apply
-//=================================================
-  .controller('OptionsCtrl', function($rootScope, $scope, Games){
-
-    //background = Games.getRandomGame();
-    //$scope.background = background.appid;
-
-    //| Save Options
-    //| Updates chrome.local with the options settings.
+    //| Save Settings
+    //| Updates chrome.local with settings
     //+-------------------------------------------------------
-      $scope.saveOptions = function(){
-        db[$scope.gameDetails.appid] = $scope.gameDetails;
-        chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
-      }
+      $scope.saveSettings = function(){
+
+        $rootScope.settings.scan    = $scope.scan;
+        $rootScope.settings.library = $scope.library;
+
+        console.log($rootScope.settings, settings);
+        chrome.storage.local.set({'settings': settings}, function(){  console.warn("settings saved", settings); });
+      };
 
   })
 
@@ -247,4 +239,4 @@ angular.module('SB.controllers')
 //=================================================
   .controller('AboutCtrl', function($rootScope, $scope){
 
-  })
+  });

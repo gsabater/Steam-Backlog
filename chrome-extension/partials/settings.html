@@ -18,14 +18,14 @@
       <div class="option-group">
         <label class="checkbox-inline">
           Scan a game every
-          <select style="margin-left: 10px;">
-            <option>second</option>
-            <option>2 seconds</option>
-            <option>3 seconds</option>
-            <option>5 seconds</option>
-            <option>10 seconds</option>
-            <option>30 seconds</option>
-            <option>60 seconds</option>
+          <select style="margin-left: 10px;" ng-model="scan.interval" ng-change="saveSettings()">
+            <option value="1">second</option>
+            <option value="2">2 seconds</option>
+            <option value="3">3 seconds</option>
+            <option value="5">5 seconds</option>
+            <option value="10">10 seconds</option>
+            <option value="30">30 seconds</option>
+            <option value="60">60 seconds</option>
           </select>
         </label>
         <p>Interval of time between every request to steam servers.<br />
@@ -45,7 +45,7 @@
 
       <div class="option-group">
         <label class="checkbox-inline" style="margin-left: -25px;">
-          <input type="checkbox" id="inlineCheckbox1" value="option1"> Include wishlisted games in the backlog
+          <input type="checkbox" ng-model="library.library_wishlist" ng-change="saveSettings()"> Include wishlisted games in the backlog
         </label>
         <p>Lorem ipsum dolor sit amer
         </p>
