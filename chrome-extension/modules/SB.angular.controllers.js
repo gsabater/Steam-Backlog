@@ -18,11 +18,9 @@ angular.module('SB.controllers')
 //=================================================
   .controller('BacklogCtrl', function($rootScope, $scope, Games, Filter){
 
-    $scope.scroll       = 0;
-    $scope.gameDetails  = false;
-
     $scope.showTags     = false;
     $scope.showGameCard = false;
+    $scope.gameDetails  = false;
 
     $scope.queue = queue;
 
@@ -53,6 +51,8 @@ angular.module('SB.controllers')
           $scope.tags     = $scope.overview.tags;
           $scope.allTags  = $scope.tags;
           $scope.games    = Filter.games($scope.filters).games;
+
+          $scope.numGames = $scope.games.length;
         }
       };
 
