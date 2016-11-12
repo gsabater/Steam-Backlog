@@ -42,6 +42,7 @@
 
     if(queue.length > 0){
       console.log("hay queue", queue.length);
+      timeout = false;
       getGameInfo();
 
     }else{
@@ -252,7 +253,7 @@
     user.hltbs = hltbs.Totals;
     chrome.storage.local.set({'user': user}, function(){ /* console.warn("user saved", user); */ });
     chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
-    if(isAngular){ $("div[ng-view]").scope().jQueryCallback(); }
+    if(isAngular){ if($("div[ng-view]").scope().hasOwnProperty("jQueryCallback")){ $("div[ng-view]").scope().jQueryCallback(); } }
 
   }
 
@@ -300,8 +301,7 @@
     }
 
     // 3. Create a stopwatch to star again with settings interval
-    var time = settings.scan.interval;
-    console.log(time,"s");
-    window.setTimeout(function(){ updateDB(); }, time * 1000);
+    var time = settings.scan.interval; //console.log(time,"s");
+    if(!timeout){ timeout = window.setTimeout(function(){ updateDB(); }, time * 1000); }
 
   }

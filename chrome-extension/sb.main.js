@@ -21,7 +21,7 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
     hltbs   = false,    // howlongtobeatsteam var
 
     queue   = [],
-    QHLTBS  = [],
+    timeout = false,
     isQueue = false, //false,
 
     settings = {
@@ -92,11 +92,3 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
      // -> module.user
      GetPlayerSummaries();
  }
-
-  //+-------------------------------------------------------
-  //| jQuery Actions
-  //+-------------------------------------------------------
-    $("body").on("click", ".profile_flag", function(){
-      chrome.storage.local.remove("user",  function(){console.error("removed"); });
-      chrome.storage.local.remove("db",    function(){console.error("removed"); });
-    });

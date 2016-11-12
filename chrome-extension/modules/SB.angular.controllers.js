@@ -223,6 +223,22 @@ angular.module('SB.controllers')
         chrome.storage.local.set({'settings': settings}, function(){  console.warn("settings saved", settings); });
       };
 
+      //| Reset Data
+      //| Removes all info
+      //+-------------------------------------------------------
+        $scope.resetData = function(){
+          var conf = confirm("¿Realmente quieres eliminar esto? ¡Esta acción no se puede deshacer!");
+          if (conf ===false){ return false; }
+
+          var url = user.info.profileurl;
+
+          chrome.storage.local.remove("db",    function(){console.error("removed"); });
+          chrome.storage.local.remove("user",    function(){console.error("removed"); });
+          chrome.storage.local.remove("settings",    function(){console.error("removed"); });
+
+          window.setTimeout(function(){ window.location.href = url; }, 1000);
+        };
+
   })
 
 //=================================================
