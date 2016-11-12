@@ -46,8 +46,6 @@
 
     }else{
       isQueue = true;
-      //clearTimeout(timeout);
-      //if(isAngular){ $("div[ng-view]").scope().jQueryCallback(); }
       console.log("everything ok");
     }
 
@@ -107,7 +105,10 @@
       if(data[gameID].hasOwnProperty("success")){
         if(data[gameID].success === false){
           console.warn("Game not available");
+
+          db[gameID].updated = n;
           db[gameID].removed = true;
+
           saveGameInfo(gameID);
           return;
         }}
@@ -283,17 +284,24 @@
 //+-------------------------------------------------------
   function saveGameInfo(gameID){
 
+    // 1. Remove the game from the queue
+    // and save the new db
     removeFromQueue(gameID);
     chrome.storage.local.set({'db': db}, function(){ console.log("db saved"); });
 
-    // Callback
-    if(isAngular){ $("div[ng-view]").scope().jQueryCallback();
-      var $card = document.getElementById('SB-game-card');
-      if($card){ $($card).scope().updateGameDetails(); }
+    // 2. Inform angular about the update
+    // and refresh scope
+    if(isAngular){
+      if($("div[ng-view]").scope().hasOwnProperty("jQueryCallback")){
+        $("div[ng-view]").scope().jQueryCallback();
+        var $card = document.getElementById('SB-game-card');
+        if($card){ $($card).scope().updateGameDetails(); }
+      }
     }
 
-    // 3. Create a stopwatch to process the queue in background
-    var time = (isAngular)? 3000 : 10000;
-    window.setTimeout(function(){ updateDB(); }, time);
+    // 3. Create a stopwatch to star again with settings interval
+    var time = settings.scan.interval;
+    console.log(time,"s");
+    window.setTimeout(function(){ updateDB(); }, time * 1000);
 
   }

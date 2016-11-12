@@ -44,11 +44,11 @@
 
       db       = items.db;
       user     = items.user;
-      //settings = items.settings;
+      settings = (items.settings) ? items.settings : settings;
 
       $rootScope.db       = items.db;
       $rootScope.user     = items.user;
-      $rootScope.settings = (items.settings)? items.settings : settings;
+      $rootScope.settings = settings;
 
       console.log("DB update");
       updateDB();
