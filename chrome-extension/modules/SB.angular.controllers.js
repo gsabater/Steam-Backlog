@@ -38,7 +38,7 @@ angular.module('SB.controllers')
       controller:   false,
       achievements: false,
 
-      limit: 30
+      limit: 50
     };
 
 
@@ -66,6 +66,10 @@ angular.module('SB.controllers')
         var filtered = Filter.games($scope.filters);
         $scope.games = filtered.games;
         $scope.tags  = filtered.tags;
+
+        $scope.filters.limit = 50;
+        $(".container").scrollTop(0);
+
       };
 
 
@@ -120,7 +124,9 @@ angular.module('SB.controllers')
     //| load elements via infinite scroll
     //+-------------------------------------------------------
       $scope.loadMore = function(){
-        $scope.filters.limit = $scope.filters.limit + 30;
+        console.log("Load more games", $scope.filters.limit);
+        $scope.filters.limit = $scope.filters.limit + 50;
+        $scope.$apply();
       };
 
     //| Init controller when storage.local is ready and the
