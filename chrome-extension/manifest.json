@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name":        "Steam Backlog ALPHA",
-  "description": "Chrome extension that helps you play and organize the always growing steam backlog of games.",
-  "version":     "0.6.5",
+  "name":        "Steam Backlog preview",
+  "description": "Steam Backlog provides easier and better way to browse our always growing steam libraries while helping decide what to play next.",
+  "version":     "0.8.0",
 
   "options_page": "steam-backlog.html#/settings",
 
