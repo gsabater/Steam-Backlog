@@ -50,7 +50,9 @@
       $rootScope.user     = items.user;
       $rootScope.settings = settings;
 
-      console.log("DB update");
+      $rootScope.app.v = v;
+
+      console.log("DB update",v);
       updateDB();
 
     });
