@@ -25,7 +25,10 @@ angular.module('SB.controllers')
     $scope.queue = queue;
 
     $scope.filters = {
+
       tags: [],
+      searchTags: "",
+
       string: "",
       orderBy: "-playtime_forever",
 
