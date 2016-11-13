@@ -31,10 +31,16 @@ header{
   background-color: #1f2532; }
 
 .dummy-logo{
-  background-color: #1f2532; }
+  background-color: #1f2532;
+  padding: 2.5em 0 0 0;
+}
 
 .dummy-heading{
   color: #b9b9b9; }
+
+.SB-sidemenu{
+  padding-top: 25px;
+}
 
 .SB-sidemenu ul{
   list-style-type: none;
@@ -549,6 +555,14 @@ span.note {
   font-weight: bold;
 }
 
+.tooltip.tooltip-reverse .tooltip-content {
+    bottom: -38px;
+    line-height: 16px;
+}
+
+.tooltip.tooltip-reverse .tooltip-content::after {
+    display: none;
+}
 
 /******************
 /**
