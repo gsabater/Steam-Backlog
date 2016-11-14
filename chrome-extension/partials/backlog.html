@@ -107,10 +107,6 @@
 
   <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
 
-    <div class="scan-alert">
-      <p class="tooltip" ng-if="scan == true">Your library is being currently scanned <i class="fa fa-spin ion-load-c"></i><span class="tooltip-content clearfix">Single Player</span></p>
-    </div>
-
     <div class="warning" ng-if="filters.orderBy == '-metascore'">
       <i class="fa fa-warning"></i> Some games might not appear on the list because it has no metascore or because we don't know it's score.
     </div>
@@ -119,7 +115,7 @@
       <i class="fa fa-warning"></i> No games match the selected filters
     </div>
 
-    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openGameCard(game.appid)">
+    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openGameCard(game.appid)" ng-if="!game.hidden">
     <!-- <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div> -->
       <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
@@ -156,7 +152,9 @@
       <a href="steam://run/{{gameDetails.appid}}" class="SB-btn"><i class="ion-arrow-down-c"></i> Download</a>
       <a href="https://store.steampowered.com/app/{{gameDetails.appid}}" target="_blank" class="SB-btn"><i class="fa fa-steam"></i> Store Page</a>
     </div>
-    <div class="game-name">{{gameDetails.name}}</div>
+    <div class="game-name">
+      {{gameDetails.name}}
+    </div>
   </div>
 
   <div class="row row-body">
@@ -223,8 +221,13 @@
 -->
 
   <div class="row row-update">
-    <div class="pull-right text-right game-updated" style="text-align: right;">
+    <div class="game-updated" style="text-align: left; width: 50%; float: left;">
+      <span class="SB-btn" ng-click="hideGame();" ng-if="gameDetails.hidden" style=" color: rgba(195, 28, 28, 0.51); margin-right: 5px; font-weight: bold;">Hidden</span>
+      <span class="SB-btn" ng-click="hideGame();" style=" color: rgba(195, 28, 28, 0.51); padding: 2px 8px; margin-right: 5px;"><i class="ion-backspace"></i></span>
+      <span class="credit" style="padding-right: 35px; line-height: 29px;">Hide this item from my Backlog</span>
+    </div>
 
+    <div class="pull-right text-right game-updated" style="text-align: right; width: 50%; float: right;">
       <span class="btn-refresh pull-right" ng-click="refreshGameDetails();" style=" margin-top: 6px;"><i class="ion-android-refresh"></i></span>
       Updated {{gameDetails.updated | date:'dd MMM, HH:mm:ss'}}
       <br /><span class="credit" style="display: block; padding-right: 35px;"><i class="ion-ios-pulse-strong"></i> HLTB data provided by howlongtobeatsteam.com</span>
