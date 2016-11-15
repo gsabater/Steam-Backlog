@@ -139,9 +139,11 @@
           appid: e.appid,
           name: e.name,
           cached: n,
-          fetch: false,
           playtime_forever: e.playtime_forever,
         };
+      }else{
+        db[e.appid].name = e.name;
+        db[e.appid].playtime_forever = e.playtime_forever;
       }
     }
 

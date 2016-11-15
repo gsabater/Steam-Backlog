@@ -33,12 +33,26 @@
       for(var i in db){
         g = db[i];
         if(!g.updated || (n - g.updated) > 2592000000 ){ // 30 dias
-          queue.push([g.appid, g.playtime_forever]);
+          //queue.push([g.appid, g.playtime_forever]);
         }
       }
 
       queue.sort(function(a, b){ return b[1] - a[1]; });
     }
+
+    // 3. Add wishlist games to queue
+    // if the game is not updated recently
+    for(var j in user.wishlist){
+
+      game   = user.wishlist[j];
+      dbgame = db[g];
+      if(!dbgame || !g.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
+        queue.push([game, 0]);
+      }
+    }
+
+    console.log(queue);
+    return;
 
     if(queue.length > 0){
       console.log("hay queue", queue.length);
@@ -91,6 +105,16 @@
     var d = new Date();
     var n = d.getTime();
 
+    if(!db[gameID]){
+      db[gameID] = {
+        'appid': gameID,
+        'name': 'unknown',
+        'cached': n,
+        'playtime_forever': 0,
+        'wishlist': true
+      };
+    }
+
     console.log("%c Steam Backlog: Scrap Game -> " + gameID + " ( " + db[gameID].name + " ) ", 'background: #222; color: #bada55');
 
   //| 1. Get JSON details for app gameID
@@ -113,6 +137,9 @@
           saveGameInfo(gameID);
           return;
         }}
+
+      // Name
+      db[gameID].name  = jsonData.name;
 
       // Dates
       db[gameID].updated  = n;
