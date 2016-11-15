@@ -144,6 +144,7 @@
       }else{
         db[e.appid].name = e.name;
         db[e.appid].playtime_forever = e.playtime_forever;
+        delete db[e.appid].wishlist;
       }
     }
 

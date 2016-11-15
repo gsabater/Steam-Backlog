@@ -103,8 +103,6 @@
 </div>
 
 <div class="inner-content has-filter-bar has-secondary-bar">
-  <!-- ng-class="{'has-secondary-bar': secondary_bar}" -->
-
   <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
 
     <div class="warning" ng-if="filters.orderBy == '-metascore'">
@@ -125,6 +123,7 @@
       <div class="game-steamscore card-second-line" ng-if="filters.orderBy == '-steamscore'"><i class="fa fa-steam"></i> {{game.steamscore}}, {{game.steamscoreAlt}}</div>
       <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div>
       <div class="game-timetobeat card-second-line" ng-if="filters.orderBy == 'timeToBeat'">Played {{game.playtime_forever | minutesToHours}}<span class="pull-right"><i class="ion-android-time"></i> {{game.hltb.MainTtb | minutesToHours }} <i class="ion-ribbon-b" style="margin-left: 5px;"></i> {{game.hltb.ExtrasTtb | minutesToHours }}</span></div>
+      <div class="game-wishlist" ng-if="game.wishlist">Wishlist</div>
 
       <div class="game-tags card-second-line"      ng-if="filters.tags.length > 0">
         <span ng-repeat="tag in game.tags | limitTo : 5" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">{{tag}}</span>
@@ -149,7 +148,8 @@
   <div class="row row-header">
 
     <div class="header-btns">
-      <a href="steam://run/{{gameDetails.appid}}" class="SB-btn"><i class="ion-arrow-down-c"></i> Download</a>
+      <a href="javascript:void(0);" class="SB-btn" style="background-color: rgb(31, 56, 12); color: white; opacity: 0.4; cursor: default;" ng-if="gameDetails.wishlist"><i class="ion-heart"></i> Game in wishlist</a>
+      <a href="steam://run/{{gameDetails.appid}}" class="SB-btn" ng-if="!gameDetails.wishlist"><i class="ion-arrow-down-c"></i> Download</a>
       <a href="https://store.steampowered.com/app/{{gameDetails.appid}}" target="_blank" class="SB-btn"><i class="fa fa-steam"></i> Store Page</a>
     </div>
     <div class="game-name">
