@@ -33,7 +33,7 @@
       for(var i in db){
         g = db[i];
         if(!g.updated || (n - g.updated) > 2592000000 ){ // 30 dias
-          //queue.push([g.appid, g.playtime_forever]);
+          queue.push([g.appid, g.playtime_forever]);
         }
       }
 
@@ -45,15 +45,14 @@
     for(var j in user.wishlist){
 
       game   = user.wishlist[j];
-      dbgame = db[g];
-      if(!dbgame || !g.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
+      dbgame = db[game];
+      if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
         queue.push([game, 0]);
       }
     }
 
-    console.log(queue);
-    return;
-
+    // 4. If there is still queue remaining
+    // call for getGameInfo()
     if(queue.length > 0){
       console.log("hay queue", queue.length);
       timeout = false;
@@ -298,7 +297,7 @@
 
       if(_queueID === gameID){
         queue.splice(i, 1);
-        console.log("Removing " + gameID + " (" + db[gameID].name + ") from queue.");
+        console.log("Removing " + gameID + " (" + db[gameID].name + ") from queue ("+ i +")");
       }
     }
   }
