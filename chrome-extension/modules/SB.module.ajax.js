@@ -9,8 +9,6 @@
 //
 //=================================================================
 
-// http://store.steampowered.com/dynamicstore/userdata/
-
 //+-------------------------------------------------------
 //| updateDB()
 //| + updates database for each game for an interval

@@ -85,10 +85,35 @@
 //| scanLibrary()
 //| + Check for new games and pass info to createDB();
 //+-------------------------------------------------------
-  function scanLibrary(){
-    $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){
-      createDB(data.response);
-    });
+  function scanLibrary(games, list){
+
+    games = (games)? games : {};
+
+  //| Step 1: Scan whole app library
+  //| then scan for wishlist
+  //+-------------------------------------------------------
+    if(!list || (list == "library")){
+      $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){
+        games = data.response;
+        scanLibrary(games, 'wishlist');
+        return;
+      });
+    }
+
+    //| Step 2: Scan dynamicstore for wishlist and recommended tags
+    //| save and createDB
+    //+-------------------------------------------------------
+      if(list == "wishlist"){
+        $.getJSON("http://store.steampowered.com/dynamicstore/userdata", function(data){
+
+          user.wishlist = data.rgWishlist;
+          user.recommendedTags = data.rgRecommendedTags;
+
+          createDB(games);
+          return;
+        });
+      }
+
   }
 
 
@@ -97,12 +122,10 @@
 //| + Given the response from doFastScan(),
 //| + creates the initial db var that serves as library
 //+-------------------------------------------------------
-  function createDB(steam, silent){
+  function createDB(steam){
 
     var d = new Date();
     var n = d.getTime();
-
-    var SteamIDs = [];
 
   //| Iterate over any game in the steam api
   //| and push to db with some initial data
