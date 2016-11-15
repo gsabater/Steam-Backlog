@@ -154,14 +154,10 @@ angular.module('SB.controllers')
       $scope.loadDetails = function(){
         $scope.gameDetails = Games.getDetails();
         console.log($scope.gameDetails);
-
-        // The game is still missing
-        //if(!$scope.gameDetails.updated){
-        //  $scope.refreshGameDetails(); }
       };
 
-    //| Search function
-    //| Filter games again because filters have changed
+    //| refreshGameDetails
+    //| Fetch the data again from the internet
     //+-------------------------------------------------------
       $scope.refreshGameDetails = function(){
         NProgress.configure({
@@ -172,36 +168,34 @@ angular.module('SB.controllers')
         getGameInfo($scope.gameDetails.appid);
       };
 
-    //| Search function
-    //| Filter games again because filters have changed
+    //| updateGameDetails
+    //| Called when refreshGameDetails has completed
     //+-------------------------------------------------------
       $scope.updateGameDetails = function(){
         NProgress.done();
       };
 
-    //| Search function
-    //| Filter games again because filters have changed
+    //| saveGameDetails
+    //| Stores game again in storage.local
     //+-------------------------------------------------------
       $scope.saveGameDetails = function(){
         db[$scope.gameDetails.appid] = $scope.gameDetails;
         chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
       };
 
-    //| Search function
-    //| Filter games again because filters have changed
+    //| hideGame
+    //| apply hidden attr to true and save
     //+-------------------------------------------------------
-      $scope.changeStatus = function(newStatus){
-        $scope.gameDetails.status = newStatus;
-        $scope.saveGameDetails();
-      };
+      $scope.hideGame = function(){
+        if($scope.gameDetails.hidden === true){
+          $scope.gameDetails.hidden = false;
+        }else{
+          var conf = confirm("Do you really want to hide this item?");
+          if (conf ===false){ return false; }
+          $scope.gameDetails.hidden = true;
+        }
 
-    //| Search function
-    //| Filter games again because filters have changed
-    //+-------------------------------------------------------
-      $scope.changeUserStatus = function(status){
-        if(!$scope.gameDetails.userStatus || (typeof $scope.gameDetails.userStatus !== "object")){ $scope.gameDetails.userStatus = {}; }
-        $scope.gameDetails.userStatus[status] = !$scope.gameDetails.userStatus[status];
-
+        db[$scope.gameDetails.appid] = $scope.gameDetails;
         $scope.saveGameDetails();
       };
 
@@ -236,7 +230,7 @@ angular.module('SB.controllers')
       //| Removes all info
       //+-------------------------------------------------------
         $scope.resetData = function(){
-          var conf = confirm("¿Realmente quieres eliminar esto? ¡Esta acción no se puede deshacer!");
+          var conf = confirm("Do you really want to reset all DB? This cannot be undone.");
           if (conf ===false){ return false; }
 
           var url = user.info.profileurl;

@@ -102,6 +102,15 @@
   padding-top: 5px;
 }
 
+.game-wishlist {
+  background-color: rgb(31, 56, 12);
+  position: absolute;
+  z-index: 9999;
+  margin-top: -18px;
+  padding: 1px 6px;
+  font-size: 13px;
+}
+
 /*****************************
 /**  Filters bar
 /*****************************/

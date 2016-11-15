@@ -9,7 +9,7 @@
 //
 //=================================================================
 
-var v = "0.8";
+var v = "0.9";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
 var isAngular    = false,    // flag used for the dashboard to make ajax calls
