@@ -38,17 +38,18 @@
       }
 
       queue.sort(function(a, b){ return b[1] - a[1]; });
-    }
 
-    // 3. Add wishlist games to queue
-    // if the game is not updated recently
-    for(var j in user.wishlist){
+      // 3. Add wishlist games to queue
+      // if the game is not updated recently
+      for(var j in user.wishlist){
 
-      game   = user.wishlist[j];
-      dbgame = db[game];
-      if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
-        queue.push([game, 0]);
+        game   = user.wishlist[j];
+        dbgame = db[game];
+        if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
+          queue.push([game, 0]);
+        }
       }
+      
     }
 
     // 4. If there is still queue remaining
