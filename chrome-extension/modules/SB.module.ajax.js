@@ -26,14 +26,21 @@
     //1.5 if the queue to update games has been already processed
     if(isQueue){ console.warn("Steam Backlog: db queue is completed. Stopping updateDB()"); return; }
 
-    // 2. Order all db games by playtime
-    // if the game is updated recently, remove from list
+    // 2. If there is no queue, build one with
+    // db games and wishlist games
     if(queue.length === 0){
 
+      // Iterate over all db games
+      // Add new games, refresh games after 30 days and removed days after a week
       for(var i in db){
         g = db[i];
+
         if(!g.updated || (n - g.updated) > 2592000000 ){ // 30 dias
           queue.push([g.appid, g.playtime_forever]);
+        }
+
+        if((g.removed === true) && (!g.updated || ((n - g.updated) > 648000000))){ // 7 dias
+          queue.push([g.appid, -100]);
         }
       }
 
@@ -42,14 +49,13 @@
       // 3. Add wishlist games to queue
       // if the game is not updated recently
       for(var j in user.wishlist){
-
         game   = user.wishlist[j];
         dbgame = db[game];
         if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
           queue.push([game, 0]);
         }
       }
-      
+
     }
 
     // 4. If there is still queue remaining
