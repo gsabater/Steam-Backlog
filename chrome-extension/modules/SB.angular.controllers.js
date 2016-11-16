@@ -234,7 +234,8 @@ angular.module('SB.controllers')
           if (conf ===false){ return false; }
 
           var url = user.info.profileurl;
-
+          isQueue = true;
+          
           chrome.storage.local.remove("db",    function(){console.error("removed"); });
           chrome.storage.local.remove("user",    function(){console.error("removed"); });
           chrome.storage.local.remove("settings",    function(){console.error("removed"); });

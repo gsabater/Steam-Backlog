@@ -127,7 +127,8 @@
   background-color: rgba(9, 11, 14, 0.7);
   background-color: rgba(9, 11, 14, 1);
   border-bottom: 1px solid rgba(245, 245, 245, 0.10);
-
+  min-height: 45px;
+  
   transition: background-color 0.5s, height 0.5s;
 }
 
