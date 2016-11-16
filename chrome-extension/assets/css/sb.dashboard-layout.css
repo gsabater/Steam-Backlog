@@ -48,6 +48,10 @@ header{
   margin: 0;
 }
 
+.SB-sidemenu li{
+  position: relative;
+}
+
 .SB-sidemenu li:hover {
   background-color: rgb(43, 51, 70);
 }
@@ -60,6 +64,12 @@ header{
   display: block;
   padding: 10px;
   padding-left: 50px;
+}
+
+.SB-sidemenu li i{
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .SB-sidemenu-categories{
