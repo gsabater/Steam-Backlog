@@ -19,9 +19,12 @@
   </div>
   -->
 
-  <div class="SB-filter-bar-layout" style="font-size: 12px;">
-    <span><i class="fa ion-load-c fa-spin" style="font-size: 10px;"></i> {{ (100-(queue.length * 100) / numGames).toFixed(1) }}%
-      <!--<i class="ion-help-circled" style="font-size: 10px;"></i>--></span>
+  <div class="SB-filter-bar-layout" style="font-size: 12px; line-height: 23px;">
+    <span>
+      <i class="fa ion-load-c fa-spin" style="font-size: 10px;"></i> {{ (100-(queue.length * 100) / numGames).toFixed(1) }}%
+      <!--<i class="ion-help-circled" style="font-size: 10px;"></i>-->
+      &nbsp;&nbsp;|&nbsp;&nbsp;Syncing {{queue.length}} items
+    </span>
   </div>
 
 </div>
