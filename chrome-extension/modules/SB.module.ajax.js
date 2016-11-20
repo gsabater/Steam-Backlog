@@ -16,7 +16,7 @@
   function updateDB(){
 
     var d = new Date();
-    var n = d.getTime();
+    var n = d.getTime() / 1000;
 
     // 1. stop execution if we don't have any games
     if(!db || Object.keys(db).length === 0){
@@ -35,11 +35,11 @@
       for(var i in db){
         g = db[i];
 
-        if(!g.updated || (n - g.updated) > 2592000000 ){ // 30 dias
+        if(!g.updated || (n - g.updated) > 2592000 ){ // 30 dias 2592000000
           queue.push([g.appid, g.playtime_forever]);
         }
 
-        if((g.removed === true) && (!g.updated || ((n - g.updated) > 648000000))){ // 7 dias
+        if((g.removed === true) && (!g.updated || ((n - g.updated) > 648000))){ // 7 dias
           queue.push([g.appid, -100]);
         }
       }
@@ -51,7 +51,7 @@
       for(var j in user.wishlist){
         game   = user.wishlist[j];
         dbgame = db[game];
-        if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
+        if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000)){ // 30 dias
           queue.push([game, 0]);
         }
       }
@@ -107,16 +107,6 @@
 //| + and saves into game db
 //+-------------------------------------------------------
   function scrapGame(gameID){
-
-    if(!db[gameID]){
-      db[gameID] = {
-        'appid': gameID,
-        'name': 'unknown',
-        'cached': n,
-        'playtime_forever': 0,
-        'wishlist': true
-      };
-    }
 
     console.log("%c Steam Backlog: Scrap Game -> " + gameID + " ( " + db[gameID].name + " ) ", 'background: #222; color: #bada55');
 

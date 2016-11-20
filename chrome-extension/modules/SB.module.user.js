@@ -90,7 +90,7 @@
     games = (games)? games : {};
 
   //| Step 1: Scan whole app library
-  //| then scan for wishlist
+  //| then iterate again to scan wishlist
   //+-------------------------------------------------------
     if(!list || (list == "library")){
       $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){
@@ -127,7 +127,7 @@
     var d = new Date();
     var n = d.getTime();
 
-  //| Iterate over any game in the steam api
+  //| Iterate over any game in the steam object
   //| and push to db with some initial data
   //+-------------------------------------------------------
     for(var i = 0, len = steam.games.length; i < len; i++){
@@ -144,8 +144,22 @@
       }else{
         db[e.appid].name = e.name;
         db[e.appid].playtime_forever = e.playtime_forever;
-        delete db[e.appid].wishlist;
+        delete db[e.appid].wishlist; // this means that the app has ben adquired
       }
+    }
+
+  //| Iterate over all wishlist games
+  //| and push to db with wishlist flag
+  //+-------------------------------------------------------
+    for(var w in user.wishlist){
+      e = user.wishlist[w];
+      console.log(w,e);
+      db[e] = {
+        appid: e,
+        name: "",
+        playtime_forever: 0,
+        wishlist: true
+      };
     }
 
     user.cached = n;

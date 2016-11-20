@@ -37,10 +37,6 @@ angular.module('SB.services', [])
           // game is hidden
           if(game.hidden === true){ continue; }
 
-          // No wishlist
-          if($rootScope.settings.library.wishlist === false){
-            if(game.wishlist === true){ continue; } }
-
           // Searchstring filter
           if(searchString && gameName.indexOf(searchString) == -1){ continue; }
 
