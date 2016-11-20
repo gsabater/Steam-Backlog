@@ -31,9 +31,12 @@
     if(queue.length === 0){
 
       // Iterate over all db games
-      // Add new games, refresh games after 30 days and removed days after a week
+      // Add new games, refresh games after 30 days and removed games after a week
       for(var i in db){
         g = db[i];
+
+        if(g.wishlist && (settings.library.wishlist === false)){
+          continue; }
 
         if(!g.updated || (n - g.updated) > 2592000 ){ // 30 dias 2592000000
           queue.push([g.appid, g.playtime_forever]);
@@ -42,19 +45,10 @@
         if((g.removed === true) && (!g.updated || ((n - g.updated) > 648000))){ // 7 dias
           queue.push([g.appid, -100]);
         }
+
       }
 
       queue.sort(function(a, b){ return b[1] - a[1]; });
-
-      // 3. Add wishlist games to queue
-      // if the game is not updated recently
-      for(var j in user.wishlist){
-        game   = user.wishlist[j];
-        dbgame = db[game];
-        if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000)){ // 30 dias
-          queue.push([game, 0]);
-        }
-      }
 
     }
 

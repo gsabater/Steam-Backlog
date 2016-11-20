@@ -52,6 +52,8 @@
       $rootScope.db       = items.db;
       $rootScope.user     = items.user;
       $rootScope.settings = local_settings;
+      
+      settings = $rootScope.settings;
 
       $rootScope.app.v = v;
 

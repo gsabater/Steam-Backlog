@@ -27,7 +27,7 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
     settings = {
       v: v,
       scan: {
-        interval: "5"
+        interval: "3"
       },
       library:{
         wishlist: false
