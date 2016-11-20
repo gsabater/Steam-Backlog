@@ -3,7 +3,7 @@
 
   "name":        "Steam Backlog preview",
   "description": "Steam Backlog provides easier and better way to browse our always growing steam libraries while helping decide what to play next.",
-  "version":     "0.9.1",
+  "version":     "0.9.3",
 
   "options_page": "steam-backlog.html#/settings",
 
@@ -43,6 +43,7 @@
     "webRequest",
     "webRequestBlocking",
     "notifications",
-    "https://www.howlongtobeatsteam.com/"
+    "https://www.howlongtobeatsteam.com/",
+    "http://backlog.bonda.es/*"
   ]
 }

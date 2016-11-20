@@ -222,8 +222,7 @@ angular.module('SB.controllers')
         $rootScope.settings.scan    = $scope.scan;
         $rootScope.settings.library = $scope.library;
 
-        console.log($rootScope.settings, settings);
-        chrome.storage.local.set({'settings': settings}, function(){  console.warn("settings saved", settings); });
+        chrome.storage.local.set({'settings': $rootScope.settings}, function(){  console.warn("settings saved", $rootScope.settings); });
       };
 
       //| Reset Data
@@ -235,7 +234,7 @@ angular.module('SB.controllers')
 
           var url = user.info.profileurl;
           isQueue = true;
-          
+
           chrome.storage.local.remove("db",    function(){console.error("removed"); });
           chrome.storage.local.remove("user",    function(){console.error("removed"); });
           chrome.storage.local.remove("settings",    function(){console.error("removed"); });
