@@ -32,7 +32,9 @@ angular.module('SB.services', [])
 
           game = $rootScope.db[i];
           game.appid = i;
-          gameName = game.name.toLowerCase();
+
+          gameName = game.name.toString();
+          gameName = gameName.toLowerCase();
 
           // game is hidden
           if(game.hidden === true){ continue; }
@@ -40,7 +42,7 @@ angular.module('SB.services', [])
           // No wishlist
           if($rootScope.settings.library.wishlist === false){
             if(game.wishlist === true){ continue; } }
-            
+
           // Searchstring filter
           if(searchString && gameName.indexOf(searchString) == -1){ continue; }
 
