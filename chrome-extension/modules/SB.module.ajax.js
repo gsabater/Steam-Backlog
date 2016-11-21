@@ -31,7 +31,7 @@
     if(queue.length === 0){
 
       // Iterate over all db games
-      // Add new games, refresh games after 30 days and removed games after a week
+      // Add new games, refresh games after 30 days and deleted games after a week
       for(var i in db){
         g = db[i];
 
@@ -42,7 +42,7 @@
           queue.push([g.appid, g.playtime_forever]);
         }
 
-        if((g.removed === true) && (!g.updated || ((n - g.updated) > 648000))){ // 7 dias
+        if((g.deleted === true) && (!g.updated || ((n - g.updated) > 648000))){ // 7 dias
           queue.push([g.appid, -100]);
         }
 

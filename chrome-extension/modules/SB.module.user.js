@@ -150,16 +150,30 @@
 
   //| Iterate over all wishlist games
   //| and push to db with wishlist flag
+  //| Also iterate over all db games with wishlist flag and
+  //| remove the ones that are not on the wishlist
   //+-------------------------------------------------------
     for(var w in user.wishlist){
       e = user.wishlist[w];
-      console.log(w,e);
-      db[e] = {
-        appid: e,
-        name: "",
-        playtime_forever: 0,
-        wishlist: true
-      };
+
+      if(!db.hasOwnProperty(e)){
+        console.log(w,e);
+        db[e] = {
+          appid: e,
+          name: "",
+          playtime_forever: 0,
+          wishlist: true
+        };
+      }
+    }
+
+    for(var c in db){
+      e = db[c];
+      if(!e.wishlist){ continue; }
+      if(user.wishlist.indexOf(parseInt(e.appid)) == -1){
+        console.warn("deleting ", c);
+        delete db[c];
+      }
     }
 
     user.cached = n;
@@ -172,6 +186,14 @@
     // Save information into chrome.local
     chrome.storage.local.set({'db': db}, function(){ console.warn("db saved", db); });
     chrome.storage.local.set({'user': user}, function(){ console.warn("user saved", user); });
+
+    if(isAngular){
+      isQueue = false;
+      updateDB();
+
+      if($("div[ng-view]").scope().hasOwnProperty("jQueryCallback")){ $("div[ng-view]").scope().jQueryCallback("force"); }
+      console.warn("updating angular view");
+    }
 
     // fill HLTB information on games
     //howLongToBeatSteam("all");

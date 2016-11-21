@@ -37,8 +37,10 @@
 
   <div class="SB-games-count">{{ games.length }} items
     &nbsp;&nbsp;|&nbsp;&nbsp;
-    <span class="SB-btn tooltip">Scan
+    <span ng-if="!scanningLibrary" class="SB-btn tooltip" ng-click="scanLibrary()">Scan
       <span class="tooltip-content clearfix" style="font-size: 11px;">Search for new games<br />in library and wishlist</span></span>
+
+    <span ng-if="scanningLibrary" class="SB-btn">Scanning...</span>
   </div>
   <!-- ng-class="{'has-secondary-bar': secondary_bar}" -->
 
@@ -126,7 +128,7 @@
 
     <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-class="{'wishlist': game.wishlist, 'deleted': game.deleted}" ng-click="openGameCard(game.appid)" ng-if="!game.hidden">
     <!-- <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div> -->
-      <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
+      <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
 
       <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
@@ -199,7 +201,7 @@
     <div class="body-image">
 
       <div class="game-image">
-        <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/header.jpg" />
+        <img ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/header.jpg" />
       </div>
 
       <div class="game-hltb" ng-if="gameDetails.hltb == 'unavailable'">

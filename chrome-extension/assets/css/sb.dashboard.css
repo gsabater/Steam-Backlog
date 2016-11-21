@@ -106,11 +106,11 @@
   opacity: 0.3 !important;
 }
 
-.game-card.deleted .card-second-line{
+.game-card.deleted .card-second-line, .game-card.wishlist .card-second-line{
   visibility: hidden;
 }
 
-.game-card.deleted .deleted-badge{
+.game-card.deleted .deleted-badge, .game-card.wishlist .wishlist-badge{
   display: block !important;
 }
 
