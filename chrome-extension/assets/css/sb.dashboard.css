@@ -102,13 +102,37 @@
   padding-top: 5px;
 }
 
-.game-wishlist {
+.game-card.deleted{
+  opacity: 0.3 !important;
+}
+
+.game-card.deleted .card-second-line{
+  visibility: hidden;
+}
+
+.game-card.deleted .deleted-badge{
+  display: block !important;
+}
+
+.wishlist-badge {
+  display: none;
   background-color: rgb(31, 56, 12);
-  position: absolute;
+  position: absolute !important;
   z-index: 9999;
   margin-top: -18px;
   padding: 1px 6px;
   font-size: 13px;
+}
+
+.deleted-badge {
+  display: none;
+  background-color: rgb(103, 25, 12);
+  position: absolute !important;
+  z-index: 9999;
+  margin-top: -18px;
+  padding: 1px 6px;
+  font-size: 13px;
+  color: white !important;
 }
 
 /*****************************
@@ -128,7 +152,7 @@
   background-color: rgba(9, 11, 14, 1);
   border-bottom: 1px solid rgba(245, 245, 245, 0.10);
   min-height: 45px;
-  
+
   transition: background-color 0.5s, height 0.5s;
 }
 
@@ -149,6 +173,7 @@
 
 .SB-filter-bar-search{
   display: inline-block;
+  width: 70%;
 }
 
 .SB-filter-bar-expand{
@@ -191,6 +216,7 @@
   padding: 5px;
   outline: none;
   width: 300px;
+  width: 93%;
 }
 
 .SB-filter-bar input::-webkit-input-placeholder{
