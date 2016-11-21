@@ -3,7 +3,7 @@
 
   "name":        "Steam Backlog preview",
   "description": "Steam Backlog provides easier and better way to browse our always growing steam libraries while helping decide what to play next.",
-  "version":     "0.9.3",
+  "version":     "0.9.4",
 
   "options_page": "steam-backlog.html#/settings",
 
