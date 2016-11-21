@@ -19,9 +19,15 @@
   </div>
   -->
 
-  <div class="SB-filter-bar-layout" style="font-size: 12px;">
-    <span><i class="fa ion-load-c fa-spin" style="font-size: 10px;"></i> {{ (100-(queue.length * 100) / numGames).toFixed(1) }}%
-      <!--<i class="ion-help-circled" style="font-size: 10px;"></i>--></span>
+  <div class="SB-filter-bar-layout" style="font-size: 12px; line-height: 23px;">
+    <span ng-if="queue.length > 0">
+      <i class="fa ion-load-c fa-spin" style="font-size: 10px;"></i>
+      {{ (100-(queue.length * 100) / numGames).toFixed(1) }}%
+      &nbsp;&nbsp;|&nbsp;&nbsp;Syncing {{queue.length}} items
+    </span>
+    <span ng-if="queue.length == 0">
+      Sync complete
+    </span>
   </div>
 
 </div>
@@ -29,7 +35,13 @@
 <div class="SB-filter-bar secondary-bar show">
   <!--  ng-class="{'show': secondary_bar}" -->
 
-  <div class="SB-games-count">{{ games.length }} items</div>
+  <div class="SB-games-count">{{ games.length }} items
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span ng-if="!scanningLibrary" class="SB-btn tooltip" ng-click="scanLibrary()">Scan
+      <span class="tooltip-content clearfix" style="font-size: 11px;">Search for new games<br />in library and wishlist</span></span>
+
+    <span ng-if="scanningLibrary" class="SB-btn">Scanning...</span>
+  </div>
   <!-- ng-class="{'has-secondary-bar': secondary_bar}" -->
 
   <div class="SB-filter-bar-sort">
@@ -73,16 +85,17 @@
 
 <div class="tags-container" ng-class="{'show': showTags}">
   <input type="text" placeholder="Search tags" ng-model="filters.searchTags" style="
-    float: right;
     color: rgba(245, 245, 245, 0.6);
-    margin-left: 7px;
+    /* margin-left: 7px; */
     background: rgba(255, 255, 255, 0.05);
     border-radius: 3px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
     border: none;
     padding: 5px;
     outline: none;
-    width: 190px;
+    width: 80%;
+    text-align: center;
+    font-size: 30px;
 ">
   <h2 style="
     font-weight: 100;
@@ -91,9 +104,9 @@
     text-shadow: 1px 1px 3px rgba(33, 44, 101, 0.51);
     color: #ffffff;
     /* line-height: 54px; */
-    margin-top: 25px;
+    margin-top: 15px;
     text-align: left;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 3px;
 "> </h2>
@@ -113,9 +126,9 @@
       <i class="fa fa-warning"></i> No games match the selected filters
     </div>
 
-    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-click="openGameCard(game.appid)" ng-if="!game.hidden">
+    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-class="{'wishlist': game.wishlist, 'deleted': game.deleted}" ng-click="openGameCard(game.appid)" ng-if="!game.hidden">
     <!-- <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div> -->
-      <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
+      <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
 
       <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
@@ -123,7 +136,8 @@
       <div class="game-steamscore card-second-line" ng-if="filters.orderBy == '-steamscore'"><i class="fa fa-steam"></i> {{game.steamscore}}, {{game.steamscoreAlt}}</div>
       <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div>
       <div class="game-timetobeat card-second-line" ng-if="filters.orderBy == 'timeToBeat'">Played {{game.playtime_forever | minutesToHours}}<span class="pull-right"><i class="ion-android-time"></i> {{game.hltb.MainTtb | minutesToHours }} <i class="ion-ribbon-b" style="margin-left: 5px;"></i> {{game.hltb.ExtrasTtb | minutesToHours }}</span></div>
-      <div class="game-wishlist" ng-if="game.wishlist">Wishlist</div>
+      <div class="wishlist-badge">Wishlist</div>
+      <div class="deleted-badge">Removed</div>
 
       <div class="game-tags card-second-line"      ng-if="filters.tags.length > 0">
         <span ng-repeat="tag in game.tags | limitTo : 5" style="display: inline-block; padding: 1px 5px; color: white; background-color: #343434; margin: 3px 3px; border-radius: 2px;">{{tag}}</span>
@@ -187,7 +201,7 @@
     <div class="body-image">
 
       <div class="game-image">
-        <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/header.jpg" />
+        <img ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{gameDetails.appid}}/header.jpg" />
       </div>
 
       <div class="game-hltb" ng-if="gameDetails.hltb == 'unavailable'">
@@ -229,7 +243,7 @@
 
     <div class="pull-right text-right game-updated" style="text-align: right; width: 50%; float: right;">
       <span class="btn-refresh pull-right" ng-click="refreshGameDetails();" style=" margin-top: 6px;"><i class="ion-android-refresh"></i></span>
-      Updated {{gameDetails.updated | date:'dd MMM, HH:mm:ss'}}
+      Updated {{(gameDetails.updated*1000) | date:'dd MMM, HH:mm'}}
       <br /><span class="credit" style="display: block; padding-right: 35px;"><i class="ion-ios-pulse-strong"></i> HLTB data provided by howlongtobeatsteam.com</span>
     </div>
 

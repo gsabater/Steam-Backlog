@@ -16,7 +16,7 @@
   function updateDB(){
 
     var d = new Date();
-    var n = d.getTime();
+    var n = d.getTime() / 1000;
 
     // 1. stop execution if we don't have any games
     if(!db || Object.keys(db).length === 0){
@@ -26,30 +26,30 @@
     //1.5 if the queue to update games has been already processed
     if(isQueue){ console.warn("Steam Backlog: db queue is completed. Stopping updateDB()"); return; }
 
-    // 2. Order all db games by playtime
-    // if the game is updated recently, remove from list
+    // 2. If there is no queue, build one with
+    // db games and wishlist games
     if(queue.length === 0){
 
+      // Iterate over all db games
+      // Add new games, refresh games after 30 days and deleted games after a week
       for(var i in db){
         g = db[i];
-        if(!g.updated || (n - g.updated) > 2592000000 ){ // 30 dias
+
+        if(g.wishlist && (settings.library.wishlist === false)){
+          continue; }
+
+        if(!g.updated || (n - g.updated) > 2592000 ){ // 30 dias 2592000000
           queue.push([g.appid, g.playtime_forever]);
         }
+
+        if((g.deleted === true) && (!g.updated || ((n - g.updated) > 648000))){ // 7 dias
+          queue.push([g.appid, -100]);
+        }
+
       }
 
       queue.sort(function(a, b){ return b[1] - a[1]; });
 
-      // 3. Add wishlist games to queue
-      // if the game is not updated recently
-      for(var j in user.wishlist){
-
-        game   = user.wishlist[j];
-        dbgame = db[game];
-        if(!dbgame || !dbgame.updated || ((n - dbgame.updated) > 2592000000)){ // 30 dias
-          queue.push([game, 0]);
-        }
-      }
-      
     }
 
     // 4. If there is still queue remaining
@@ -102,133 +102,41 @@
 //+-------------------------------------------------------
   function scrapGame(gameID){
 
-    var d = new Date();
-    var n = d.getTime();
-
-    if(!db[gameID]){
-      db[gameID] = {
-        'appid': gameID,
-        'name': 'unknown',
-        'cached': n,
-        'playtime_forever': 0,
-        'wishlist': true
-      };
-    }
-
     console.log("%c Steam Backlog: Scrap Game -> " + gameID + " ( " + db[gameID].name + " ) ", 'background: #222; color: #bada55');
 
   //| 1. Get JSON details for app gameID
-  //| --
+  //| Data taken from Steam Backlog server API
   //+-------------------------------------------------------
-    $.getJSON("http://store.steampowered.com/api/appdetails?appids=" + gameID,
+    $.getJSON("http://backlog.bonda.es/api/get/" + gameID,
     function(data){
 
-      var jsonData = data[gameID].data;
-      //console.log(jsonData);
+      // Merge received data into existing db object
+      $.extend(db[gameID], data);
 
-      // 0. Check if game is removed
-      if(data[gameID].hasOwnProperty("success")){
-        if(data[gameID].success === false){
-          console.warn("Game not available");
-
-          db[gameID].updated = n;
-          db[gameID].removed = true;
-
-          saveGameInfo(gameID);
-          return;
-        }}
-
-      // Name
-      db[gameID].name  = jsonData.name;
-
-      // Dates
-      db[gameID].updated  = n;
-      db[gameID].released = jsonData.release_date.date;
-
-      // metascore
-      if(jsonData.hasOwnProperty("metacritic")){ db[gameID].metascore = jsonData.metacritic.score; }
-
-      // Features
-      db[gameID].achievements = false;
-
-      for(var i in jsonData.categories){
-        var feature = jsonData.categories[i];
-
-        if(feature.id == 22){ db[gameID].achievements = true; }
-        if(feature.id == 29){ db[gameID].cards = true; }
-        if(feature.id == 28){ db[gameID].controller = true; }
-        if(feature.id == 18){ db[gameID].controller = true; }
-
-        if(feature.id == 2){ db[gameID].singlePlayer = true; }
-        if(feature.id == 1){ db[gameID].multiPlayer = true; }
-        if(feature.id == 27){ db[gameID].multiPlayer = true; }
-        if(feature.id == 20){ db[gameID].mmo = true; }
-
-        if(feature.id == 9){ db[gameID].coop = true; }
-        if(feature.id == 24){ db[gameID].coop = true; }
-        if(feature.id == 24){ db[gameID].localCoop = true; }
-      }
-
-    //| 2. Scrap html page
-    //| Get tags, user reviews, ...
+    //| 2. Get achievements stats
+    //| every user must do it on it's own
     //+-------------------------------------------------------
-      $.get( "http://store.steampowered.com/app/" + gameID )
-      .done(function(xhr){
+      $.getJSON("http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=" + gameID + "&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=" + user.steamid,
+      function(data){
+        // execute always because sometimes the app has no achievements.
+      })
+      .always(function(data){
 
-        // Clean data to avoid loading extra images via xhr
-        xhr = xhr.replace(/<img[^>]*>/g,"");
+        // Achievements info if it has
+        if(data.hasOwnProperty("playerstats")){
+          if(data.playerstats.hasOwnProperty("achievements")){
+            var achieved = 0; for(i in data.playerstats.achievements){
+              if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
 
-        // Stop if age barrier
-        if(!$(".apphub_AppName", xhr).length){
-          console.warn("Game not available");
-          saveGameInfo(gameID);
-          return;
-        }
+            db[gameID].achievements = data.playerstats.achievements.length;
+            db[gameID].achieved     = achieved;
 
-        // Steam Score
-        if($(".game_review_summary", xhr).length){
-          steamscore = $(".user_reviews_summary_row[itemprop='aggregateRating']", xhr).attr("data-store-tooltip");
-          steamscore = steamscore.split("%")[0];
-
-          db[gameID].steamscore    = steamscore.replace(/\D/g,'');
-          db[gameID].steamscoreAlt = $(".game_review_summary[itemprop='description']", xhr).text();
-        }else{
-          db[gameID].steamscore    = 0;
-          db[gameID].steamscoreAlt = "No score yet";
-        }
-
-        // Game tags
-        var tags = [];
-        $(".popular_tags a", xhr).each(function(){ tags.push($(this).text().trim()); });
-        db[gameID].tags = tags.slice(0, 20);
-
-
-      //| 3. Get achievements stats
-      //+-------------------------------------------------------
-        $.getJSON("http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=" + gameID + "&key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid=" + user.steamid,
-        function(data){
-          // execute always to avoid errors 400 given by steam
-        })
-        .always(function(data){
-
-          // if error code 503 || > 500
-
-          // Achievements info if it has
-          if(data.hasOwnProperty("playerstats")){
-            if(data.playerstats.hasOwnProperty("achievements")){
-              var achieved = 0; for(i in data.playerstats.achievements){
-                if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
-
-              db[gameID].achievements = data.playerstats.achievements.length;
-              db[gameID].achieved     = achieved;
-
-            }
           }
+        }
 
-          howLongToBeatSteam(gameID);
-          saveGameInfo(gameID);
+        howLongToBeatSteam(gameID);
+        saveGameInfo(gameID);
 
-        });
       });
 
     });

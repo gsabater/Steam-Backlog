@@ -23,6 +23,7 @@ angular.module('SB.controllers')
     $scope.gameDetails  = false;
 
     $scope.queue = queue;
+    $scope.scanningLibrary = false;
 
     $scope.filters = {
 
@@ -108,18 +109,26 @@ angular.module('SB.controllers')
           $(document.getElementById('SB-game-card')).scope().loadDetails();  }
       };
 
+      //| scanLibrary
+      //| ececute scanlibrary() from module.user
+      //+-------------------------------------------------------
+        $scope.scanLibrary = function(){
+          $scope.scanningLibrary = true;
+          scanLibrary();
+        };
 
     //| jQuery Callback
     //| is called when a game has been refreshed in jquery
     //+-------------------------------------------------------
-      $scope.jQueryCallback = function(){
-        //$scope.search();
-        //$scope.allTags = Games.getAllTags();
+      $scope.jQueryCallback = function(force){
 
         $scope.overview = Games.overview();
         $scope.allTags  = $scope.overview.tags;
 
+        $scope.scanningLibrary = false;
         $scope.$apply();
+
+        if(force){ $scope.search(); }
       };
 
 
@@ -222,8 +231,12 @@ angular.module('SB.controllers')
         $rootScope.settings.scan    = $scope.scan;
         $rootScope.settings.library = $scope.library;
 
-        console.log($rootScope.settings, settings);
-        chrome.storage.local.set({'settings': settings}, function(){  console.warn("settings saved", settings); });
+        settings = $rootScope.settings;
+        chrome.storage.local.set({'settings': $rootScope.settings}, function(){
+          console.warn("settings saved", "rootscope ", $rootScope.settings);
+          console.log("rootscope", $rootScope.settings);
+          console.log("local", settings);
+        });
       };
 
       //| Reset Data
@@ -234,6 +247,7 @@ angular.module('SB.controllers')
           if (conf ===false){ return false; }
 
           var url = user.info.profileurl;
+          isQueue = true;
 
           chrome.storage.local.remove("db",    function(){console.error("removed"); });
           chrome.storage.local.remove("user",    function(){console.error("removed"); });
