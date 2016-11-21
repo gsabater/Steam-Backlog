@@ -42,16 +42,13 @@
 
       console.log("chrome.storage", items);
 
-      db             = items.db;
-      user           = items.user;
-      local_settings = (items.settings) ? items.settings : settings;
-
-      // apply defaults
-      if(!local_settings.hasOwnProperty("library")){ local_settings.library = settings.library; }
+      db       = items.db;
+      user     = items.user;
+      settings = (items.settings) ? items.settings : settings;
 
       $rootScope.db       = items.db;
       $rootScope.user     = items.user;
-      $rootScope.settings = local_settings;
+      $rootScope.settings = settings;
 
       $rootScope.app.v = v;
 

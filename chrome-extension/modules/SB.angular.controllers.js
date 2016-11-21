@@ -213,6 +213,7 @@ angular.module('SB.controllers')
     $scope.scan    = $rootScope.settings.scan;
     $scope.library = $rootScope.settings.library;
 
+
     //| Save Settings
     //| Updates chrome.local with settings
     //+-------------------------------------------------------
@@ -221,7 +222,8 @@ angular.module('SB.controllers')
         $rootScope.settings.scan    = $scope.scan;
         $rootScope.settings.library = $scope.library;
 
-        chrome.storage.local.set({'settings': $rootScope.settings}, function(){  console.warn("settings saved", $rootScope.settings); });
+        console.log($rootScope.settings, settings);
+        chrome.storage.local.set({'settings': settings}, function(){  console.warn("settings saved", settings); });
       };
 
       //| Reset Data
