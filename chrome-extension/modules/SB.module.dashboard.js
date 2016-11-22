@@ -9,7 +9,32 @@
 //
 //=================================================================
 
+var resize       = false;
+var contentWidth = false;
+var appWidth     = false;
+
+function setAppMargin(){
+  clearTimeout(resize);
+  resize = window.setTimeout(function(){
+    var contentWidth = (contentWidth)? contentWidth : $( ".content" ).width() - 15;
+    var appWidth     = (appWidth)? appWidth : $( ".game-card:first-child" ).outerWidth(true);
+
+    var rest    = contentWidth / appWidth;
+    var numApps = Math.floor(rest);
+    var margin  = (rest - numApps) * appWidth;
+    var marginRight = (margin / numApps) + 10;
+
+    if($("#css-app-margin").length){
+      $("#css-app-margin").html(".game-card{ transition: margin-right 0.3s; margin-right: " + marginRight + "px !important; }"); }
+
+  }, 600);
+
+}
+
 $(document).ready(function(){
+
+  setAppMargin();
+  $( window ).resize(function() { setAppMargin(); });
 
 //+-------------------------------------------------------
 //| + Infinite scroll
