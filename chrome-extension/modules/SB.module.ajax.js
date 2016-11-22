@@ -35,8 +35,8 @@
       for(var i in db){
         g = db[i];
 
-        if(g.wishlist && (settings.library.wishlist === false)){
-          continue; }
+        //if(g.wishlist && (settings.library.wishlist === false)){
+        //  continue; }
 
         if(!g.updated || (n - g.updated) > 2592000 ){ // 30 dias 2592000000
           queue.push([g.appid, g.playtime_forever]);

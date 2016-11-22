@@ -29,7 +29,7 @@ function setAppMargin(){
       marginRight = (margin / numApps);
     }
 
-    console.log(contentWidth, appWidth, rest, numApps, margin, "margin?: " + marginRight);
+    //console.log(contentWidth, appWidth, rest, numApps, margin, "margin?: " + marginRight);
 
     if($("#css-app-margin").length){
       $("#css-app-margin").html(".game-card{ transition: margin-right 0.3s; margin: 17px " + marginRight / 2 + "px !important; }"); }
