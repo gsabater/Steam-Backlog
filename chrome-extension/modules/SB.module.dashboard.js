@@ -16,18 +16,24 @@ var appWidth     = false;
 function setAppMargin(){
   clearTimeout(resize);
   resize = window.setTimeout(function(){
-    var contentWidth = (contentWidth)? contentWidth : $( ".content" ).width() - 15;
-    var appWidth     = (appWidth)? appWidth : $( ".game-card:first-child" ).outerWidth(true);
+    var contentWidth = (contentWidth)? contentWidth : $( ".content" ).width() -40;
+    var appWidth     = (appWidth)? appWidth : $( ".game-card:first-child" ).width();
 
     var rest    = contentWidth / appWidth;
     var numApps = Math.floor(rest);
     var margin  = (rest - numApps) * appWidth;
-    var marginRight = (margin / numApps) + 10;
+    var marginRight = (margin / numApps);
+
+    if(marginRight < 10){
+      margin  = (rest - (numApps-1)) * appWidth;
+      marginRight = (margin / numApps);
+    }
+
+    console.log(contentWidth, appWidth, rest, numApps, margin, "margin?: " + marginRight);
 
     if($("#css-app-margin").length){
-      $("#css-app-margin").html(".game-card{ transition: margin-right 0.3s; margin-right: " + marginRight + "px !important; }"); }
-
-  }, 600);
+      $("#css-app-margin").html(".game-card{ transition: margin-right 0.3s; margin: 17px " + marginRight / 2 + "px !important; }"); }
+  }, 300);
 
 }
 

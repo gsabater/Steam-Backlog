@@ -36,15 +36,24 @@ angular.module('SB.services', [])
           gameName = game.name.toString();
           gameName = gameName.toLowerCase();
 
+          /*
+          // FIXME: for some reason, this detection is very very slow
+
+          // include exact game by number
+          gameNameInt = parseInt(searchString);
+            if(!isNaN(gameNameInt)){ console.log(gameNameInt);
+              if(game.appid == gameNameInt){ result.games.push(game); } }
+          */
+
+          // Searchstring filter
+          if(searchString && gameName.indexOf(searchString) == -1){ continue; }
+
           // game is hidden
           if(game.hidden === true){ continue; }
 
           // No wishlist
           if($rootScope.settings.library.wishlist === false){
             if(game.wishlist === true){ continue; } }
-
-          // Searchstring filter
-          if(searchString && gameName.indexOf(searchString) == -1){ continue; }
 
           // Attributes filter
           if(filters.singlePlayer && !game.singlePlayer){ continue;}
