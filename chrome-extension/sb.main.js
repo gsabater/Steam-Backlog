@@ -24,7 +24,8 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
     timeout = false,
     isQueue = false, //false,
 
-    settings = {
+    collections = false,    // chrome.local var
+    settings    = {
       v: v,
       scan: {
         interval: "3"
