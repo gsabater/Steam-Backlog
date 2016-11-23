@@ -57,7 +57,7 @@
         <ul>
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
           <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}"><a ng-href="#/backlog">Backlog</a></li>
-          <li><a href="javascript:void(0);">Collections</a> <i class="ion-plus"></i></li>
+          <li ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;" ><a>Collections</a> <i class="ion-plus"></i></li>
           <li ng-click="menu_active = 'settings'" ng-class="{'active': menu_active == 'settings'}"><a ng-href="#/settings">Settings</a></li>
           <li ng-click="menu_active = 'about'" ng-class="{'active': menu_active == 'about'}"><a ng-href="#/about">About</a></li>
         </ul>
@@ -74,24 +74,8 @@
       <div class="content" ng-view>
       </div>
 
-      <div id="SB-collection" ng-controller="CollectionsCtrl" style="
-          position: fixed;
-          width: calc(100vw - 5px);
-          background: #1F1F1F;
-          /* background-color: rgba(0, 0, 0, 0.9); */
-          padding: 25px;
-          z-index: 99999;
-          top: 100px;
-          left: calc(50% - (450px/2));
-          width: 450px;
-          height: auto;
-          /* background-color: #1B2838; */
-          /* background-position: center top; */
-          /* background-repeat: no-repeat; */
-          z-index: 99999;
-          border-radius: 4px;
-      ">
-        <h2 style="margin-top: 0;"><i class="fa fa-book"></i> Collections</h2>
+      <div id="SB-collection" ng-controller="CollectionsCtrl" ng-class="{'show': showPanel}" >
+        <h2 style="margin-top: 0;"><i class="fa fa-book"></i> Collections {{showPanel}}</h2>
         <label style="    display: block;
     padding-bottom: 5px;
     font-weight: 100;">Name your collection</label>
@@ -121,11 +105,11 @@
 
         <span class="SB-btn" style="    color: #efefef;
     font-weight: bold;
-    opacity: 0.6;">Cancel</span>
+    opacity: 0.6;" ng-click="closePanel();">Cancel</span>
         </div>
 
             </div>
-      <div id="SB-backdrop" class="show" ng-class="{'show': app.backdrop}" ng-click="app.backdrop = false"></div>
+      <div id="SB-backdrop" ng-class="{'show': app.backdrop}" ng-click="app.backdrop = false"></div>
 
     </div>
   </body>

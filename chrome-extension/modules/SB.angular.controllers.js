@@ -58,6 +58,8 @@ angular.module('SB.controllers')
 
           $scope.numGames = $scope.games.length;
         }
+
+        setAppMargin();
       };
 
 

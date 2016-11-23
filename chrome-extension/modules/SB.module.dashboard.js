@@ -32,14 +32,20 @@ function setAppMargin(){
     //console.log(contentWidth, appWidth, rest, numApps, margin, "margin?: " + marginRight);
 
     if($("#css-app-margin").length){
-      $("#css-app-margin").html(".game-card{ transition: margin-right 0.3s; margin: 17px " + marginRight / 2 + "px !important; }"); }
+      $("#css-app-margin").html(".game-card{ margin: 17px " + marginRight / 2 + "px !important; }"); }
+
+    /*
+    $(".games-list div.game-card").each(function(i,e){
+      $(e).delay(i*100).animate({opacity: 0.8} ,300);
+    });
+    */
+
   }, 300);
 
 }
 
 $(document).ready(function(){
 
-  setAppMargin();
   $( window ).resize(function() { setAppMargin(); });
 
 //+-------------------------------------------------------
@@ -64,6 +70,7 @@ $(document).ready(function(){
     $("div[ng-view]").scope().showTags = false;
     $("div[ng-view]").scope().showGameCard = false;
     $("div[ng-view]").scope().$apply();
+    $("div#SB-collection").scope().closePanel(true);
   });
 
 });

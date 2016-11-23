@@ -29,7 +29,8 @@
     $rootScope.app = {
       v: 0,
       listStyle: "cards",  // - list
-      backdrop: false
+      backdrop: false,
+      showCollectionsPanel: false
     };
 
     $rootScope.stats = {
@@ -52,7 +53,7 @@
       $rootScope.db       = items.db;
       $rootScope.user     = items.user;
       $rootScope.settings = local_settings;
-      
+
       settings = $rootScope.settings;
 
       $rootScope.app.v = v;

@@ -42,7 +42,9 @@
   width: 205px;
   margin: 17px 15px;
   border-radius: 0px;
-  opacity: 0.7;
+  opacity: 0.6;
+
+  transition: margin-right 0.3s, opacity 0.2s;
 }
 
 .games-list.cards .bookmark{
@@ -658,4 +660,27 @@ text-align: right;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
   text-decoration: none;
   padding-top: 8px;
+}
+
+/*****************************
+/****  collections
+/*****************************/
+
+#SB-collection{
+  display: none;
+  position: fixed;
+  width: calc(100vw - 5px);
+  background: #1F1F1F;
+  padding: 25px;
+  z-index: 99999;
+  top: 100px;
+  left: calc(50% - (450px/2));
+  width: 450px;
+  height: auto;
+  z-index: 99999;
+  border-radius: 4px;
+}
+
+#SB-collection.show{
+  display: block !important;
 }
