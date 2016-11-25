@@ -76,6 +76,14 @@ header{
   transition: opacity 0.3s;
 }
 
+.SB-sidemenu li i.drag{
+  position: relative !important;
+  float: none;
+  top: -1px !important;
+  font-size: 10px;
+  cursor: all-scroll;
+}
+
 .SB-sidemenu li:hover i {
   opacity: 1;
 }
@@ -594,6 +602,49 @@ span.note {
 
 .tooltip.tooltip-reverse .tooltip-content::after {
     display: none;
+}
+
+/* ************************************** */
+/* Mandatory CSS required for ng-sortable */
+/* ************************************** */
+
+.as-sortable-item, .as-sortable-placeholder {
+    display: block;
+}
+
+.as-sortable-item {
+    -ms-touch-action: none;
+    touch-action: none;
+    /* to disable context menu on iOS devices */
+    -webkit-touch-callout: none;
+}
+
+.as-sortable-item-handle {
+    cursor: move;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+}
+
+.as-sortable-placeholder {
+}
+
+.as-sortable-drag {
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.as-sortable-hidden {
+    display: none !important;
+}
+
+.as-sortable-un-selectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /******************

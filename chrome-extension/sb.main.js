@@ -28,17 +28,14 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
     collections = [
       {
         name: "Completed",
-        order: 1,
         apps: []
       },
       {
         name: "Favorites",
-        order: 4,
         apps: []
       },
       {
         name: "I really want to play this one",
-        order: 3,
         apps: []
       }
     ],    // chrome.local var

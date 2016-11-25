@@ -14,6 +14,7 @@
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-route.min.js"></script>
     <script src="lib/nprogress.js"></script>
+    <script src="lib/ng-sortable.min.js"></script>
 
     <!-- Javascript angular modules -->
     <script src="modules/SB.angular.app.js"></script>
@@ -34,6 +35,7 @@
     <!-- Page and plugin styles -->
     <link rel="stylesheet" href="assets/css/sb.dashboard.css" type="text/css">
     <link rel="stylesheet" href="assets/css/sb.dashboard-layout.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="lib/ng-sortable.css" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -53,14 +55,14 @@
 
       <button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
 
-      <nav class="menu SB-sidemenu">
-        <ul>
+      <nav class="menu SB-sidemenu" ng-controller="NavCtrl">
+        <ul data-as-sortable="board.dragControlListeners" data-ng-model="collections">
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
           <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}"><a ng-href="#/backlog">Backlog</a></li>
 
           <li ><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
-          <li ng-repeat="item in collections | orderBy: item.name" class="collections-item">
-            <a>{{item.name}}</a>
+          <li ng-repeat="item in collections | orderBy: item.name" class="collections-item" data-as-sortable-item>
+            <a><i class="ion-drag drag" data-as-sortable-item-handle></i> {{item.name}}</a>
             <i class="ion-edit"></i>
           </li>
 
@@ -69,6 +71,7 @@
           <li ng-click="menu_active = 'settings'" ng-class="{'active': menu_active == 'settings'}"><a ng-href="#/settings">Settings</a></li>
           <li ng-click="menu_active = 'about'" ng-class="{'active': menu_active == 'about'}"><a ng-href="#/about">About</a></li>
         </ul>
+
       </nav>
 
       <div class="SB-sidemenu-user-card">

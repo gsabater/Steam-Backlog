@@ -268,6 +268,28 @@ angular.module('SB.controllers')
 
   })
 
+  //=================================================
+  // NavCtrl
+  // +
+  //=================================================
+    .controller('NavCtrl', function($rootScope, $scope){
+
+      $scope.dragControlListeners = {
+          accept: function (sourceItemHandleScope, destSortableScope) {return boolean;},//override to determine drag is allowed or not. default is true.
+          itemMoved: function (event) { console.log($scope.items); },
+          orderChanged: function(event) { console.log($scope.items); },
+          containment: '#board',//optional param.
+          clone: true, //optional param for clone feature.
+          allowDuplicates: false //optional param allows duplicates to be dropped.
+      };
+
+      $scope.dragControlListeners1 = {
+              containment: '#board',//optional param.
+              allowDuplicates: true //optional param allows duplicates to be dropped.
+      };
+
+    })
+
 //=================================================
 // AboutCtrl
 // + Function to check the active state and apply

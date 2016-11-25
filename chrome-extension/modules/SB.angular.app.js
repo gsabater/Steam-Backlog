@@ -14,6 +14,7 @@
     'SB.controllers',
     'SB.services',
     'SB.filters',
+    'as.sortable'
     //'pascalprecht.translate',
   ])
 
