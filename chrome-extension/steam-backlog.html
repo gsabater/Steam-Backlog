@@ -57,7 +57,15 @@
         <ul>
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
           <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}"><a ng-href="#/backlog">Backlog</a></li>
-          <li ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;" ><a>Collections</a> <i class="ion-plus"></i></li>
+
+          <li ><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
+          <li ng-repeat="item in collections | orderBy: item.name" class="collections-item">
+            <a>{{item.name}}</a>
+            <i class="ion-edit"></i>
+          </li>
+
+          <li><hr /></li>
+
           <li ng-click="menu_active = 'settings'" ng-class="{'active': menu_active == 'settings'}"><a ng-href="#/settings">Settings</a></li>
           <li ng-click="menu_active = 'about'" ng-class="{'active': menu_active == 'about'}"><a ng-href="#/about">About</a></li>
         </ul>
@@ -75,28 +83,9 @@
       </div>
 
       <div id="SB-collection" ng-controller="CollectionsCtrl" ng-class="{'show': showPanel}" >
-        <h2 style="margin-top: 0;"><i class="fa fa-book"></i> Collections {{showPanel}}</h2>
-        <label style="    display: block;
-    padding-bottom: 5px;
-    font-weight: 100;">Name your collection</label>
-        <input type="text" name="name" placeholder="My ..." style="
-        display: block;
-            width: 100%;
-            height: 38px;
-            padding: 6px 9pt;
-            font-size: 14px;
-            line-height: 1.71428571;
-            color: #eee;
-            vertical-align: middle;
-            background-color: #555;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            line-height: 1.5em;
-            border: 0;
-            box-shadow: 0 0 2px rgba(0,0,0,.3),inset -2px 2px 2px rgba(0,0,0,.1);
-            outline: none;
-            margin-bottom: 20px;
-        ">
+        <h2><i class="fa fa-book"></i> Collections</h2>
+        <label>Name your collection</label>
+        <input type="text" name="name" placeholder="My ..." />
         <div class="row">
           <span class="SB-btn" style="    color: white;
       margin-right: 5px;
