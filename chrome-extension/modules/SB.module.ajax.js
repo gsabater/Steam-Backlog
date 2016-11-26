@@ -20,11 +20,11 @@
 
     // 1. stop execution if we don't have any games
     if(!db || Object.keys(db).length === 0){
-      console.warn("Steam Backlog: db is empty. Stopping updateDB()");
+      console.warn("Steam Backlog -> updateDB: db is empty. Stopping updateDB()");
       return; }
 
     //1.5 if the queue to update games has been already processed
-    if(isQueue){ console.warn("Steam Backlog: db queue is completed. Stopping updateDB()"); return; }
+    if(isQueue){ console.warn("Steam Backlog -> updateDB: db queue is completed. Stopping updateDB()"); return; }
 
     // 2. If there is no queue, build one with
     // db games and wishlist games
@@ -61,7 +61,7 @@
 
     }else{
       isQueue = true;
-      console.log("everything ok");
+      console.log("Steam Backlog -> updateDB: everything ok");
     }
 
   }

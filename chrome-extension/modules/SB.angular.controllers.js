@@ -254,6 +254,7 @@ angular.module('SB.controllers')
           chrome.storage.local.remove("db",    function(){console.error("removed"); });
           chrome.storage.local.remove("user",    function(){console.error("removed"); });
           chrome.storage.local.remove("settings",    function(){console.error("removed"); });
+          chrome.storage.local.remove("collections",    function(){console.error("removed"); });
 
           window.setTimeout(function(){ window.location.href = url; }, 1000);
         };
@@ -274,19 +275,7 @@ angular.module('SB.controllers')
   //=================================================
     .controller('NavCtrl', function($rootScope, $scope){
 
-      $scope.dragControlListeners = {
-          accept: function (sourceItemHandleScope, destSortableScope) {return boolean;},//override to determine drag is allowed or not. default is true.
-          itemMoved: function (event) { console.log($scope.items); },
-          orderChanged: function(event) { console.log($scope.items); },
-          containment: '#board',//optional param.
-          clone: true, //optional param for clone feature.
-          allowDuplicates: false //optional param allows duplicates to be dropped.
-      };
 
-      $scope.dragControlListeners1 = {
-              containment: '#board',//optional param.
-              allowDuplicates: true //optional param allows duplicates to be dropped.
-      };
 
     })
 

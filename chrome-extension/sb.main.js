@@ -25,20 +25,6 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
     isQueue = false, //false,
 
     collections = false,    // chrome.local var
-    collections = [
-      {
-        name: "Completed",
-        apps: []
-      },
-      {
-        name: "Favorites",
-        apps: []
-      },
-      {
-        name: "I really want to play this one",
-        apps: []
-      }
-    ],    // chrome.local var
     settings    = {
       v: v,
       scan: {
@@ -101,9 +87,10 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
       }else{
 
         // Set global user and db vars
-        db       = (storage.db)? storage.db : {};
-        user     = (storage.user)? storage.user : {};
-        settings = (storage.settings)? storage.settings : settings;
+        db          = (storage.db)? storage.db : {};
+        user        = (storage.user)? storage.user : {};
+        settings    = (storage.settings)? storage.settings : settings;
+        collections = (storage.collections)? storage.collections : false;
       }
 
      // Update user information

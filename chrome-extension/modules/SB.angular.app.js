@@ -29,39 +29,39 @@
 
     $rootScope.app = {
       v: 0,
-      listStyle: "cards",  // - list
       backdrop: false,
+      listStyle: "cards",  // - list
       showCollectionsPanel: false
     };
 
-    $rootScope.stats = {
-      hoursPlayed: 0
-    };
-
   // chrome.storage.local.get
+  // Set main vars into rootscope
   //+-------------------------------------------------------
     chrome.storage.local.get(null, function(items){
 
-      console.log("chrome.storage", items);
+      console.log("Steam Backlog - chrome.storage.local", items);
 
       db             = items.db;
       user           = items.user;
-      local_settings = (items.settings) ? items.settings : settings;
 
-      // apply defaults
+      local_collections = (items.collections) ? items.collections : collections;
+      local_settings    = (items.settings) ? items.settings : settings;
+
+      // apply default settings
       if(!local_settings.hasOwnProperty("library")){ local_settings.library = settings.library; }
 
       $rootScope.db       = items.db;
       $rootScope.user     = items.user;
 
-      $rootScope.collections = collections;
+      $rootScope.collections = local_collections;
+      $rootScope.settings    = local_settings;
 
-      $rootScope.settings = local_settings;
-      settings = $rootScope.settings;
+      settings    = $rootScope.settings;
+      collections = $rootScope.collections;
 
       $rootScope.app.v = v;
 
-      console.log("DB update",v);
+      console.log("DB update", v);
       updateDB();
 
     });
@@ -108,10 +108,3 @@
       });
   }])
 ;
-
-/*
-.when('/dashboard/:phoneId', {
-  templateUrl: 'partials/phone-detail.html',
-  controller: 'PhoneDetailCtrl'
-})
-*/

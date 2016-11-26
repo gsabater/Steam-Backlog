@@ -666,6 +666,30 @@ text-align: right;
 /****  collections
 /*****************************/
 
+.SB-sidemenu .collections-item{
+  padding-left: 0px;
+  margin: 0 10px;
+  font-size: 13px;
+  border-radius: 2px;
+}
+
+.SB-sidemenu li i{
+  opacity: 0;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  transition: opacity 0.3s;
+}
+
+.SB-sidemenu li i.drag{
+  position: relative !important;
+  float: none;
+  top: -1px !important;
+  margin-left: -9px;
+  font-size: 10px;
+  cursor: all-scroll;
+}
+
 #SB-collection{
   display: none;
   position: fixed;
@@ -693,6 +717,19 @@ text-align: right;
   display: block;
   padding-bottom: 5px;
   font-weight: 100;
+}
+
+.btn-add-collection{
+  color: white !important;
+  margin-right: 5px;
+  font-weight: 500;
+  background-color: rgba(56, 97, 65, 0.6) !important;
+}
+
+.btn-close-window{
+  color: #efefef !important;
+  font-weight: bold;
+  opacity: 0.6;
 }
 
 #SB-collection input{

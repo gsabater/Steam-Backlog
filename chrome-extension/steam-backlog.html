@@ -19,7 +19,7 @@
     <!-- Javascript angular modules -->
     <script src="modules/SB.angular.app.js"></script>
     <script src="modules/SB.angular.controllers.js"></script>
-    <script src="modules/SB.angular.controller.collection.js"></script>
+    <script src="modules/SB.angular.controller.collections.js"></script>
     <script src="modules/SB.angular.services.js"></script>
     <script src="modules/SB.angular.filters.js"></script>
 
@@ -35,7 +35,6 @@
     <!-- Page and plugin styles -->
     <link rel="stylesheet" href="assets/css/sb.dashboard.css" type="text/css">
     <link rel="stylesheet" href="assets/css/sb.dashboard-layout.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="lib/ng-sortable.css" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -56,17 +55,17 @@
       <button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
 
       <nav class="menu SB-sidemenu" ng-controller="NavCtrl">
-        <ul data-as-sortable="board.dragControlListeners" data-ng-model="collections">
+        <ul data-as-sortable="{ allowDuplicates: true }" data-ng-model="collections">
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
           <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}"><a ng-href="#/backlog">Backlog</a></li>
 
           <li ><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
-          <li ng-repeat="item in collections | orderBy: item.name" class="collections-item" data-as-sortable-item>
+          <li ng-repeat="item in collections track by $index" class="collections-item" data-as-sortable-item>
             <a><i class="ion-drag drag" data-as-sortable-item-handle></i> {{item.name}}</a>
-            <i class="ion-edit"></i>
+            <i class="ion-edit" ng-click="app.showCollectionsPanel = 'edit'; app.editCollectionID = $index" style="cursor: pointer;"></i>
           </li>
 
-          <li><hr /></li>
+          <li>{{collections}}<hr /></li>
 
           <li ng-click="menu_active = 'settings'" ng-class="{'active': menu_active == 'settings'}"><a ng-href="#/settings">Settings</a></li>
           <li ng-click="menu_active = 'about'" ng-class="{'active': menu_active == 'about'}"><a ng-href="#/about">About</a></li>
@@ -88,19 +87,21 @@
       <div id="SB-collection" ng-controller="CollectionsCtrl" ng-class="{'show': showPanel}" >
         <h2><i class="fa fa-book"></i> Collections</h2>
         <label>Name your collection</label>
-        <input type="text" name="name" placeholder="My ..." />
-        <div class="row">
-          <span class="SB-btn" style="    color: white;
-      margin-right: 5px;
-      font-weight: 500;
-      background-color: rgba(56, 97, 65, 0.6) !important;">Add collection</span>
+        <form ng-submit="addCollection();" autocomplete="off">
+          <input type="text" name="collection_name" ng-model="collection_name" placeholder="My ..."  />
+        </form>
 
-        <span class="SB-btn" style="    color: #efefef;
-    font-weight: bold;
-    opacity: 0.6;" ng-click="closePanel();">Cancel</span>
+        <div class="row" ng-if="app.editCollectionID == undefined">
+          <span class="SB-btn btn-add-collection" ng-click="addCollection();">Add collection</span>
+          <span class="SB-btn btn-close-window" ng-click="closePanel();">Cancel</span>
         </div>
 
-            </div>
+        <div class="row" ng-if="app.editCollectionID !== undefined">
+          <span class="SB-btn btn-add-collection" ng-click="editCollection();">Save changes</span>
+          <span class="SB-btn btn-close-window" ng-click="closePanel();">Cancel</span>
+        </div>
+
+      </div>
       <div id="SB-backdrop" ng-class="{'show': app.backdrop}" ng-click="app.backdrop = false"></div>
 
     </div>
