@@ -180,7 +180,7 @@
         <div style="display: inline-block;" class="game-steamscore" ng-if="gameDetails.steamscore"><i class="fa fa-steam"></i> {{gameDetails.steamscore}}, {{ gameDetails.steamscoreAlt}}</div>
         <a class="btn-store" href="http://store.steampowered.com/app/{{gameDetails.appid}}" target="_blank" style="display: none;"><i class="ion-steam"></i> Store</a>
       </div>
-
+      
       <div class="game-features" ng-if="gameDetails.updated">
         <div class="SB-btn tooltip" ng-class="{'not-available': !gameDetails.singlePlayer}"  ><i class="ion-ios-person"></i>       <span class="tooltip-content clearfix">Single Player</span></div>
         <div class="SB-btn tooltip" ng-class="{'not-available': !gameDetails.multiPlayer}"   ><i class="ion-ios-people"></i>      <span class="tooltip-content clearfix">Multiplayer</span></div>
@@ -193,7 +193,10 @@
         <div class="SB-btn tooltip" ng-class="{'not-available': !gameDetails.achievements}"  ><i class="fa fa-certificate"></i><span class="tooltip-content clearfix">Achievements</span></div>
       </div>
 
+      <hr style="margin-bottom: 15px;" />
+
       <div class="game-tags">
+        <!-- <div style="margin-bottom: 10px;">Popular tags</div> -->
         <span class="SB-btn" ng-class="{'tag-active': filters.tags.indexOf(tag) > -1}" ng-repeat="tag in gameDetails.tags | limitTo: 50" ng-click="filterTag(tag)">{{tag}}</span>
       </div>
 
@@ -224,22 +227,19 @@
     </div>
   </div>
 
-<!--
   <div class="row row-categories">
-    <div>Your categories</div>
+    <div style="margin-bottom: 10px;">Collections</div>
     <div class="game-categories">
-      <span class="SB-btn" ng-class="{'tag-active': filters.tags.indexOf(tag) > -1}" ng-repeat="tag in gameDetails.tags | limitTo: 10" ng-click="filterTag(tag)">{{tag}}
-      <i class="ion-android-checkbox-outline-blank" style="margin-left: 3px;"></i>
+      <span class="SB-btn" ng-class="{'tag-active': filters.tags.indexOf(tag) > -1}" ng-repeat="item in collections track by $index">{{item.name}}
+        <i class="ion-android-checkbox-outline-blank" style="margin-left: 3px;"></i>
       </span>
     </div>
   </div>
--->
 
   <div class="row row-update">
     <div class="game-updated" style="text-align: left; width: 50%; float: left;">
       <span class="SB-btn" ng-click="hideGame();" ng-if="gameDetails.hidden" style=" color: rgba(195, 28, 28, 0.51); margin-right: 5px; font-weight: bold;">Hidden</span>
-      <span class="SB-btn" ng-click="hideGame();" style=" color: rgba(195, 28, 28, 0.51); padding: 2px 8px; margin-right: 5px;"><i class="ion-backspace"></i></span>
-      <span class="credit" style="padding-right: 35px; line-height: 29px;">Hide this item from my Backlog</span>
+      <span class="credit" ng-click="hideGame();" ng-if="!gameDetails.hidden" style="padding-right: 35px; line-height: 29px; cursor: pointer;">Hide this item from my Backlog</span>
     </div>
 
     <div class="pull-right text-right game-updated" style="text-align: right; width: 50%; float: right;">
