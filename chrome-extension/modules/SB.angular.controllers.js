@@ -275,9 +275,12 @@ angular.module('SB.controllers')
   //=================================================
     .controller('NavCtrl', function($rootScope, $scope){
 
-      $scope.sort = [1,2,3,4,5];
       $scope.sortableOptions = {
-        update: function(e, ui) { console.log("asd"); },
+        update: function(e, ui) {
+          window.setTimeout(function(){
+            $("#SB-collection").scope().saveLocal();
+          }, 200);
+        },
         axis: 'y',
         handle: '.drag',
       };

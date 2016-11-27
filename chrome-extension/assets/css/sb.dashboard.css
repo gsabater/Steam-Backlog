@@ -727,9 +727,17 @@ text-align: right;
 }
 
 .btn-close-window{
+  display: none !important;
   color: #efefef !important;
   font-weight: bold;
   opacity: 0.6;
+}
+
+.btn-delete{
+  float: right;
+  color: rgba(226, 171, 171, 0.71) !important;
+  background-color: #5d0404 !important;
+  opacity: 0.5;
 }
 
 #SB-collection input{

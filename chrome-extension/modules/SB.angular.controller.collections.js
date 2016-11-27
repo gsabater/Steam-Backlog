@@ -20,7 +20,7 @@ angular.module('SB.controllers')
     $scope.showPanel = false;
 
   //| Listener of rootScope.collections
-  //| applyDefaults values and also saves object
+  //| applyDefaults values and saves object
   //+-------------------------------------------------------
     $rootScope.$watch('collections', function(){
       if($rootScope.collections === false){
@@ -30,29 +30,26 @@ angular.module('SB.controllers')
 
 
   //| Listener of rootScope.app.showCollectionsPanel
-  //| show window anf focus or set value of input.
+  //| true: show window; edit: show window and set value
   //+-------------------------------------------------------
     $rootScope.$watch('app.showCollectionsPanel', function(){
 
       if($rootScope.app.showCollectionsPanel === true){
-        $scope.showPanel = true;
-        $rootScope.app.backdrop = true;
-
-        delete $rootScope.app.editCollectionID;
-
         window.setTimeout(function(){
           $("input[name='collection_name']").focus(); }, 150);
+
+        $scope.showPanel = true;
+        $rootScope.app.backdrop = true;
+        delete $rootScope.app.editCollectionID;
       }
 
       if($rootScope.app.showCollectionsPanel === "edit"){
         var item = $rootScope.collections[$rootScope.app.editCollectionID];
+        window.setTimeout(function(){
+          $("input[name='collection_name']").val(item.name).focus(); }, 100);
 
         $scope.showPanel = true;
         $rootScope.app.backdrop = true;
-
-        window.setTimeout(function(){
-          $("input[name='collection_name']").val(item.name).focus(); }, 150);
-
       }
 
     });
@@ -75,28 +72,20 @@ angular.module('SB.controllers')
     };
 
 
-  //| editCollection
+  //| newedit
+  //| reads app.editCollectionID == undefined and
   //| Edits values in a certain collection index
-  //| Then save the object in local.storage
+  //| or adds a new item to collections object
   //+-------------------------------------------------------
-    $scope.editCollection = function(){
+    $scope.newedit = function(){
 
-      $rootScope.collections[$rootScope.app.editCollectionID].name = $("input[name='collection_name']").val();
-
-      $scope.closePanel();
-      $scope.saveLocal();
-    };
-
-
-  //| addCollection
-  //| Adds a new element into collections array
-  //| Then save the object in local.storage
-  //+-------------------------------------------------------
-    $scope.addCollection = function(){
-
-      $rootScope.collections.push({
-        name: $scope.collection_name.toString(),
-        apps: [] });
+      if($rootScope.app.editCollectionID === undefined){
+        $rootScope.collections.push({
+          name: $scope.collection_name.toString(),
+          apps: [] });
+      }else{
+        $rootScope.collections[$rootScope.app.editCollectionID].name = $("input[name='collection_name']").val();
+      }
 
       $scope.closePanel();
       $scope.saveLocal();
@@ -107,17 +96,13 @@ angular.module('SB.controllers')
   //| Removes a collection
   //+-------------------------------------------------------
     $scope.delete = function(){
-      var conf = confirm("Do you really want to reset all DB? This cannot be undone.");
+      var conf = confirm("Do you want to delete this element? This cannot be undone.");
       if (conf ===false){ return false; }
 
-      var url = user.info.profileurl;
-      isQueue = true;
+      $rootScope.collections.splice($rootScope.app.editCollectionID, 1);
 
-      chrome.storage.local.remove("db",    function(){console.error("removed"); });
-      chrome.storage.local.remove("user",    function(){console.error("removed"); });
-      chrome.storage.local.remove("settings",    function(){console.error("removed"); });
-
-      window.setTimeout(function(){ window.location.href = url; }, 1000);
+      $scope.closePanel();
+      $scope.saveLocal();
     };
 
 
@@ -125,11 +110,8 @@ angular.module('SB.controllers')
   //| Saves in chrome.local
   //+-------------------------------------------------------
     $scope.saveLocal = function(){
-
       chrome.storage.local.set({'collections': $rootScope.collections}, function(){
-        console.warn("collections saved", $rootScope.collections);
-      });
-
+        console.warn("collections saved", $rootScope.collections);  });
     };
 
 

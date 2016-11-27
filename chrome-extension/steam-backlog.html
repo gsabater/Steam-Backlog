@@ -30,12 +30,11 @@
     <script src="modules/SB.module.ajax.js"></script>
     <script src="modules/SB.module.dashboard.js"></script>
 
+    <!-- Page and plugin styles -->
     <link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/component.css" />
-
-    <!-- Page and plugin styles -->
-    <link rel="stylesheet" href="assets/css/sb.dashboard.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/sb.dashboard-layout.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="assets/css/sb.dashboard.css" >
+    <link rel="stylesheet" type="text/css" href="assets/css/sb.dashboard-layout.css">
 
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -49,7 +48,7 @@
       <header class="bp-header cf">
         <div class="dummy-logo">
           <div class=""><img src="assets/img/steam_logo.png" width="176" height="44"></div>
-          <h2 class="dummy-heading">Awesome Backlog v{{ app.v }} (preview)</h2>
+          <h2 class="dummy-heading">Awesome Backlog v{{ app.v }}</h2>
         </div>
       </header>
 
@@ -65,12 +64,11 @@
             <i class="ion-edit" ng-click="app.showCollectionsPanel = 'edit'; app.editCollectionID = $index" style="cursor: pointer;"></i>
           </li>
 
-          <li>{{collections}}<hr /></li>
+          <li><hr /></li>
 
           <li ng-click="menu_active = 'settings'" ng-class="{'active': menu_active == 'settings'}"><a ng-href="#/settings">Settings</a></li>
           <li ng-click="menu_active = 'about'" ng-class="{'active': menu_active == 'about'}"><a ng-href="#/about">About</a></li>
         </ul>
-
       </nav>
 
       <div class="SB-sidemenu-user-card">
@@ -85,20 +83,22 @@
       </div>
 
       <div id="SB-collection" ng-controller="CollectionsCtrl" ng-class="{'show': showPanel}" >
+        <i class="fa fa-close" ng-click="closePanel();" style="float: right; opacity: 0.7;  font-size: 13px; cursor: pointer;"></i>
         <h2><i class="fa fa-book"></i> Collections</h2>
         <label>Name your collection</label>
-        <form ng-submit="addCollection();" autocomplete="off">
+        <form ng-submit="newedit();" autocomplete="off">
           <input type="text" name="collection_name" ng-model="collection_name" placeholder="My ..."  />
         </form>
 
         <div class="row" ng-if="app.editCollectionID == undefined">
-          <span class="SB-btn btn-add-collection" ng-click="addCollection();">Add collection</span>
+          <span class="SB-btn btn-add-collection" ng-click="newedit();">Add collection</span>
           <span class="SB-btn btn-close-window" ng-click="closePanel();">Cancel</span>
         </div>
 
         <div class="row" ng-if="app.editCollectionID !== undefined">
-          <span class="SB-btn btn-add-collection" ng-click="editCollection();">Save changes</span>
+          <span class="SB-btn btn-add-collection" ng-click="newedit();">Save changes</span>
           <span class="SB-btn btn-close-window" ng-click="closePanel();">Cancel</span>
+          <span class="SB-btn btn-delete" ng-click="delete();">Delete</span>
         </div>
 
       </div>
