@@ -11,10 +11,11 @@
 
     <!-- Javascript libraries  -->
     <script src="lib/jquery.backlog.min.js"></script>
+    <script src="lib/jquery-ui.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-route.min.js"></script>
     <script src="lib/nprogress.js"></script>
-    <script src="lib/ng-sortable.min.js"></script>
+    <script src="lib/ng-sortable.js"></script>
 
     <!-- Javascript angular modules -->
     <script src="modules/SB.angular.app.js"></script>
@@ -52,16 +53,15 @@
         </div>
       </header>
 
-      <button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
-
       <nav class="menu SB-sidemenu" ng-controller="NavCtrl">
-        <ul data-as-sortable="{ allowDuplicates: true }" data-ng-model="collections">
+        <ul ui-sortable="sortableOptions" ng-model="collections">
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
-          <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}"><a ng-href="#/backlog">Backlog</a></li>
+          <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}">
+            <a ng-href="#/backlog">Backlog</a></li>
 
-          <li ><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
-          <li ng-repeat="item in collections track by $index" class="collections-item" data-as-sortable-item>
-            <a><i class="ion-drag drag" data-as-sortable-item-handle></i> {{item.name}}</a>
+          <li><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
+          <li ng-repeat="item in collections track by $index" class="collections-item">
+            <a><i class="ion-drag drag"></i> {{item.name}}</a>
             <i class="ion-edit" ng-click="app.showCollectionsPanel = 'edit'; app.editCollectionID = $index" style="cursor: pointer;"></i>
           </li>
 
