@@ -18,6 +18,7 @@ angular.module('SB.controllers')
   .controller('CollectionsCtrl', function($rootScope, $scope, Games){
 
     $scope.showPanel = false;
+    $scope.collection = false;
 
   //| Listener of rootScope.collections
   //| applyDefaults values and saves object
@@ -30,7 +31,7 @@ angular.module('SB.controllers')
 
 
   //| Listener of rootScope.app.showCollectionsPanel
-  //| true: show window; edit: show window and set value
+  //| true: show window (new); edit: show window and set value (edit)
   //+-------------------------------------------------------
     $rootScope.$watch('app.showCollectionsPanel', function(){
 
@@ -44,9 +45,9 @@ angular.module('SB.controllers')
       }
 
       if($rootScope.app.showCollectionsPanel === "edit"){
-        var item = $rootScope.collections[$rootScope.app.editCollectionID];
+        $scope.collection = $rootScope.collections[$rootScope.app.editCollectionID];
         window.setTimeout(function(){
-          $("input[name='collection_name']").val(item.name).focus(); }, 100);
+          $("input[name='collection_name']").val($scope.collection.name).focus(); }, 100);
 
         $scope.showPanel = true;
         $rootScope.app.backdrop = true;
@@ -63,6 +64,7 @@ angular.module('SB.controllers')
 
       $rootScope.app.showCollectionsPanel = false;
       $rootScope.app.backdrop = false;
+      $scope.collection = false;
       $scope.showPanel = false;
 
       delete $rootScope.app.editCollectionID;
@@ -84,7 +86,8 @@ angular.module('SB.controllers')
           name: $scope.collection_name.toString(),
           apps: [] });
       }else{
-        $rootScope.collections[$rootScope.app.editCollectionID].name = $("input[name='collection_name']").val();
+        $scope.collection.name = $("input[name='collection_name']").val();
+        $rootScope.collections[$rootScope.app.editCollectionID] = $scope.collection;
       }
 
       $scope.closePanel();
@@ -105,6 +108,21 @@ angular.module('SB.controllers')
       $scope.saveLocal();
     };
 
+    //| toggleApp
+    //| Adds an appID into a collection
+    //+-------------------------------------------------------
+      $scope.toggleApp = function(appid, collection){
+
+        var item  = $rootScope.collections[collection];
+        var index = item.apps.indexOf(appid);
+
+        if(index > -1){ $rootScope.collections[collection].apps.splice(index, 1);
+        }else{          $rootScope.collections[collection].apps.push(appid); }
+
+        console.log($rootScope.collections[collection].apps, $rootScope.collections[collection]);
+        $scope.saveLocal();
+
+      };
 
   //| saveLocal
   //| Saves in chrome.local

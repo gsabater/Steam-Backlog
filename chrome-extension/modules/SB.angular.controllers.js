@@ -167,6 +167,7 @@ angular.module('SB.controllers')
         console.log($scope.gameDetails);
       };
 
+
     //| refreshGameDetails
     //| Fetch the data again from the internet
     //+-------------------------------------------------------
@@ -179,12 +180,14 @@ angular.module('SB.controllers')
         getGameInfo($scope.gameDetails.appid);
       };
 
+
     //| updateGameDetails
     //| Called when refreshGameDetails has completed
     //+-------------------------------------------------------
       $scope.updateGameDetails = function(){
         NProgress.done();
       };
+
 
     //| saveGameDetails
     //| Stores game again in storage.local
@@ -193,6 +196,7 @@ angular.module('SB.controllers')
         db[$scope.gameDetails.appid] = $scope.gameDetails;
         chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
       };
+
 
     //| hideGame
     //| apply hidden attr to true and save
@@ -209,6 +213,15 @@ angular.module('SB.controllers')
         db[$scope.gameDetails.appid] = $scope.gameDetails;
         $scope.saveGameDetails();
       };
+
+
+      //| toggleCollection
+      //| apply hidden attr to true and save
+      //+-------------------------------------------------------
+        $scope.toggleCollection = function(appid, collection){
+          $("#SB-collection").scope().toggleApp(appid, collection);
+        };
+
 
     $scope.loadDetails();
 

@@ -693,6 +693,17 @@ text-align: right;
   cursor: all-scroll;
 }
 
+.SB-sidemenu li i.hidden-collection{
+  position: relative;
+  top: inherit;
+  right: inherit;
+  opacity: 0.5;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.34);
+  text-shadow: 0px 0px 3px black;
+  margin-left: 3px;
+}
+
 #SB-collection{
   display: none;
   position: fixed;
@@ -759,5 +770,5 @@ text-align: right;
   border: 0;
   box-shadow: 0 0 2px rgba(0,0,0,.3),inset -2px 2px 2px rgba(0,0,0,.1);
   outline: none;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }

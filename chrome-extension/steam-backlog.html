@@ -63,7 +63,11 @@
           </li>
           <li><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
           <li ng-repeat="item in collections track by $index" class="collections-item">
-            <a><i class="ion-drag drag"></i> {{item.name}}</a>
+            <a>
+              <i class="ion-drag drag"></i>
+              {{item.name}} ({{item.apps.length}})
+              <i class="ion-flash-off hidden-collection" ng-if="item.hide"></i>
+            </a>
             <i class="ion-edit" ng-click="app.showCollectionsPanel = 'edit'; app.editCollectionID = $index" style="cursor: pointer;"></i>
           </li>
 
@@ -89,10 +93,13 @@
         <i class="fa fa-close" ng-click="closePanel();" style="float: right; opacity: 0.7;  font-size: 13px; cursor: pointer;"></i>
         <h2><i class="fa fa-book"></i> Collections</h2>
         <label>Name your collection</label>
+
         <form ng-submit="newedit();" autocomplete="off">
           <input type="text" name="collection_name" ng-model="collection_name" placeholder="My ..."  />
-          <label class="checkbox-inline" style="margin-left: -5px;">
-            <input type="checkbox" ng-model="library.wishlist" ng-change="saveSettings()"> Include wishlisted games in the backlog
+
+          <label class="checkbox-inline" style=" margin-bottom: 20px;">
+            <input type="checkbox" ng-model="collection.hide" ng-change="saveSettings()"> Exclude from results
+            <i class="ion-help-circled tooltip"><span class="tooltip-content">When checked, games in this list will be hidden in the backlog results</span></i>
           </label>
         </form>
 
