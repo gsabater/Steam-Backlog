@@ -125,7 +125,7 @@
         // Achievements info if it has
         if(data.hasOwnProperty("playerstats")){
           if(data.playerstats.hasOwnProperty("achievements")){
-            var achieved = 0; for(i in data.playerstats.achievements){
+            var achieved = 0; for(var i in data.playerstats.achievements){
               if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
 
             db[gameID].achievements = data.playerstats.achievements.length;
@@ -236,7 +236,7 @@
     }
 
     // 3. Create a stopwatch to star again with settings interval
-    var time = settings.scan.interval; //console.log(time,"s");
+    var time = settings.scan.interval; console.log(time,"s", timeout, "angular: " + isAngular);
     if(!timeout){ timeout = window.setTimeout(function(){ updateDB(); }, time * 1000); }
 
   }
