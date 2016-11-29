@@ -84,7 +84,8 @@ angular.module('SB.controllers')
       if($rootScope.app.editCollectionID === undefined){
         $rootScope.collections.push({
           name: $scope.collection_name.toString(),
-          apps: [] });
+          apps: [],
+          hide: $scope.collection.hide});
       }else{
         $scope.collection.name = $("input[name='collection_name']").val();
         $rootScope.collections[$rootScope.app.editCollectionID] = $scope.collection;
@@ -108,21 +109,23 @@ angular.module('SB.controllers')
       $scope.saveLocal();
     };
 
-    //| toggleApp
-    //| Adds an appID into a collection
-    //+-------------------------------------------------------
-      $scope.toggleApp = function(appid, collection){
 
-        var item  = $rootScope.collections[collection];
-        var index = item.apps.indexOf(appid);
+  //| toggleApp
+  //| Adds an appID into a collection
+  //+-------------------------------------------------------
+    $scope.toggleApp = function(appid, collection){
 
-        if(index > -1){ $rootScope.collections[collection].apps.splice(index, 1);
-        }else{          $rootScope.collections[collection].apps.push(appid); }
+      var item  = $rootScope.collections[collection];
+      var index = item.apps.indexOf(appid);
 
-        console.log($rootScope.collections[collection].apps, $rootScope.collections[collection]);
-        $scope.saveLocal();
+      if(index > -1){ $rootScope.collections[collection].apps.splice(index, 1);
+      }else{          $rootScope.collections[collection].apps.push(appid); }
 
-      };
+      console.log($rootScope.collections[collection].apps, $rootScope.collections[collection]);
+      $scope.saveLocal();
+
+    };
+
 
   //| saveLocal
   //| Saves in chrome.local

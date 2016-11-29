@@ -33,7 +33,8 @@ angular.module('SB.services', [])
           game = $rootScope.db[i];
           game.appid = i;
 
-          gameName = game.name.toString();
+          gameName = (game.name)? game.name : "";
+          gameName = gameName.toString();
           gameName = gameName.toLowerCase();
 
           /*

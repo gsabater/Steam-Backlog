@@ -712,11 +712,22 @@ text-align: right;
   padding: 25px;
   z-index: 99999;
   top: 100px;
-  left: calc(50% - (450px/2));
+  left: calc(50% - (550px/2));
   width: 450px;
   height: auto;
   z-index: 99999;
   border-radius: 4px;
+
+  width: 550px;
+  height: auto;
+  background-color: #1B2838;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 99999;
+  padding: 20px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  outline: 1px solid rgba(255, 255, 255, 0.15);
+  outline-offset: -1px;
 }
 
 #SB-collection.show{
