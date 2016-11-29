@@ -676,6 +676,13 @@ text-align: right;
   border-radius: 2px;
 }
 
+.SB-sidemenu .collections-item a{
+  display: inline-block;
+  margin-left: 50px;
+  padding-left: 0;
+}
+
+
 .SB-sidemenu li i{
   opacity: 0;
   position: absolute;

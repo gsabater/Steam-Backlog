@@ -43,8 +43,8 @@ angular.module('SB.services', [])
 
           game = $rootScope.db[i];
 
-          // app is hidden
-          if(hiddenApps.indexOf(game.appid) > -1){ console.log("filter ", game.appid, hiddenApps); continue; }
+          // app is in a hidden collection
+          if(hiddenApps.indexOf(game.appid) > -1){ continue; }
 
           gameName = (game.name)? game.name : "";
           gameName = gameName.toString();

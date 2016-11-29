@@ -63,7 +63,7 @@
           </li>
           <li><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
           <li ng-repeat="item in collections track by $index" class="collections-item">
-            <a>
+            <a ng-href="#/backlog/collection/{{$index}}">
               <i class="ion-drag drag"></i>
               {{item.name}}
               <span style="font-size: 10px; color: #777;">- {{item.apps.length}}</span>

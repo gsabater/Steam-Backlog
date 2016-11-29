@@ -16,8 +16,8 @@ angular.module('SB.controllers')
 // BacklogCtrl
 // +
 //=================================================
-  .controller('BacklogCtrl', function($rootScope, $scope, Games, Filter){
-
+  .controller('BacklogCtrl', function($rootScope, $scope, $routeParams, Games, Filter){
+    console.log($routeParams);
     $scope.showTags     = false;
     $scope.showGameCard = false;
     $scope.gameDetails  = false;
@@ -215,7 +215,7 @@ angular.module('SB.controllers')
         db[$scope.gameDetails.appid] = $scope.gameDetails;
         $scope.saveGameDetails();
       };
-      
+
       */
 
       //| toggleCollection

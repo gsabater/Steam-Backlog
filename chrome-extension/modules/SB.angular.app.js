@@ -88,9 +88,14 @@
         controller: 'BacklogCtrl'
       })
 
-      .when('/progress', {
-        templateUrl: 'partials/progress.html'
-        //controller: 'ProgressCtrl'
+      .when('/backlog/:specialFilter', {
+        templateUrl: 'partials/backlog.html',
+        controller: 'BacklogCtrl'
+      })
+
+      .when('/backlog/collection/:collectionID', {
+        templateUrl: 'partials/backlog.html',
+        controller: 'BacklogCtrl'
       })
 
       .when('/settings', {
