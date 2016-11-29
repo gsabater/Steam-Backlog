@@ -28,13 +28,21 @@ angular.module('SB.services', [])
         var result       = {games: [], tags: []};
         var searchString = (filters)? filters.string.toLowerCase() : false;
 
-        // Create an array of hidden games from collections
+        //| Collections
+        //+ --------------------------
+        //| new hiddenApps object with appids of hidden apps
+        //| new collected obects with appids of selected collection
+        //+---------------------------------------
         var hiddenApps = [];
+        var collected = false;
+
+        if(filters.collection !== false){
+          var collected = $rootScope.collections[filters.collection].apps; }
+
         for(var c in $rootScope.collections){
           var collection = $rootScope.collections[c];
           if(collection.hide === true){
-            hiddenApps = hiddenApps.concat(collection.apps);
-          }
+            hiddenApps = hiddenApps.concat(collection.apps); }
         }
 
         // Do a dance in DB
@@ -43,8 +51,13 @@ angular.module('SB.services', [])
 
           game = $rootScope.db[i];
 
-          // app is in a hidden collection
-          if(hiddenApps.indexOf(game.appid) > -1){ continue; }
+          // Filter if the game do not belongs to a collection
+          // or app is in a hidden collection
+          if(filters.collection !== false){
+            if(collected.indexOf(game.appid) == -1){ continue; }
+          }else{
+            if(hiddenApps.indexOf(game.appid) > -1){ continue; }
+          }
 
           gameName = (game.name)? game.name : "";
           gameName = gameName.toString();

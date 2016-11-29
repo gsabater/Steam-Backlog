@@ -13,7 +13,16 @@ var resize       = false;
 var contentWidth = false;
 var appWidth     = false;
 
+var marginRight  = false;
+
 function setAppMargin(){
+
+  if(marginRight !== false){
+    if($("#css-app-margin").length){
+      $("#css-app-margin").html(".game-card{ margin: 17px " + marginRight / 2 + "px !important; }"); }
+      return;
+  }
+
   clearTimeout(resize);
   resize = window.setTimeout(function(){
     var contentWidth = (contentWidth)? contentWidth : $( ".content" ).width() -40;
@@ -22,7 +31,7 @@ function setAppMargin(){
     var rest    = contentWidth / appWidth;
     var numApps = Math.floor(rest);
     var margin  = (rest - numApps) * appWidth;
-    var marginRight = (margin / numApps);
+    marginRight = (margin / numApps);
 
     if(marginRight < 10){
       margin  = (rest - (numApps-1)) * appWidth;
@@ -34,19 +43,13 @@ function setAppMargin(){
     if($("#css-app-margin").length){
       $("#css-app-margin").html(".game-card{ margin: 17px " + marginRight / 2 + "px !important; }"); }
 
-    /*
-    $(".games-list div.game-card").each(function(i,e){
-      $(e).delay(i*100).animate({opacity: 0.8} ,300);
-    });
-    */
-
-  }, 300);
+  }, 200);
 
 }
 
 $(document).ready(function(){
 
-  $( window ).resize(function() { setAppMargin(); });
+  $( window ).resize(function() { marginRight = false; setAppMargin(); });
 
 //+-------------------------------------------------------
 //| + Infinite scroll

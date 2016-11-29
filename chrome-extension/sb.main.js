@@ -17,7 +17,6 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
 
     user    = false,    // chrome.local var
     db      = false,    // chrome.local var
-
     hltbs   = false,    // howlongtobeatsteam var
 
     queue   = [],

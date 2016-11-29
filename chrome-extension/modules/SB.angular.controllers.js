@@ -17,7 +17,7 @@ angular.module('SB.controllers')
 // +
 //=================================================
   .controller('BacklogCtrl', function($rootScope, $scope, $routeParams, Games, Filter){
-    console.log($routeParams);
+
     $scope.showTags     = false;
     $scope.showGameCard = false;
     $scope.gameDetails  = false;
@@ -26,6 +26,8 @@ angular.module('SB.controllers')
     $scope.scanningLibrary = false;
 
     $scope.filters = {
+
+      collection : false,
 
       tags: [],
       searchTags: "",
@@ -43,6 +45,8 @@ angular.module('SB.controllers')
       limit: 50
     };
 
+    if($routeParams.collectionID){
+      $scope.filters.collection = $routeParams.collectionID; }
 
     //| init()
     //| Init scope vars from db information
