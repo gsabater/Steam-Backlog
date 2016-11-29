@@ -144,7 +144,8 @@ angular.module('SB.controllers')
         $rootScope.collections = [
           { name: "Favorites", apps: [] },
           { name: "Completed", apps: [] },
-          { name: "What to pick next", apps: [] }
+          { name: "What to pick next", apps: [] },
+          { name: "Hidden games", apps: [], hide: true }
         ];
       }
     };

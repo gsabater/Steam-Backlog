@@ -198,6 +198,8 @@ angular.module('SB.controllers')
       };
 
 
+    /*
+
     //| hideGame
     //| apply hidden attr to true and save
     //+-------------------------------------------------------
@@ -213,7 +215,8 @@ angular.module('SB.controllers')
         db[$scope.gameDetails.appid] = $scope.gameDetails;
         $scope.saveGameDetails();
       };
-
+      
+      */
 
       //| toggleCollection
       //| apply hidden attr to true and save

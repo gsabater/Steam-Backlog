@@ -83,38 +83,6 @@
 
 </div>
 
-<div class="tags-container" ng-class="{'show': showTags}">
-  <input type="text" placeholder="Search tags" ng-model="filters.searchTags" style="
-    color: rgba(245, 245, 245, 0.6);
-    /* margin-left: 7px; */
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-    border: none;
-    padding: 5px;
-    outline: none;
-    width: 80%;
-    text-align: center;
-    font-size: 30px;
-">
-  <h2 style="
-    font-weight: 100;
-    letter-spacing: 1px;
-    font-size: 20px;
-    text-shadow: 1px 1px 3px rgba(33, 44, 101, 0.51);
-    color: #ffffff;
-    /* line-height: 54px; */
-    margin-top: 15px;
-    text-align: left;
-    padding-bottom: 0px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 3px;
-"> </h2>
-  <span ng-repeat="tag in allTags | orderBy: 'toString()' | filter:filters.searchTags" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
-    {{ ::tag }}
-  </span>
-</div>
-
 <div class="inner-content has-filter-bar has-secondary-bar">
   <style id="css-app-margin"></style>
   <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
@@ -127,7 +95,7 @@
       <i class="fa fa-warning"></i> No games match the selected filters
     </div>
 
-    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-class="{'wishlist': game.wishlist, 'deleted': game.deleted}" ng-click="openGameCard(game.appid)" ng-if="!game.hidden">
+    <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-class="{'wishlist': game.wishlist, 'deleted': game.deleted}" ng-click="openGameCard(game.appid)">
     <!-- <div class="bookmark" ng-if="($index%10 == 0) && $index > 0">#{{ ::$index}}</div> -->
       <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
@@ -238,10 +206,12 @@
   </div>
 
   <div class="row row-update">
+    <!--
     <div class="game-updated" style="text-align: left; width: 50%; float: left;">
       <span class="SB-btn" ng-click="hideGame();" ng-if="gameDetails.hidden" style=" color: rgba(195, 28, 28, 0.51); margin-right: 5px; font-weight: bold;">Hidden</span>
       <span class="credit" ng-click="hideGame();" ng-if="!gameDetails.hidden" style="padding-right: 35px; line-height: 29px; cursor: pointer;">Hide this item</span>
     </div>
+    -->
 
     <div class="pull-right text-right game-updated" style="text-align: right; width: 50%; float: right;">
       <span class="btn-refresh pull-right" ng-click="refreshGameDetails();" style=" margin-top: 6px;"><i class="ion-android-refresh"></i></span>
@@ -251,4 +221,36 @@
 
   </div>
 
+</div>
+
+<div class="tags-container" ng-class="{'show': showTags}">
+  <input type="text" placeholder="Search tags" ng-model="filters.searchTags" style="
+    color: rgba(245, 245, 245, 0.6);
+    /* margin-left: 7px; */
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    border: none;
+    padding: 5px;
+    outline: none;
+    width: 80%;
+    text-align: center;
+    font-size: 30px;
+">
+  <h2 style="
+    font-weight: 100;
+    letter-spacing: 1px;
+    font-size: 20px;
+    text-shadow: 1px 1px 3px rgba(33, 44, 101, 0.51);
+    color: #ffffff;
+    /* line-height: 54px; */
+    margin-top: 15px;
+    text-align: left;
+    padding-bottom: 0px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+"> </h2>
+  <span ng-repeat="tag in allTags | orderBy: 'toString()' | filter:filters.searchTags" ng-click="filterTag(tag)" ng-class="{'faded': tags.indexOf(tag) == -1, 'tag-active': filters.tags.indexOf(tag) > -1}">
+    {{ ::tag }}
+  </span>
 </div>

@@ -56,17 +56,18 @@
         <ul ui-sortable="sortableOptions" ng-model="collections">
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
           <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}">
-            <a ng-href="#/backlog">Backlog</a></li>
+            <a ng-href="#/backlog">Library</a></li>
 
-          <li style=" padding-left: 0px; margin: 0 10px; font-size: 13px; border-radius: 2px;">
+          <li style=" padding-left: 0px; margin: 0 10px; font-size: 13px; border-radius: 2px;" ng-if="settings.library.wishlist">
             <a ng-href="#/backlog/wishlist">Wishlist</a>
           </li>
           <li><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
           <li ng-repeat="item in collections track by $index" class="collections-item">
             <a>
               <i class="ion-drag drag"></i>
-              {{item.name}} ({{item.apps.length}})
-              <i class="ion-flash-off hidden-collection" ng-if="item.hide"></i>
+              {{item.name}}
+              <span style="font-size: 10px; color: #777;">- {{item.apps.length}}</span>
+              <i class="fa fa-low-vision hidden-collection" ng-if="item.hide"></i>
             </a>
             <i class="ion-edit" ng-click="app.showCollectionsPanel = 'edit'; app.editCollectionID = $index" style="cursor: pointer;"></i>
           </li>
@@ -98,8 +99,8 @@
           <input type="text" name="collection_name" ng-model="collection_name" placeholder="My ..."  />
 
           <label class="checkbox-inline" style=" margin-bottom: 20px;">
-            <input type="checkbox" ng-model="collection.hide" ng-change="saveSettings()"> Exclude from results
-            <i class="ion-help-circled tooltip" style="font-size: 13px; margin-left: 5px;"><span class="tooltip-content">When checked, games in this list will be hidden in the backlog results</span></i>
+            <input type="checkbox" ng-model="collection.hide"> Hide in library
+            <i class="ion-help-circled tooltip" style="font-size: 13px; margin-left: 5px;"><span class="tooltip-content">When checked, apps in this list will be hidden from search results</span></i>
           </label>
         </form>
 
