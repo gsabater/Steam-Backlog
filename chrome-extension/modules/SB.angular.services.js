@@ -33,17 +33,17 @@ angular.module('SB.services', [])
         //| new hiddenApps object with appids of hidden apps
         //| new collected obects with appids of selected collection
         //+---------------------------------------
-        var hiddenApps = [];
-        var collected = false;
+          var hiddenApps = [];
+          var collected = false;
 
-        if(filters.collection !== false){
-          var collected = $rootScope.collections[filters.collection].apps; }
+          if(filters.collection !== false){
+            var collected = $rootScope.collections[filters.collection].apps; }
 
-        for(var c in $rootScope.collections){
-          var collection = $rootScope.collections[c];
-          if(collection.hide === true){
-            hiddenApps = hiddenApps.concat(collection.apps); }
-        }
+          for(var c in $rootScope.collections){
+            var collection = $rootScope.collections[c];
+            if(collection.hide === true){
+              hiddenApps = hiddenApps.concat(collection.apps); }
+          }
 
         // Do a dance in DB
         // filter out items from filters
@@ -59,6 +59,11 @@ angular.module('SB.services', [])
             if(hiddenApps.indexOf(game.appid) > -1){ continue; }
           }
 
+          // Filter only wishlist games
+          // when specialfilter is set to wishlist
+          if((filters.specialFilter == "wishlist") && (game.wishlist !== true)){ continue; }
+
+          // Apply game.name normalization
           gameName = (game.name)? game.name : "";
           gameName = gameName.toString();
           gameName = gameName.toLowerCase();

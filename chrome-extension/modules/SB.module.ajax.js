@@ -82,6 +82,7 @@
   //+-------------------------------------------------------
     if(injectID){
 
+      if(typeof injectID == "number"){ queue.unshift(injectID); }
       if(typeof injectID == "string"){ queue.unshift(injectID); }
       if(Array.isArray(injectID)){ queue.unshift(injectID[0]); }
 

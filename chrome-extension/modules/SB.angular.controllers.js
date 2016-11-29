@@ -28,6 +28,7 @@ angular.module('SB.controllers')
     $scope.filters = {
 
       collection : false,
+      specialFilter : false,
 
       tags: [],
       searchTags: "",
@@ -45,8 +46,13 @@ angular.module('SB.controllers')
       limit: 50
     };
 
+
     if($routeParams.collectionID){
       $scope.filters.collection = $routeParams.collectionID; }
+
+    if($routeParams.specialFilter){
+      $scope.filters.specialFilter = $routeParams.specialFilter; }
+
 
     //| init()
     //| Init scope vars from db information
@@ -115,6 +121,7 @@ angular.module('SB.controllers')
           $(document.getElementById('SB-game-card')).scope().loadDetails();  }
       };
 
+
       //| scanLibrary
       //| ececute scanlibrary() from module.user
       //+-------------------------------------------------------
@@ -122,6 +129,7 @@ angular.module('SB.controllers')
           $scope.scanningLibrary = true;
           scanLibrary();
         };
+
 
     //| jQuery Callback
     //| is called when a game has been refreshed in jquery
