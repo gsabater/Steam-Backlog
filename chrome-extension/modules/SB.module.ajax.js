@@ -114,6 +114,9 @@
       // Merge received data into existing db object
       $.extend(db[gameID], data);
 
+      // Fix normalization, appid always must be a string
+      db[gameID].appid = db[gameID].appid.toString();
+
     //| 2. Get achievements stats
     //| every user must do it on it's own
     //+-------------------------------------------------------

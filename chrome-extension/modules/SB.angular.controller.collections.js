@@ -115,6 +115,7 @@ angular.module('SB.controllers')
   //+-------------------------------------------------------
     $scope.toggleApp = function(appid, collection){
 
+      appid     = appid.toString();
       var item  = $rootScope.collections[collection];
       var index = item.apps.indexOf(appid);
 

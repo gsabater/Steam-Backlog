@@ -201,41 +201,12 @@ angular.module('SB.controllers')
       };
 
 
-    //| saveGameDetails
-    //| Stores game again in storage.local
-    //+-------------------------------------------------------
-      $scope.saveGameDetails = function(){
-        db[$scope.gameDetails.appid] = $scope.gameDetails;
-        chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
-      };
-
-
-    /*
-
-    //| hideGame
+    //| toggleCollection
     //| apply hidden attr to true and save
     //+-------------------------------------------------------
-      $scope.hideGame = function(){
-        if($scope.gameDetails.hidden === true){
-          $scope.gameDetails.hidden = false;
-        }else{
-          var conf = confirm("Do you really want to hide this item?");
-          if (conf ===false){ return false; }
-          $scope.gameDetails.hidden = true;
-        }
-
-        db[$scope.gameDetails.appid] = $scope.gameDetails;
-        $scope.saveGameDetails();
+      $scope.toggleCollection = function(appid, collection){
+        $("#SB-collection").scope().toggleApp(appid, collection);
       };
-
-      */
-
-      //| toggleCollection
-      //| apply hidden attr to true and save
-      //+-------------------------------------------------------
-        $scope.toggleCollection = function(appid, collection){
-          $("#SB-collection").scope().toggleApp(appid, collection);
-        };
 
 
     $scope.loadDetails();

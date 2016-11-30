@@ -58,7 +58,7 @@
           <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}">
             <a ng-href="#/backlog">Library</a></li>
 
-          <li style=" padding-left: 0px; margin: 0 10px; font-size: 13px; border-radius: 2px;" ng-if="settings.library.wishlist">
+          <li style=" padding-left: 0px; margin: 0 10px; font-size: 13px; border-radius: 2px;">
             <a ng-href="#/backlog/wishlist">Wishlist</a>
           </li>
           <li><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
