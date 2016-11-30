@@ -48,6 +48,7 @@
     <i class="fa fa-sort"></i>
     <select ng-model="filters.orderBy" ng-change="search()">
       <option selected="selected" disabled="disabled">Sort by...</option>
+      <<option value="name">Name</option>
       <option value="-playtime_forever">Time played</option>
       <option value="-metascore">Metascore</option>
       <option value="-steamscore">Steam Score</option>
@@ -100,7 +101,7 @@
       <div class="game-image" ng-class="{completed: game.status.completed == true, mastered: game.status.mastered == true}" ><img ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{game.appid}}/capsule_231x87.jpg" /></div>
       <div class="game-name">{{game.name}}</div>
 
-      <div class="game-playime card-second-line"   ng-if="filters.orderBy == '-playtime_forever'">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
+      <div class="game-playime card-second-line"   ng-if="(filters.orderBy == '-playtime_forever') || (filters.orderBy == 'name')">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
       <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-metascore'"><i class="fa fa-star"></i> {{game.metascore}}</div>
       <div class="game-steamscore card-second-line" ng-if="filters.orderBy == '-steamscore'"><i class="fa fa-steam"></i> {{game.steamscore}}, {{game.steamscoreAlt}}</div>
       <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div>
