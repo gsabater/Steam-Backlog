@@ -50,6 +50,8 @@ header{
 
 .SB-sidemenu li{
   position: relative;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.51);
+  cursor: default;
 }
 
 .SB-sidemenu li:hover {
@@ -66,10 +68,28 @@ header{
   padding-left: 50px;
 }
 
-.SB-sidemenu li i{
-  position: absolute;
-  right: 10px;
-  top: 10px;
+.SB-sidemenu li:hover i {
+  opacity: 1;
+}
+
+.ui-sortable-helper i:not(.drag){
+    display:none;
+}
+
+.ui-sortable-placeholder{
+  /* visibility: visible !important; */
+  background-color: rgb(43, 51, 70);
+  padding-left: 5px;
+  margin: 0 10px;
+  font-size: 13px;
+  border-radius: 2px;
+}
+
+.SB-sidemenu hr{
+  width: 80%;
+  border: 0;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .SB-sidemenu-categories{

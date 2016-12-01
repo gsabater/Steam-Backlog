@@ -131,18 +131,15 @@
   //| and push to db with some initial data
   //+-------------------------------------------------------
     for(var i = 0, len = steam.games.length; i < len; i++){
-
       e = steam.games[i];
 
       if(!db.hasOwnProperty(e.appid)){
         db[e.appid] = {
           appid: e.appid,
           name: e.name,
-          cached: n,
           playtime_forever: e.playtime_forever,
         };
       }else{
-        db[e.appid].name = e.name;
         db[e.appid].playtime_forever = e.playtime_forever;
         delete db[e.appid].wishlist; // this means that the app has ben adquired
       }

@@ -14,6 +14,7 @@
     'SB.controllers',
     'SB.services',
     'SB.filters',
+    'ui.sortable'
     //'pascalprecht.translate',
   ])
 
@@ -28,36 +29,39 @@
 
     $rootScope.app = {
       v: 0,
+      backdrop: false,
       listStyle: "cards",  // - list
-      backdrop: false
-    };
-
-    $rootScope.stats = {
-      hoursPlayed: 0
+      showCollectionsPanel: false
     };
 
   // chrome.storage.local.get
+  // Set main vars into rootscope
   //+-------------------------------------------------------
     chrome.storage.local.get(null, function(items){
 
-      console.log("chrome.storage", items);
+      console.log("Steam Backlog - chrome.storage.local", items);
 
       db             = items.db;
       user           = items.user;
-      local_settings = (items.settings) ? items.settings : settings;
 
-      // apply defaults
+      local_collections = (items.collections) ? items.collections : collections;
+      local_settings    = (items.settings) ? items.settings : settings;
+
+      // apply default settings
       if(!local_settings.hasOwnProperty("library")){ local_settings.library = settings.library; }
 
       $rootScope.db       = items.db;
       $rootScope.user     = items.user;
-      $rootScope.settings = local_settings;
-      
-      settings = $rootScope.settings;
+
+      $rootScope.collections = local_collections;
+      $rootScope.settings    = local_settings;
+
+      settings    = $rootScope.settings;
+      collections = $rootScope.collections;
 
       $rootScope.app.v = v;
 
-      console.log("DB update",v);
+      console.log("DB update", v);
       updateDB();
 
     });
@@ -84,9 +88,14 @@
         controller: 'BacklogCtrl'
       })
 
-      .when('/progress', {
-        templateUrl: 'partials/progress.html'
-        //controller: 'ProgressCtrl'
+      .when('/backlog/:specialFilter', {
+        templateUrl: 'partials/backlog.html',
+        controller: 'BacklogCtrl'
+      })
+
+      .when('/backlog/collection/:collectionID', {
+        templateUrl: 'partials/backlog.html',
+        controller: 'BacklogCtrl'
       })
 
       .when('/settings', {
@@ -104,10 +113,3 @@
       });
   }])
 ;
-
-/*
-.when('/dashboard/:phoneId', {
-  templateUrl: 'partials/phone-detail.html',
-  controller: 'PhoneDetailCtrl'
-})
-*/

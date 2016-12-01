@@ -11,13 +11,16 @@
 
     <!-- Javascript libraries  -->
     <script src="lib/jquery.backlog.min.js"></script>
+    <script src="lib/jquery-ui.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-route.min.js"></script>
     <script src="lib/nprogress.js"></script>
+    <script src="lib/ng-sortable.js"></script>
 
     <!-- Javascript angular modules -->
     <script src="modules/SB.angular.app.js"></script>
     <script src="modules/SB.angular.controllers.js"></script>
+    <script src="modules/SB.angular.controller.collections.js"></script>
     <script src="modules/SB.angular.services.js"></script>
     <script src="modules/SB.angular.filters.js"></script>
 
@@ -27,12 +30,11 @@
     <script src="modules/SB.module.ajax.js"></script>
     <script src="modules/SB.module.dashboard.js"></script>
 
+    <!-- Page and plugin styles -->
     <link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/component.css" />
-
-    <!-- Page and plugin styles -->
-    <link rel="stylesheet" href="assets/css/sb.dashboard.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/sb.dashboard-layout.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="assets/css/sb.dashboard.css" >
+    <link rel="stylesheet" type="text/css" href="assets/css/sb.dashboard-layout.css">
 
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -46,17 +48,32 @@
       <header class="bp-header cf">
         <div class="dummy-logo">
           <div class=""><img src="assets/img/steam_logo.png" width="176" height="44"></div>
-          <h2 class="dummy-heading">Awesome Backlog v{{ app.v }} (preview)</h2>
+          <h2 class="dummy-heading">Awesome Backlog v{{ app.v }} (pre-release)</h2>
         </div>
       </header>
 
-      <button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
-
-      <nav class="menu SB-sidemenu">
-        <ul>
+      <nav class="menu SB-sidemenu" ng-controller="NavCtrl">
+        <ul ui-sortable="sortableOptions" ng-model="collections">
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
-          <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}"><a ng-href="#/backlog">Backlog</a></li>
-          <li><a href="javascript:void(0);">Libraries</a> <i class="ion-plus"></i></li>
+          <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}">
+            <a ng-href="#/backlog">Library</a></li>
+
+          <li style=" padding-left: 0px; margin: 0 10px; font-size: 13px; border-radius: 2px;">
+            <a ng-href="#/backlog/wishlist">Wishlist</a>
+          </li>
+          <li><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
+          <li ng-repeat="item in collections track by $index" class="collections-item">
+            <a ng-href="#/backlog/collection/{{$index}}">
+              <i class="ion-drag drag"></i>
+              {{item.name}}
+              <span style="font-size: 10px; color: #777;">- {{item.apps.length}}</span>
+              <i class="fa fa-low-vision hidden-collection" ng-if="item.hide"></i>
+            </a>
+            <i class="ion-edit" ng-click="app.showCollectionsPanel = 'edit'; app.editCollectionID = $index" style="cursor: pointer;"></i>
+          </li>
+
+          <li><hr /></li>
+
           <li ng-click="menu_active = 'settings'" ng-class="{'active': menu_active == 'settings'}"><a ng-href="#/settings">Settings</a></li>
           <li ng-click="menu_active = 'about'" ng-class="{'active': menu_active == 'about'}"><a ng-href="#/about">About</a></li>
         </ul>
@@ -71,12 +88,36 @@
       </div>
 
       <div class="content" ng-view>
-        <p class="info">Please choose a category</p>
       </div>
 
+      <div id="SB-collection" ng-controller="CollectionsCtrl" ng-class="{'show': showPanel}" >
+        <i class="fa fa-close" ng-click="closePanel();" style="float: right; opacity: 0.7;  font-size: 13px; cursor: pointer;"></i>
+        <h2><i class="fa fa-book"></i> Collections</h2>
+        <label>Name your collection</label>
+
+        <form ng-submit="newedit();" autocomplete="off">
+          <input type="text" name="collection_name" ng-model="collection_name" placeholder="My ..."  />
+
+          <label class="checkbox-inline" style=" margin-bottom: 20px;">
+            <input type="checkbox" ng-model="collection.hide"> Hide in library
+            <i class="ion-help-circled tooltip" style="font-size: 13px; margin-left: 5px;"><span class="tooltip-content">When checked, apps in this list will be hidden from search results</span></i>
+          </label>
+        </form>
+
+        <div class="row" ng-if="app.editCollectionID == undefined">
+          <span class="SB-btn btn-add-collection" ng-click="newedit();">Add collection</span>
+          <span class="SB-btn btn-close-window" ng-click="closePanel();">Cancel</span>
+        </div>
+
+        <div class="row" ng-if="app.editCollectionID !== undefined">
+          <span class="SB-btn btn-add-collection" ng-click="newedit();">Save changes</span>
+          <span class="SB-btn btn-close-window" ng-click="closePanel();">Cancel</span>
+          <span class="SB-btn btn-delete" ng-click="delete();">Delete</span>
+        </div>
+
+      </div>
       <div id="SB-backdrop" ng-class="{'show': app.backdrop}" ng-click="app.backdrop = false"></div>
 
     </div>
-
   </body>
 </html>

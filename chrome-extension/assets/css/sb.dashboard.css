@@ -42,7 +42,9 @@
   width: 205px;
   margin: 17px 15px;
   border-radius: 0px;
-  opacity: 0.7;
+  opacity: 0.6;
+
+  transition: margin-right 0.3s, opacity 0.2s;
 }
 
 .games-list.cards .bookmark{
@@ -553,8 +555,11 @@
   overflow: hidden;
 }
 
-#SB-game-card .game-categories{
-  margin-top: 17px;
+#SB-game-card hr{
+  width: 100%;
+  border: none;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 #SB-game-card .btn-refresh{
@@ -628,7 +633,7 @@ text-align: right;
 }
 
 .game-hltb hr{
-  width: 80%;
+  width: 80% !important;
 	height: 1px;
 	border: none;
 	background-color: rgba(255, 255, 255, 0.10);
@@ -646,7 +651,7 @@ text-align: right;
   margin-left: 15px;
 }
 
-.game-hltb a:first-child i, .game-hltb .credit i{
+.game-hltb a:first-child i, .game-hltb span:first-child i, .game-hltb .credit i{
   margin-left: 0;
 }
 
@@ -658,4 +663,130 @@ text-align: right;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.68);
   text-decoration: none;
   padding-top: 8px;
+}
+
+/*****************************
+/****  collections
+/*****************************/
+
+.SB-sidemenu .collections-item{
+  padding-left: 0px;
+  margin: 0 10px;
+  font-size: 13px;
+  border-radius: 2px;
+}
+
+.SB-sidemenu .collections-item a{
+  display: inline-block;
+  margin-left: 50px;
+  padding-left: 0;
+}
+
+
+.SB-sidemenu li i{
+  opacity: 0;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  transition: opacity 0.3s;
+}
+
+.SB-sidemenu li i.drag{
+  position: relative !important;
+  float: none;
+  top: -1px !important;
+  margin-left: -9px;
+  font-size: 10px;
+  cursor: all-scroll;
+}
+
+.SB-sidemenu li i.hidden-collection{
+  position: relative;
+  top: inherit;
+  right: inherit;
+  opacity: 0.5;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.34);
+  text-shadow: 0px 0px 3px black;
+  margin-left: 3px;
+}
+
+#SB-collection{
+  display: none;
+  position: fixed;
+  width: calc(100vw - 5px);
+  background: #1F1F1F;
+  padding: 25px;
+  z-index: 99999;
+  top: 100px;
+  left: calc(50% - (550px/2));
+  width: 450px;
+  height: auto;
+  z-index: 99999;
+  border-radius: 4px;
+
+  width: 550px;
+  height: auto;
+  background-color: #1B2838;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 99999;
+  padding: 20px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  outline: 1px solid rgba(255, 255, 255, 0.15);
+  outline-offset: -1px;
+}
+
+#SB-collection.show{
+  display: block !important;
+}
+
+#SB-collection h2{
+  margin-top: 0;
+}
+
+#SB-collection label{
+  display: block;
+  padding-bottom: 5px;
+  font-weight: 100;
+}
+
+.btn-add-collection{
+  color: white !important;
+  margin-right: 5px;
+  font-weight: 500;
+  background-color: rgba(56, 97, 65, 0.6) !important;
+}
+
+.btn-close-window{
+  display: none !important;
+  color: #efefef !important;
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+.btn-delete{
+  float: right;
+  color: rgba(226, 171, 171, 0.71) !important;
+  background-color: #5d0404 !important;
+  opacity: 0.5;
+}
+
+#SB-collection input[type='text']{
+  display: block;
+  width: 100%;
+  height: 38px;
+  padding: 6px 9pt;
+  font-size: 14px;
+  line-height: 1.71428571;
+  color: #eee;
+  vertical-align: middle;
+  background-color: #555;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  line-height: 1.5em;
+  border: 0;
+  box-shadow: 0 0 2px rgba(0,0,0,.3),inset -2px 2px 2px rgba(0,0,0,.1);
+  outline: none;
+  margin-bottom: 10px;
 }

@@ -9,7 +9,7 @@
 //
 //=================================================================
 
-var v = "0.9.4";
+var v = "0.9.9";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
 var isAngular    = false,    // flag used for the dashboard to make ajax calls
@@ -17,14 +17,14 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
 
     user    = false,    // chrome.local var
     db      = false,    // chrome.local var
-
     hltbs   = false,    // howlongtobeatsteam var
 
     queue   = [],
     timeout = false,
     isQueue = false, //false,
 
-    settings = {
+    collections = false,    // chrome.local var
+    settings    = {
       v: v,
       scan: {
         interval: "3"
@@ -86,9 +86,10 @@ var isAngular    = false,    // flag used for the dashboard to make ajax calls
       }else{
 
         // Set global user and db vars
-        db       = (storage.db)? storage.db : {};
-        user     = (storage.user)? storage.user : {};
-        settings = (storage.settings)? storage.settings : settings;
+        db          = (storage.db)? storage.db : {};
+        user        = (storage.user)? storage.user : {};
+        settings    = (storage.settings)? storage.settings : settings;
+        collections = (storage.collections)? storage.collections : false;
       }
 
      // Update user information

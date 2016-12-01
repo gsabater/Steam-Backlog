@@ -16,7 +16,7 @@ angular.module('SB.controllers')
 // BacklogCtrl
 // +
 //=================================================
-  .controller('BacklogCtrl', function($rootScope, $scope, Games, Filter){
+  .controller('BacklogCtrl', function($rootScope, $scope, $routeParams, Games, Filter){
 
     $scope.showTags     = false;
     $scope.showGameCard = false;
@@ -26,6 +26,9 @@ angular.module('SB.controllers')
     $scope.scanningLibrary = false;
 
     $scope.filters = {
+
+      collection : false,
+      specialFilter : false,
 
       tags: [],
       searchTags: "",
@@ -44,6 +47,13 @@ angular.module('SB.controllers')
     };
 
 
+    if($routeParams.collectionID){
+      $scope.filters.collection = $routeParams.collectionID; }
+
+    if($routeParams.specialFilter){
+      $scope.filters.specialFilter = $routeParams.specialFilter; }
+
+
     //| init()
     //| Init scope vars from db information
     //+-------------------------------------------------------
@@ -58,6 +68,8 @@ angular.module('SB.controllers')
 
           $scope.numGames = $scope.games.length;
         }
+
+        setAppMargin();
       };
 
 
@@ -109,6 +121,7 @@ angular.module('SB.controllers')
           $(document.getElementById('SB-game-card')).scope().loadDetails();  }
       };
 
+
       //| scanLibrary
       //| ececute scanlibrary() from module.user
       //+-------------------------------------------------------
@@ -116,6 +129,7 @@ angular.module('SB.controllers')
           $scope.scanningLibrary = true;
           scanLibrary();
         };
+
 
     //| jQuery Callback
     //| is called when a game has been refreshed in jquery
@@ -165,6 +179,7 @@ angular.module('SB.controllers')
         console.log($scope.gameDetails);
       };
 
+
     //| refreshGameDetails
     //| Fetch the data again from the internet
     //+-------------------------------------------------------
@@ -177,6 +192,7 @@ angular.module('SB.controllers')
         getGameInfo($scope.gameDetails.appid);
       };
 
+
     //| updateGameDetails
     //| Called when refreshGameDetails has completed
     //+-------------------------------------------------------
@@ -184,29 +200,14 @@ angular.module('SB.controllers')
         NProgress.done();
       };
 
-    //| saveGameDetails
-    //| Stores game again in storage.local
-    //+-------------------------------------------------------
-      $scope.saveGameDetails = function(){
-        db[$scope.gameDetails.appid] = $scope.gameDetails;
-        chrome.storage.local.set({'db': db}, function(){ /* console.warn("db saved", db); */ });
-      };
 
-    //| hideGame
+    //| toggleCollection
     //| apply hidden attr to true and save
     //+-------------------------------------------------------
-      $scope.hideGame = function(){
-        if($scope.gameDetails.hidden === true){
-          $scope.gameDetails.hidden = false;
-        }else{
-          var conf = confirm("Do you really want to hide this item?");
-          if (conf ===false){ return false; }
-          $scope.gameDetails.hidden = true;
-        }
-
-        db[$scope.gameDetails.appid] = $scope.gameDetails;
-        $scope.saveGameDetails();
+      $scope.toggleCollection = function(appid, collection){
+        $("#SB-collection").scope().toggleApp(appid, collection);
       };
+
 
     $scope.loadDetails();
 
@@ -252,6 +253,7 @@ angular.module('SB.controllers')
           chrome.storage.local.remove("db",    function(){console.error("removed"); });
           chrome.storage.local.remove("user",    function(){console.error("removed"); });
           chrome.storage.local.remove("settings",    function(){console.error("removed"); });
+          chrome.storage.local.remove("collections",    function(){console.error("removed"); });
 
           window.setTimeout(function(){ window.location.href = url; }, 1000);
         };
@@ -265,6 +267,24 @@ angular.module('SB.controllers')
   .controller('DashboardCtrl', function($rootScope, $scope){
 
   })
+
+  //=================================================
+  // NavCtrl
+  // +
+  //=================================================
+    .controller('NavCtrl', function($rootScope, $scope){
+
+      $scope.sortableOptions = {
+        update: function(e, ui) {
+          window.setTimeout(function(){
+            $("#SB-collection").scope().saveLocal();
+          }, 200);
+        },
+        axis: 'y',
+        handle: '.drag',
+      };
+
+    })
 
 //=================================================
 // AboutCtrl

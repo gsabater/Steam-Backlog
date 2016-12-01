@@ -20,11 +20,11 @@
 
     // 1. stop execution if we don't have any games
     if(!db || Object.keys(db).length === 0){
-      console.warn("Steam Backlog: db is empty. Stopping updateDB()");
+      console.warn("Steam Backlog -> updateDB: db is empty. Stopping updateDB()");
       return; }
 
     //1.5 if the queue to update games has been already processed
-    if(isQueue){ console.warn("Steam Backlog: db queue is completed. Stopping updateDB()"); return; }
+    if(isQueue){ console.warn("Steam Backlog -> updateDB: db queue is completed. Stopping updateDB()"); return; }
 
     // 2. If there is no queue, build one with
     // db games and wishlist games
@@ -35,8 +35,8 @@
       for(var i in db){
         g = db[i];
 
-        if(g.wishlist && (settings.library.wishlist === false)){
-          continue; }
+        //if(g.wishlist && (settings.library.wishlist === false)){
+        //  continue; }
 
         if(!g.updated || (n - g.updated) > 2592000 ){ // 30 dias 2592000000
           queue.push([g.appid, g.playtime_forever]);
@@ -61,7 +61,7 @@
 
     }else{
       isQueue = true;
-      console.log("everything ok");
+      console.log("Steam Backlog -> updateDB: everything ok");
     }
 
   }
@@ -82,6 +82,7 @@
   //+-------------------------------------------------------
     if(injectID){
 
+      if(typeof injectID == "number"){ queue.unshift(injectID); }
       if(typeof injectID == "string"){ queue.unshift(injectID); }
       if(Array.isArray(injectID)){ queue.unshift(injectID[0]); }
 
@@ -113,6 +114,9 @@
       // Merge received data into existing db object
       $.extend(db[gameID], data);
 
+      // Fix normalization, appid always must be a string
+      db[gameID].appid = db[gameID].appid.toString();
+
     //| 2. Get achievements stats
     //| every user must do it on it's own
     //+-------------------------------------------------------
@@ -125,7 +129,7 @@
         // Achievements info if it has
         if(data.hasOwnProperty("playerstats")){
           if(data.playerstats.hasOwnProperty("achievements")){
-            var achieved = 0; for(i in data.playerstats.achievements){
+            var achieved = 0; for(var i in data.playerstats.achievements){
               if(data.playerstats.achievements[i].achieved == 1){ achieved++; } }
 
             db[gameID].achievements = data.playerstats.achievements.length;
@@ -236,7 +240,7 @@
     }
 
     // 3. Create a stopwatch to star again with settings interval
-    var time = settings.scan.interval; //console.log(time,"s");
+    var time = settings.scan.interval; console.log(time,"s", timeout, "angular: " + isAngular);
     if(!timeout){ timeout = window.setTimeout(function(){ updateDB(); }, time * 1000); }
 
   }
