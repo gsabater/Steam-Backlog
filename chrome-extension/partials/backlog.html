@@ -37,10 +37,13 @@
 
   <div class="SB-games-count">{{ games.length }} items
     &nbsp;&nbsp;|&nbsp;&nbsp;
-    <span ng-if="!scanningLibrary" class="SB-btn tooltip" ng-click="scanLibrary()">Scan
-      <span class="tooltip-content clearfix" style="font-size: 11px;">Search for new games<br />in library and wishlist</span></span>
+    <span ng-if="queue.length > 0" class="SB-btn" ng-click="stopSync();" ><i class="ion-close-circled"></i> Stop syncing now</span>
+    <span ng-if="(queue.length == 0) && scanningLibrary" class="SB-btn">Scanning...</span>
+    <span ng-if="(queue.length == 0) && !scanningLibrary" class="SB-btn tooltip" ng-click="scanLibrary()">
+      Scan
+      <span class="tooltip-content clearfix" style="font-size: 11px;">Search for new games<br />in library and wishlist</span>
+    </span>
 
-    <span ng-if="scanningLibrary" class="SB-btn">Scanning...</span>
   </div>
   <!-- ng-class="{'has-secondary-bar': secondary_bar}" -->
 

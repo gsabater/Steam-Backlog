@@ -45,7 +45,6 @@
       }
 
       queue.sort(function(a, b){ return b[1] - a[1]; });
-
     }
 
     // 4. If there is still queue remaining

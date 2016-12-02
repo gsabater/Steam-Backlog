@@ -123,13 +123,23 @@ angular.module('SB.controllers')
       };
 
 
-      //| scanLibrary
-      //| ececute scanlibrary() from module.user
-      //+-------------------------------------------------------
-        $scope.scanLibrary = function(){
-          $scope.scanningLibrary = true;
-          scanLibrary();
-        };
+    //| scanLibrary
+    //| ececute scanlibrary() from module.user
+    //+-------------------------------------------------------
+    $scope.scanLibrary = function(){
+        $scope.scanningLibrary = true;
+        $scope.queue = queue;
+        scanLibrary();
+    };
+
+    //| stopSync()
+    //| Stops ajax calls at once
+    //+-------------------------------------------------------
+    $scope.stopSync = function(){
+        isQueue = true;
+        $scope.queue = [];
+        //$scope.scanningLibrary = false;
+    };
 
 
     //| jQuery Callback
