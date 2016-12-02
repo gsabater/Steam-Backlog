@@ -12,18 +12,19 @@
 var v = "0.9.9";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
-var isAngular    = false,    // flag used for the dashboard to make ajax calls
-    isOwnProfile = false, // flag if window.location is own profile
+var isAngular    = false,       // flag used to know if the execution is done in the angular panel
+    isOwnProfile = false,       // flag used to know if window.location is own profile steam page
 
-    user    = false,    // chrome.local var
-    db      = false,    // chrome.local var
-    hltbs   = false,    // howlongtobeatsteam var
+    user    = false,            // chrome.local var
+    db      = false,            // chrome.local var
+    hltbs   = false,            // howlongtobeatsteam var
 
-    queue   = [],
-    timeout = false,
-    isQueue = false, //false,
+    queue        = [],          // used to store pending apps waiting to be updated
+    timeout      = false,       // identifier to stop updater watch
+    isQueue      = false,       // default false, when true means there are games waiting to be updated
+    notification = false,       // Contains the text used to inform about current update game and others
 
-    collections = false,    // chrome.local var
+    collections = false,        // chrome.local var
     settings    = {
       v: v,
       scan: {

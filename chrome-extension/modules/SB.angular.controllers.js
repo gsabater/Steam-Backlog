@@ -22,7 +22,8 @@ angular.module('SB.controllers')
     $scope.showGameCard = false;
     $scope.gameDetails  = false;
 
-    $scope.queue = queue;
+    $scope.queue           = queue;
+    //$scope.notification    = notification;
     $scope.scanningLibrary = false;
 
     $scope.filters = {

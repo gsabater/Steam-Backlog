@@ -16,7 +16,7 @@
   function updateDB(){
 
     var d = new Date();
-    var n = d.getTime() / 1000;
+    var n = d.getTime();
 
     // 1. stop execution if we don't have any games
     if(!db || Object.keys(db).length === 0){
@@ -31,19 +31,15 @@
     if(queue.length === 0){
 
       // Iterate over all db games
-      // Add new games, refresh games after 30 days and deleted games after a week
+      // Add new games, refresh games after 15 days and deleted games after a week
       for(var i in db){
         g = db[i];
 
         //if(g.wishlist && (settings.library.wishlist === false)){
         //  continue; }
 
-        if(!g.updated || (n - g.updated) > 2592000 ){ // 30 dias 2592000000
+        if(!g.updated || (n - g.updated) > 1296000000 ){ // 30 dias 2592000000 -- 15 dias 1296000000
           queue.push([g.appid, g.playtime_forever]);
-        }
-
-        if((g.deleted === true) && (!g.updated || ((n - g.updated) > 648000))){ // 7 dias
-          queue.push([g.appid, -100]);
         }
 
       }
@@ -55,7 +51,7 @@
     // 4. If there is still queue remaining
     // call for getGameInfo()
     if(queue.length > 0){
-      console.log("hay queue", queue.length);
+      console.log("hay queue", queue.length, queue);
       timeout = false;
       getGameInfo();
 
@@ -103,7 +99,11 @@
 //+-------------------------------------------------------
   function scrapGame(gameID){
 
+    var d = new Date();
+    var n = d.getTime();
+
     console.log("%c Steam Backlog: Scrap Game -> " + gameID + " ( " + db[gameID].name + " ) ", 'background: #222; color: #bada55');
+    //notification = "Scrapìng game <strong>" + db[gameID].name + "</strong>";
 
   //| 1. Get JSON details for app gameID
   //| Data taken from Steam Backlog server API
@@ -116,6 +116,9 @@
 
       // Fix normalization, appid always must be a string
       db[gameID].appid = db[gameID].appid.toString();
+
+      // Store local updated Date
+      db[gameID].updated = n;
 
     //| 2. Get achievements stats
     //| every user must do it on it's own

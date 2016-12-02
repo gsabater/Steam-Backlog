@@ -93,6 +93,8 @@
   //| then iterate again to scan wishlist
   //+-------------------------------------------------------
     if(!list || (list == "library")){
+        //notification = "Getting user owned apps...";
+
       $.getJSON("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=A594C3C2BBC8B18CB7C00CB560BA1409&steamid="+user.steamid+"&include_played_free_games=1&include_appinfo=1&format=json", function(data){
         games = data.response;
         scanLibrary(games, 'wishlist');
@@ -104,8 +106,10 @@
     //| save and createDB
     //+-------------------------------------------------------
       if(list == "wishlist"){
+          //notification = "Getting user wishlist apps...";
         $.getJSON("http://store.steampowered.com/dynamicstore/userdata", function(data){
 
+          //notification = false;
           user.wishlist = data.rgWishlist;
           user.recommendedTags = data.rgRecommendedTags;
 
@@ -154,7 +158,7 @@
       e = user.wishlist[w];
 
       if(!db.hasOwnProperty(e)){
-        console.log(w,e);
+        console.log(w,e, db[e]);
         db[e] = {
           appid: e,
           name: "",
