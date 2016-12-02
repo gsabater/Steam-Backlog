@@ -120,6 +120,13 @@
       // Store local updated Date
       db[gameID].updated = n;
 
+      // Avoid one ajax call if no achievements
+      if(data.achievements === false){
+        howLongToBeatSteam(gameID);
+        saveGameInfo(gameID);
+        return;
+      }
+
     //| 2. Get achievements stats
     //| every user must do it on it's own
     //+-------------------------------------------------------
