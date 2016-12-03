@@ -137,6 +137,7 @@ angular.module('SB.controllers')
     //+-------------------------------------------------------
     $scope.stopSync = function(){
         isQueue = true;
+        queue = [];
         $scope.queue = [];
         //$scope.scanningLibrary = false;
     };
