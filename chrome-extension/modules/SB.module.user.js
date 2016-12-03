@@ -106,15 +106,15 @@
     //| save and createDB
     //+-------------------------------------------------------
       if(list == "wishlist"){
-          //notification = "Getting user wishlist apps...";
+        //notification = "Getting user wishlist apps...";
         $.getJSON("http://store.steampowered.com/dynamicstore/userdata", function(data){
 
-          //notification = false;
-          user.wishlist = data.rgWishlist;
-          user.recommendedTags = data.rgRecommendedTags;
-
-          createDB(games);
-          return;
+            //notification = false;
+            if(data.rgWishlist.length > 0){
+                user.wishlist = data.rgWishlist; }
+            user.recommendedTags = data.rgRecommendedTags;
+            createDB(games);
+            return;
         });
       }
 
