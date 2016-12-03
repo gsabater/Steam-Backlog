@@ -120,7 +120,7 @@
       db[gameID].updated = n;
 
       // Avoid one ajax call if no achievements
-      if((data.achievements === false) || (data.achievements === 0)){
+      if(db[gameID].wishlist || !data.achievements || (data.achievements === false) || (data.achievements === 0)){
         howLongToBeatSteam(gameID);
         saveGameInfo(gameID);
         return;
