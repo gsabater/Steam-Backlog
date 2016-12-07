@@ -57,7 +57,7 @@
       <option value="-steamscore">Steam Score</option>
       <option value="-achievementProgress">Achievements</option>
       <option value="timeToBeat">Beating time</option>
-      <!- - <option>achievement %</option> - ->
+      <!-- <option>achievement %</option> -->
     </select>
   </div>
 
@@ -97,6 +97,11 @@
 
     <div class="warning" ng-if="games.length == 0">
       <i class="fa fa-warning"></i> No games match the selected filters
+    </div>
+
+    <div ng-if="hidden.length > 0">
+      <i class="fa fa-warning"></i> Hey! There are {{hidden.length}} hidden items that matches your search. -- show them
+      {{hidden}}
     </div>
 
     <div ng-repeat="game in games | orderBy : filters.orderBy | limitTo : filters.limit track by game.appid" class="game-card" ng-class="{'wishlist': game.wishlist, 'deleted': game.deleted}" ng-click="openGameCard(game.appid)">

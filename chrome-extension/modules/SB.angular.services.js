@@ -25,8 +25,9 @@ angular.module('SB.services', [])
     //+---------------------------------------
       self.games = function(filters){
 
-        var result       = {games: [], tags: []};
+        var result       = {games: [], tags: [], hidden: []};
         var searchString = (filters)? filters.string.toLowerCase() : false;
+        var skipped      = 0;
 
         //| Collections
         //+ --------------------------
@@ -41,8 +42,7 @@ angular.module('SB.services', [])
 
           for(var c in $rootScope.collections){
             var collection = $rootScope.collections[c];
-            if(collection.hide === true){
-              hiddenApps = hiddenApps.concat(collection.apps); }
+            if(collection.hide === true){ hiddenApps = hiddenApps.concat(collection.apps); }
           }
 
         // Do a dance in DB
@@ -51,13 +51,9 @@ angular.module('SB.services', [])
 
           game = $rootScope.db[i];
 
-          // Filter if the game do not belongs to a collection
-          // or app is in a hidden collection
+          // When looking a collection, filter everything else
           if(filters.collection !== false){
-            if(collected.indexOf(game.appid) == -1){ continue; }
-          }else{
-            if(hiddenApps.indexOf(game.appid) > -1){ continue; }
-          }
+            if(collected.indexOf(game.appid) == -1){ continue; } }
 
           // Filter only wishlist games
           // when specialfilter is set to wishlist
@@ -69,46 +65,53 @@ angular.module('SB.services', [])
           gameName = gameName.toLowerCase();
 
           // Searchstring filter
-          if(searchString && gameName.indexOf(searchString) == -1){ continue; }
+          if(searchString && gameName.indexOf(searchString) == -1){ skipped++; continue; }
 
           // No wishlist
           if($rootScope.settings.library.wishlist === false){
-            if(game.wishlist === true){ continue; } }
+            if(game.wishlist === true){ skipped++; continue; } }
 
           // Attributes filter
-          if(filters.singlePlayer && !game.singlePlayer){ continue;}
-          if(filters.multiPlayer && !game.multiPlayer){ continue;}
-          if(filters.coop && !game.coop){ continue;}
-          if(filters.localCoop && !game.localCoop){ continue;}
-          if(filters.mmo && !game.mmo){ continue;}
-          if(filters.controller && !game.controller){ continue;}
-          if(filters.achievements && !game.achievements){ continue;}
+          if(filters.singlePlayer && !game.singlePlayer){ skipped++; continue;}
+          if(filters.multiPlayer && !game.multiPlayer){ skipped++; continue;}
+          if(filters.coop && !game.coop){ skipped++; continue;}
+          if(filters.localCoop && !game.localCoop){ skipped++; continue;}
+          if(filters.mmo && !game.mmo){ skipped++; continue;}
+          if(filters.controller && !game.controller){ skipped++; continue;}
+          if(filters.achievements && !game.achievements){ skipped++; continue;}
 
           // Score filters
           if(filters.orderBy == "-metascore"){
-            if(!game.metascore){ continue; } }
+            if(!game.metascore){ skipped++; continue; } }
 
           if(filters.orderBy == "-steamscore"){
-            if(!game.steamscore){ continue; } }
+            if(!game.steamscore){ skipped++; continue; } }
 
           // Achievements filter
           if(filters.orderBy == "-achievementProgress"){
-            if(!game.achievements){ continue; }
+            if(!game.achievements){ skipped++; continue; }
             game.achievementProgress = game.achieved - game.achievements;
           }
 
           //HLTB filter
           if(filters.orderBy == "timeToBeat"){
-            if(!game.hltb == "unavailable"){ continue; }
+            if(!game.hltb == "unavailable"){ skipped++; continue; }
             game.timeToBeat = game.hltb.MainTtb; // - game.playtime_forever;
           }
 
           //Tag filter
           if(filters.tags.length > 0){
-            if(!game.tags){ continue; }
+            if(!game.tags){ skipped++; continue; }
 
             for(var f in filters.tags){
               if(game.tags.indexOf(filters.tags[f]) == -1){ continue dance; } }
+          }
+
+          // When there is a filter search active, but hidden games should be added to the list
+          // push them also into hidden object
+          if(skipped > 0){
+            if(hiddenApps.indexOf(game.appid) > -1){
+              result.hidden.push(game); continue; }
           }
 
           // Add resulting games and tags to result object

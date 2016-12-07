@@ -81,8 +81,11 @@ angular.module('SB.controllers')
         console.log("backlog: search()");
 
         var filtered = Filter.games($scope.filters);
-        $scope.games = filtered.games;
-        $scope.tags  = filtered.tags;
+        //console.log(filtered);
+
+        $scope.games  = filtered.games;
+        $scope.tags   = filtered.tags;
+        $scope.hidden = filtered.hidden;
 
         $scope.filters.limit = 50;
         $(".container").scrollTop(0);
