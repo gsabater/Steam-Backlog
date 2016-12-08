@@ -80,22 +80,21 @@ angular.module('SB.services', [])
           if(filters.controller && !game.controller){ skipped++; continue;}
           if(filters.achievements && !game.achievements){ skipped++; continue;}
 
-          // Score filters
+          // OrderBy filters
+          // Score, achievements, time to beat
           if(filters.orderBy == "-metascore"){
-            if(!game.metascore){ skipped++; continue; } }
+            if(!game.metascore){ /* skipped++; */ continue; } }
 
           if(filters.orderBy == "-steamscore"){
-            if(!game.steamscore){ skipped++; continue; } }
+            if(!game.steamscore){ /* skipped++; */ continue; } }
 
-          // Achievements filter
           if(filters.orderBy == "-achievementProgress"){
-            if(!game.achievements){ skipped++; continue; }
+            if(!game.achievements){ /* skipped++; */ continue; }
             game.achievementProgress = game.achieved - game.achievements;
           }
 
-          //HLTB filter
           if(filters.orderBy == "timeToBeat"){
-            if(!game.hltb == "unavailable"){ skipped++; continue; }
+            if(!game.hltb == "unavailable"){ /* skipped++; */ continue; }
             game.timeToBeat = game.hltb.MainTtb; // - game.playtime_forever;
           }
 
@@ -104,14 +103,14 @@ angular.module('SB.services', [])
             if(!game.tags){ skipped++; continue; }
 
             for(var f in filters.tags){
-              if(game.tags.indexOf(filters.tags[f]) == -1){ continue dance; } }
+              if(game.tags.indexOf(filters.tags[f]) == -1){ skipped++; continue dance; } }
           }
 
           // When there is a filter search active, but hidden games should be added to the list
           // push them also into hidden object
-          if(skipped > 0){
-            if(hiddenApps.indexOf(game.appid) > -1){
-              result.hidden.push(game); continue; }
+          if(filters.collection == false){
+            if((hiddenApps.indexOf(game.appid) > -1) && (skipped > 0)){ result.hidden.push(game); }
+            if(hiddenApps.indexOf(game.appid) > -1){ continue; }
           }
 
           // Add resulting games and tags to result object

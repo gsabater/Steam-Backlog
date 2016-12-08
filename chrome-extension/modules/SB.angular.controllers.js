@@ -52,7 +52,9 @@ angular.module('SB.controllers')
       $scope.filters.collection = $routeParams.collectionID; }
 
     if($routeParams.specialFilter){
-      $scope.filters.specialFilter = $routeParams.specialFilter; }
+      $scope.filters.specialFilter = $routeParams.specialFilter;
+      if($scope.filters.specialFilter == "wishlist"){ $scope.filters.orderBy = "-metascore" }
+    }
 
 
     //| init()

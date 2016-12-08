@@ -91,9 +91,11 @@
   <style id="css-app-margin"></style>
   <div class="games-list" ng-class="(app.listStyle)?app.listStyle:'cards'">
 
+    <!--
     <div class="warning" ng-if="filters.orderBy == '-metascore'">
       <i class="fa fa-warning"></i> Some games might not appear on the list because it has no metascore or because we don't know it's score.
     </div>
+    -->
 
     <div class="warning" ng-if="games.length == 0">
       <i class="fa fa-warning"></i> No games match the selected filters
