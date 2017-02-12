@@ -75,6 +75,8 @@
       scanLibrary(); return; }
 
     var profileGames  = parseInt($(".responsive_count_link_area a[href*='games/?tab=all'] span.profile_count_link_total").text().replace(",", ""));
+    console.warn("Steam Backlog: Profile games: "+ profileGames+ ", stored info: "+ user.profileGames);
+
     if(isOwnProfile && (user.profileGames != profileGames) ){
       scanLibrary(); return; }
 
@@ -192,8 +194,8 @@
       isQueue = false;
       updateDB();
 
-      if($("div[ng-view]").scope().hasOwnProperty("jQueryCallback")){ $("div[ng-view]").scope().jQueryCallback("force"); }
-      console.warn("updating angular view");
+      if($("div[ng-view]").scope().hasOwnProperty("jQueryCallback")){
+        $("div[ng-view]").scope().jQueryCallback("force"); }
     }
 
     // fill HLTB information on games
