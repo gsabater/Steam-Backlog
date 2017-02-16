@@ -8,15 +8,6 @@
       <!--
       <div class="option-group">
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox1" value="option1"> Scan games in background
-        </label>
-        <p>If active, the Backlog will fetch game information from steam <span class="tooltip">every few seconds<span class="tooltip-content">Only when you are in the Backlog page</span></span> until all your library have been scanned. The game data is valid for a month before being scanned again.<br>
-        <span class="note">Archived games will not be scanned, reducing the library scan time and load.</span></p>
-      </div>
-      -->
-
-      <div class="option-group">
-        <label class="checkbox-inline">
           Scan a game every
           <select style="margin-left: 10px;" ng-model="scan.interval" ng-change="saveSettings()">
             <option value="0">Instant</option>
@@ -29,6 +20,15 @@
         <p>Interval of time between every request to the steam-backlog server.<br />
           Lower values scan your whole library faster but is not recommended for slow computers.
         <span class="note">This process is stopped once all your games have been scanned.</span></p>
+      </div>
+      -->
+
+      <div class="option-group">
+        <label class="checkbox-inline" style="margin-left: -5px;">
+          <input type="checkbox" ng-model="scan.achievements" ng-change="saveSettings()"> Scan for wishlist
+        </label>
+        <p>When active, the extension will get achievement data for games. This will allow you to order by achievement progression, and see your completed % on the game card.
+        <span class="note">Scanning for achievements may greatly increase your sync time and performance in the backlog, as must be done one your machine.</span></p>
       </div>
 
     </div>
@@ -59,7 +59,7 @@
       <p>
         If you have problems with your backlog, your howlongtobeat info is not showing up, or you think that something might be wrong,
         you may want to reset your data and start the scanning process again.
-        <span class="note">This process cannot be undone.</span>
+        <span class="note">This <u>cannot</u> be undone.</span>
       </p>
       <p>
         <div class="SB-btn" style="background-color: rgba(255, 0, 0, 0.17); color: white;" ng-click="resetData()">

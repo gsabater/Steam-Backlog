@@ -29,7 +29,8 @@ var isAngular    = false,       // flag used to know if the execution is done in
     settings     = {
       v: v,
       scan: {
-        interval: "3"
+        interval: "3",
+        achievements: false
       },
       library:{
         wishlist: false

@@ -55,8 +55,9 @@
       <option value="-playtime_forever">Time played</option>
       <option value="-metascore">Metascore</option>
       <option value="-steamscore">Steam Score</option>
-      <option value="-achievementProgress">Achievements</option>
       <option value="timeToBeat">Beating time</option>
+
+      <!-- <option value="-achievementProgress">Achievements</option> -->
       <!-- <option>achievement %</option> -->
     </select>
   </div>
@@ -114,7 +115,7 @@
       <div class="game-playime card-second-line"   ng-if="(filters.orderBy == '-playtime_forever') || (filters.orderBy == 'name')">Played {{game.playtime_forever | minutesToHours}} <span class="pull-right"><i class="fa fa-star" ng-if="game.metascore"></i> {{game.metascore}}  <i class="fa fa-steam" ng-if="game.steamscore" style="padding-left: 8px;"></i> {{game.steamscore}}</span></div>
       <div class="game-metascore card-second-line" ng-if="filters.orderBy == '-metascore'"><i class="fa fa-star"></i> {{game.metascore}}</div>
       <div class="game-steamscore card-second-line" ng-if="filters.orderBy == '-steamscore'"><i class="fa fa-steam"></i> {{game.steamscore}}, {{game.steamscoreAlt}}</div>
-      <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div>
+      <!-- <div class="game-achievements card-second-line" ng-if="filters.orderBy == '-achievementProgress'"><i class="fa fa-certificate" style="margin-right: 3px;"></i> {{game.achieved}} / {{game.achievements}} ( {{((100*game.achieved)/game.achievements).toFixed(0)}}% )</div> -->
       <div class="game-timetobeat card-second-line" ng-if="filters.orderBy == 'timeToBeat'">Played {{game.playtime_forever | minutesToHours}}<span class="pull-right"><i class="ion-android-time"></i> {{game.hltb.MainTtb | minutesToHours }} <i class="ion-ribbon-b" style="margin-left: 5px;"></i> {{game.hltb.ExtrasTtb | minutesToHours }}</span></div>
       <div class="wishlist-badge">Wishlist</div>
       <div class="deleted-badge">Removed</div>
