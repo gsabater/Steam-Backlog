@@ -134,7 +134,9 @@ function scrapBatch(batch){
             saveGameInfo();
 
             if(isAngular){
+                if($("div[ng-view]").scope().hasOwnProperty("jQueryCallback")){
                     $("div[ng-view]").scope().queue = [];
+                    $("div[ng-view]").scope().jQueryCallback();
                 }
             }
         }
@@ -168,6 +170,7 @@ function mergeApp(app){
     // Store local updated Date
     db[appID].updated = n;
 
+    howLongToBeatSteam();
     saveGameInfo(appID);
 }
 
@@ -177,6 +180,8 @@ function mergeApp(app){
 //| + Loads user information from howlongtobeatsteam
 //| + Fills information for a certain or all games
 //+-------------------------------------------------------
+function howLongToBeatSteam(){
+
     //| Get howlongtobeatsteam info
     //| And call function again
     //+-------------------------------------------------------
@@ -187,6 +192,7 @@ function mergeApp(app){
         $.getJSON("https://www.howlongtobeatsteam.com/api/games/library/" + user.steamid + "?callback=jsonp", function(hltbs){
         }).always(function(xhr){
             hltbs = xhr;
+            howLongToBeatSteam();
         });
 
         return;
