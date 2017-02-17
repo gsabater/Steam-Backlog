@@ -78,7 +78,7 @@ function getGameInfo(injectID){ //console.warn(injectID, queue);
     // the batch is sent to steam-backlog.com and returned data
     //+-------------------------------------------------------
     if(queue.length > 1){
-        var segment = queue.slice(0, 100);
+        var segment = queue.slice(0, 97);
         scrapBatch(segment, segment[0]);
 
     }else{
@@ -134,7 +134,6 @@ function scrapBatch(batch){
             saveGameInfo();
 
             if(isAngular){
-                if($("div[ng-view]").scope().hasOwnProperty("queue")){
                     $("div[ng-view]").scope().queue = [];
                 }
             }
@@ -169,7 +168,6 @@ function mergeApp(app){
     // Store local updated Date
     db[appID].updated = n;
 
-    howLongToBeatSteam(appID);
     saveGameInfo(appID);
 }
 
@@ -179,9 +177,6 @@ function mergeApp(app){
 //| + Loads user information from howlongtobeatsteam
 //| + Fills information for a certain or all games
 //+-------------------------------------------------------
-function howLongToBeatSteam(gameID){
-//console.warn("HLTBS");
-return;
     //| Get howlongtobeatsteam info
     //| And call function again
     //+-------------------------------------------------------
@@ -192,7 +187,6 @@ return;
         $.getJSON("https://www.howlongtobeatsteam.com/api/games/library/" + user.steamid + "?callback=jsonp", function(hltbs){
         }).always(function(xhr){
             hltbs = xhr;
-            howLongToBeatSteam(gameID);
         });
 
         return;
