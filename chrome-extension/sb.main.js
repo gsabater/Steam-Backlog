@@ -9,15 +9,15 @@
 //
 //=================================================================
 
-var v = "0.9.9";
+var v = "1.0";
 console.log("%c Steam Backlog v" + v + " ", 'background: #222; color: #bada55');
 
 var isAngular    = false,       // flag used to know if the execution is done in the angular panel
     isOwnProfile = false,       // flag used to know if window.location is own profile steam page
 
-    user         = false,            // chrome.local var
-    db           = false,            // chrome.local var
-    hltbs        = false,            // howlongtobeatsteam var
+    user         = false,       // chrome.local var
+    db           = false,       // chrome.local var
+    hltbs        = false,       // howlongtobeatsteam var
     savedb       = false,
 
     queue        = [],          // used to store pending apps waiting to be updated
@@ -27,21 +27,21 @@ var isAngular    = false,       // flag used to know if the execution is done in
 
     collections  = false,        // chrome.local var
     settings     = {
-      v: v,
-      scan: {
-        interval: "3",
-        achievements: false
-      },
-      library:{
-        wishlist: false
-      }
+        v: v,
+        scan: {
+            interval: "3",
+            achievements: false
+        },
+        library:{
+            wishlist: false
+        }
     };
 
 
-  // Initialize app only when needed
-  window.setTimeout(function(){
+// Initialize app only when needed
+window.setTimeout(function(){
     init();
-  }, 50);
+}, 50);
 
 
 //+-------------------------------------------------------
@@ -50,9 +50,10 @@ var isAngular    = false,       // flag used to know if the execution is done in
 //| + gets chrome.local information when needed
 //| + Adds layout modifications
 //+-------------------------------------------------------
-  function init(){
+function init()
+{
 
-    // Flag if angular app (dashboard / backlog)
+    // Flag when inside the angular app
     var windowURL = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
     isAngular = (windowURL == "steam-backlog.html")? true : false;
 
@@ -62,40 +63,50 @@ var isAngular    = false,       // flag used to know if the execution is done in
     // Add backlog menu option
     $('<a class="menuitem" href="'+chrome.extension.getURL("/steam-backlog.html")+'">BACKLOG</a>').insertAfter(".menuitem.supernav.username");
 
-    // Initialize localstorage
+    // Initialize Chrome Storage
     initChromeLocal();
 
-    /* // Update notification
-    if(parseFloat(options.v) == parseFloat(v)){
-      console.warn(options, parseFloat(options.v) , parseFloat(v));
-      //sendPush("update", "Mediavida Notifier ha sido actualizada a la versión "+v, true);
-    }
-    */
+}
 
-  }
 
-  //+-------------------------------------------------------
-  //| init()
-  //+--------------------------------
-  //| + gets chrome.local information when needed
-  //| + Sets global db and user vars
-  //+-------------------------------------------------------
-    function initChromeLocal(storage){
+//+-------------------------------------------------------
+//| initChromeLocal()
+//+--------------------------------
+//| + gets chrome.local information when needed
+//| + Sets global db and user vars
+//+-------------------------------------------------------
+function initChromeLocal(storage)
+{
 
-      if(!storage){
+    if(!storage){
         chrome.storage.local.get(null, function(items){
-          console.warn("Steam Backlog stored vars", items); initChromeLocal(items); });
-          return;
-      }else{
+            console.warn("Steam Backlog stored vars", items); initChromeLocal(items); });
+            return;
+    }else{
 
         // Set global user and db vars
         db          = (storage.db)? storage.db : {};
         user        = (storage.user)? storage.user : {};
         settings    = (storage.settings)? storage.settings : settings;
         collections = (storage.collections)? storage.collections : false;
-      }
+    }
 
-     // Update user information
-     // -> module.user
-     GetPlayerSummaries();
- }
+    // Initialize user data update
+    // -> module.user
+    GetPlayerSummaries();
+
+    // Notify the user about a new extension update
+    if(parseFloat(v) > parseFloat(settings.v)){
+
+        var options = {
+            notID: "update-alert",
+            title: "Steam Backlog",
+            message: "Has been updated to version "+ v,
+            contextMessage: "Click here to see what's new",
+        };
+
+        chrome.runtime.sendMessage({push: options}, function(response){
+            //console.log("...");
+        });
+    }
+}

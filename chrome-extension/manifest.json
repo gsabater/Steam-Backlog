@@ -31,6 +31,10 @@
     "default_popup": "popup.html"
   },
 
+  "background": {
+    "scripts": ["modules/SB.module.notifications.js"]
+  },
+
   "web_accessible_resources": [
     "steam-backlog.html",
     "/partials/*",
