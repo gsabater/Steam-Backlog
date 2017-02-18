@@ -56,11 +56,13 @@
         <ul ui-sortable="sortableOptions" ng-model="collections">
           <!-- <li><a ng-href="#/dashboard">Dashboard</a></li> -->
           <li ng-init="menu_active = 'backlog'" ng-click="menu_active = 'backlog'" ng-class="{'active': menu_active == 'backlog'}">
-            <a ng-href="#/backlog">Library</a></li>
+            <a ng-href="#/backlog">Library</a>
+          </li>
 
-          <li style=" padding-left: 0px; margin: 0 10px; font-size: 13px; border-radius: 2px;">
+          <li ng-show="settings.library.wishlist" style="padding-left: 0px; margin: 0 10px; font-size: 13px; border-radius: 2px;">
             <a ng-href="#/backlog/wishlist">Wishlist</a>
           </li>
+
           <li><a>Collections</a> <i class="ion-plus" ng-click="app.showCollectionsPanel = true;" style="cursor: pointer;"></i></li>
           <li ng-repeat="item in collections track by $index" class="collections-item">
             <a ng-href="#/backlog/collection/{{$index}}">
