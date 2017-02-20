@@ -33,8 +33,17 @@ var isAngular    = false,       // flag used to know if the execution is done in
             achievements: false
         },
         library:{
-            wishlist: false
+            wishlist: true
         }
+    },
+
+    // Configuration object.
+    // Edit this values to customize how the extension behaves
+    config = {
+        notifyUpdate: true,
+        updateAppAfter: 2592000000, // 30 days
+        resyncAfter: 86400000,
+        batchSize: 116,
     };
 
 

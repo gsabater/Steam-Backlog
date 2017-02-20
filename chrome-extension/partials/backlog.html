@@ -20,7 +20,7 @@
             &nbsp;&nbsp;|&nbsp;&nbsp;Syncing {{queue.length}} items
         </span>
         <span ng-if="queue.length == 0">
-            Sync complete. Last {{user.cached | date : 'd MMM, HH:m:s'}}
+            Sync complete. Last {{user.cached | date : 'd MMM, HH:m:ss'}}
         </span>
     </div>
 
@@ -31,9 +31,9 @@
     <div class="SB-games-count">{{ games.length }} items
         &nbsp;&nbsp;|&nbsp;&nbsp;
         <span ng-if="queue.length > 0" class="SB-btn" ng-click="stopSync();" ><i class="ion-close-circled"></i> Stop syncing now</span>
-        <span ng-if="(queue.length == 0) && scanningLibrary" class="SB-btn">Scanning...</span>
-        <span ng-if="(queue.length == 0) && !scanningLibrary" class="SB-btn tooltip" ng-click="scanLibrary()">
-            Scan
+        <span ng-if="(queue.length == 0) && syncing" class="SB-btn">Syncing library...</span>
+        <span ng-if="(queue.length == 0) && !syncing" class="SB-btn tooltip" ng-click="sync()">
+            Sync
             <span class="tooltip-content clearfix" style="font-size: 11px;">Search for new games<br />in library and wishlist</span>
         </span>
     </div>
@@ -190,8 +190,9 @@
 
             <div style="margin-top: 20px; margin-bottom: 10px;">
                 Languages
-                <i class="fa fa-home tooltip"><span class="tooltip-content clearfix">Language may be in the interface, audio or via subtitles</span></i>
-                <i class="ion-help-circled tooltip" style="font-size: 13px; margin-left: 5px;"><span class="tooltip-content">When checked, apps in this list will be hidden from search results</span></i>
+                <i class="ion-help-circled tooltip" style="font-size: 13px; margin-left: 5px;">
+                    <span class="tooltip-content">Language may be available for audio, subtitles or for the interface. Visit the steam page for more details.</span>
+                </i>
             </div>
             <div class="game-tags">
                 <span class="SB-btn" ng-repeat="item in gameDetails.languages track by $index">{{item}}</span>

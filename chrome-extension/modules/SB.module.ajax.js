@@ -11,10 +11,9 @@
 
 //+-------------------------------------------------------
 //| updateDB()
-//| +
 //+-------------------------------------------------------
-function updateDB(){
-
+function updateDB()
+{
     var d = new Date();
     var n = d.getTime();
 
@@ -24,7 +23,9 @@ function updateDB(){
         return; }
 
     //1.5 if process has been flagged as ended
-    if(isQueue){ console.warn("Steam Backlog -> updateDB: db queue is completed. Stopping updateDB()"); return; }
+    if(isQueue){
+        hideDialog("loader");
+        console.warn("Steam Backlog -> updateDB: db queue is completed. Stopping updateDB()"); return; }
 
     // 2. If there is no queue, build one with
     // db games and wishlist games
@@ -33,10 +34,7 @@ function updateDB(){
         for(var i in db){
             g = db[i];
 
-            //if(g.wishlist && (settings.library.wishlist === false)){
-            //  continue; }
-
-            if(!g.updated || (n - g.updated) > 1296000000 ){ // 30 dias 2592000000 -- 15 dias 1296000000
+            if(!g.updated || (n - g.updated) > config.updateAppAfter ){
                 queue.push([g.appid, g.playtime_forever]);
             }
         }
@@ -44,11 +42,11 @@ function updateDB(){
         queue.sort(function(a, b){ return b[1] - a[1]; });
     }
 
-    // 3. call for getGameInfo()
+    // 3. Process queue with getgameinfo or mark queue as completed
     if(queue.length > 0){
-        console.log("Queue remaining", queue.length, queue);
-        timeout = false;
         getGameInfo();
+        timeout = false;
+        console.log("Queue remaining", queue.length, queue);
     }else{
         isQueue = true;
         console.log("Steam Backlog -> updateDB: queue flagged as finished");
@@ -60,7 +58,9 @@ function updateDB(){
 //| getGameInfo()
 //| + Process queue to update app data
 //+-------------------------------------------------------
-function getGameInfo(injectID){ //console.warn(injectID, queue);
+function getGameInfo(injectID)
+{
+    //console.warn(injectID, queue);
 
     //| 1. Add games to queue if injectID is set
     //+-------------------------------------------------------
@@ -78,8 +78,13 @@ function getGameInfo(injectID){ //console.warn(injectID, queue);
     // the batch is sent to steam-backlog.com and returned data
     //+-------------------------------------------------------
     if(queue.length > 1){
-        var segment = queue.slice(0, 97);
+        var segment = queue.slice(0, config.batchSize);
         scrapBatch(segment, segment[0]);
+
+        if(queue.length > 15){
+            percent = (100-(queue.length * 100) / Object.keys(db).length);
+            showDialog("Your library is being updated, please wait... <br>" + percent.toFixed(1) +"%", "loader", percent);
+        }
 
     }else{
         var gameID = queue[0];

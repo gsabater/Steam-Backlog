@@ -650,3 +650,21 @@ span.note {
     /* margin: 0 auto; */
     text-align: center;
 }
+
+#SB-dialog{
+    display: none;
+    position: fixed;
+    top: 95px;
+    left: calc(50% - (650px/2));
+    width: 650px;
+    height: auto;
+    background-color: #1B2838;
+    background-position: center top;
+    background-repeat: no-repeat;
+    z-index: 99999;
+    padding: 20px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+    outline: 1px solid rgba(255, 255, 255, 0.15);
+    outline-offset: -1px;
+    text-align: center;
+}

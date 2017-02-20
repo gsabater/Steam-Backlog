@@ -25,7 +25,7 @@ angular.module('SB.filters', [])
           if(remaining == " 0'"){ remaining = ""; }
           return hours.toFixed(0) + "h" + remaining;
         }
-      
+
       };
     })
 
@@ -61,4 +61,11 @@ angular.module('SB.filters', [])
         }
       };
     })
+
+
+    .filter('to_trusted', ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text.toString());
+        };
+    }])
 ;
