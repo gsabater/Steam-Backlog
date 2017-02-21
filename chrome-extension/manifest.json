@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name":        "Steam Backlog preview",
+  "name":        "Steam Backlog RC1",
   "description": "Steam Backlog provides easier and better way to browse our always growing steam libraries while helping decide what to play next.",
-  "version":     "0.9.9",
+  "version":     "1.0.0",
 
   "options_page": "steam-backlog.html#/settings",
 
@@ -31,6 +31,10 @@
     "default_popup": "popup.html"
   },
 
+  "background": {
+    "scripts": ["modules/SB.module.notifications.js"]
+  },
+
   "web_accessible_resources": [
     "steam-backlog.html",
     "/partials/*",
@@ -44,6 +48,6 @@
     "webRequestBlocking",
     "notifications",
     "https://www.howlongtobeatsteam.com/",
-    "http://backlog.bonda.es/*"
+    "https://steam-backlog.com/"
   ]
 }

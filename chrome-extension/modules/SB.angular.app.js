@@ -30,6 +30,7 @@
     $rootScope.app = {
       v: 0,
       backdrop: false,
+      dialog: false,
       listStyle: "cards",  // - list
       showCollectionsPanel: false
     };
