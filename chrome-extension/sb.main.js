@@ -25,7 +25,7 @@ var isAngular    = false,       // flag used to know if the execution is done in
     isQueue      = false,       // default false, when true means there are games waiting to be updated
     notification = false,       // Contains the text used to inform about current update game and others
 
-    collections  = false,        // chrome.local var
+    collections  = false,       // chrome.local var
     settings     = {
         v: v,
         scan: {
@@ -117,5 +117,8 @@ function initChromeLocal(storage)
         chrome.runtime.sendMessage({push: options}, function(response){
             //console.log("...");
         });
+
+        settings.v = v;
+        chrome.storage.local.set({'settings': settings}, function(){ });
     }
 }

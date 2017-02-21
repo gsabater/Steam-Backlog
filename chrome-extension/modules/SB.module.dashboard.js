@@ -94,6 +94,9 @@ function showDialog(text, loader, percent)
                     trickleSpeed: 600
                 });
                 NProgress.start();
+            }else{
+                console.log(percent / 100);
+                NProgress.set(percent / 100);
             }
         }
     }, 500);
@@ -105,6 +108,8 @@ function hideDialog(loader)
     if(loader == "loader"){
         NProgress.done();
     }
+
+    if($("div[ng-view]").scope().$parent.app.dialog === false){ return; }
 
     window.setTimeout(function(){
         $("div[ng-view]").scope().$parent.app.dialog = false;

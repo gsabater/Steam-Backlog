@@ -49,6 +49,7 @@ function updateDB()
         console.log("Queue remaining", queue.length, queue);
     }else{
         isQueue = true;
+        hideDialog("loader");
         console.log("Steam Backlog -> updateDB: queue flagged as finished");
     }
 }
