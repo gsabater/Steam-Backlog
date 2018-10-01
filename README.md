@@ -3,6 +3,6 @@ Steam Backlog is a Steam library manager built with simplicity in mind. Managing
 
 The new cloud based service is hosted in https://steam-backlog.com
 
-### What is this extension for?
+## What is this extension for?
 The current status for the companion extension is ´development´.
 At this point, nothing more than adding a shortcut to steam backlog.
